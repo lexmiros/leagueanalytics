@@ -71,7 +71,7 @@ def get_match_history_start(user, region):
 """
 Given a user and a region, returns a dataframe filled with information for the given users games
 """
-def get_match_details(user, region):
+def get_match_details(user, region, number_games):
     #Gets a list of match_ids 
     i = 0
     #Creates an empty list to populate with dictionaries
@@ -79,7 +79,7 @@ def get_match_details(user, region):
     participants = []
 
 
-    while i < 1000:
+    while i < number_games:
         
         match_ids = get_match_history_start(user, region)
         if match_ids == []:
