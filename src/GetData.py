@@ -1,5 +1,6 @@
 from matplotlib.pyplot import get
 from src import *
+import time
 
 """
 Return the user accountID for the given username and region
@@ -58,12 +59,12 @@ def get_first_match_history(user, region):
 
 
 """
-Get a timeline for a match
+Get a list of match IDs for the match hisotry of the user and region given a specific start-point
 """
-def get_match_timeline(user, region):
-    first_match_id = get_first_match_history(user, region)
-    first_match_timeline = watcher.match.timeline_by_match(region,first_match_id)
-    return first_match_timeline
+def get_match_history_start(user, region):
+    puiid = get_puuid(user, region)
+    my_match_ids = watcher.match.matchlist_by_puuid(region,puiid, start=0,  count=100)
+    return my_match_ids
 
 
 
@@ -72,48 +73,56 @@ Given a user and a region, returns a dataframe filled with information for the g
 """
 def get_match_details(user, region):
     #Gets a list of match_ids 
-    match_ids = get_match_history(user, region, start_index = 0)
+    i = 0
     #Creates an empty list to populate with dictionaries
     #Each element of the list will be one game
     participants = []
 
-    #For each match ID in the list of match_ids
-    for id in match_ids:
 
-        #Gets the information for the match
-        match_detail = watcher.match.by_id(my_region, id)
+    while i < 1000:
         
-        #For each participant in the match
-        for row in match_detail['info']['participants']:
-            #If the participant is the user, create a dictionary and populate
-            if row['summonerName'] == user:
-                participants_row = {}
-                participants_row['SummonerName'] = row['summonerName']
-                participants_row['WinLoss']    = row['win']
-                participants_row['Lane'] = row['individualPosition']
-                participants_row['Champion'] = row['championName']
-                participants_row['SummonerSpell1'] = row['summoner1Id']
-                participants_row['Spell1Casts'] = row['summoner1Casts']
-                participants_row['SummonerSpell2'] = row['summoner2Id']
-                participants_row['Spell2Casts'] = row['summoner2Casts']
-                participants_row['Q casts'] = row['spell1Casts']
-                participants_row['W casts'] = row['spell2Casts']
-                participants_row['E casts'] = row['spell3Casts']
-                participants_row['R casts'] = row['spell4Casts']
-                participants_row['ChampLevel'] = row['champLevel']
-                participants_row['CS']    = row['totalMinionsKilled']
-                participants_row['Kills']    = row['kills']
-                participants_row['Deaths']    = row['deaths']
-                participants_row['Assists']    = row['assists']
-                participants_row['Exp']    = row['champExperience']
-                participants_row['Damage'] = row['totalDamageDealtToChampions']
-                participants_row['TotalDamageTaken'] = row['totalDamageTaken']
-                participants_row['WardsPlace']    = row['wardsPlaced']
-                participants_row['WardsKilled']    = row['wardsKilled']
+        match_ids = get_match_history_start(user, region)
+        if match_ids == []:
+            print("Found all matches")
+            break
+        else:
+            #For each match ID in the list of match_ids
+            for id in match_ids:    
+                #Gets the information for the match
+                match_detail = watcher.match.by_id(my_region, id)
+                #For each participant in the match
+                for row in match_detail['info']['participants']:
+                    #If the participant is the user, create a dictionary and populate
+                    if row['summonerName'] == user:
+                        participants_row = {}
+                        participants_row['SummonerName'] = row['summonerName']
+                        participants_row['WinLoss']    = row['win']
+                        participants_row['Lane'] = row['individualPosition']
+                        participants_row['Champion'] = row['championName']
+                        participants_row['SummonerSpell1'] = row['summoner1Id']
+                        participants_row['Spell1Casts'] = row['summoner1Casts']
+                        participants_row['SummonerSpell2'] = row['summoner2Id']
+                        participants_row['Spell2Casts'] = row['summoner2Casts']
+                        participants_row['Q casts'] = row['spell1Casts']
+                        participants_row['W casts'] = row['spell2Casts']
+                        participants_row['E casts'] = row['spell3Casts']
+                        participants_row['R casts'] = row['spell4Casts']
+                        participants_row['ChampLevel'] = row['champLevel']
+                        participants_row['CS']    = row['totalMinionsKilled']
+                        participants_row['Kills']    = row['kills']
+                        participants_row['Deaths']    = row['deaths']
+                        participants_row['Assists']    = row['assists']
+                        participants_row['Exp']    = row['champExperience']
+                        participants_row['Damage'] = row['totalDamageDealtToChampions']
+                        participants_row['TotalDamageTaken'] = row['totalDamageTaken']
+                        participants_row['WardsPlace']    = row['wardsPlaced']
+                        participants_row['WardsKilled']    = row['wardsKilled']
 
-                #Append the dictionary to the list
-                participants.append(participants_row)
-    #Create a dataframe from the list of dictionaries             
+                        #Append the dictionary to the list
+                        participants.append(participants_row)
+            time.sleep(2)
+            i = i + 100
+        #Create a dataframe from the list of dictionaries             
     df = pd.DataFrame(participants)
 
     return df
