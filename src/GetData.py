@@ -36,9 +36,9 @@ def get_account_info(user, region):
 """
 Get a list of match IDs for the match hisotry of the user and region
 """
-def get_match_history(user, region):
+def get_match_history(user, region, start_index):
     puiid = get_puuid(user, region)
-    my_match_ids = watcher.match.matchlist_by_puuid(region,puiid, count=100)
+    my_match_ids = watcher.match.matchlist_by_puuid(region,puiid, start = start_index, count=100)
     return my_match_ids
 
 
@@ -72,7 +72,7 @@ Given a user and a region, returns a dataframe filled with information for the g
 """
 def get_match_details(user, region):
     #Gets a list of match_ids 
-    match_ids = get_match_history(user, region)
+    match_ids = get_match_history(user, region, start_index = 0)
     #Creates an empty list to populate with dictionaries
     #Each element of the list will be one game
     participants = []
