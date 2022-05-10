@@ -25,7 +25,7 @@ if __name__ == "__main__":
     df = pd.read_csv('./TestData')
     df = pd.DataFrame(df)
     df = col_to_string(df, "WinLoss")
-    df['WinLoss'] = df['WinLoss'].map(encode_winloss)
+    df['WinLoss'] = df['WinLoss'].map(encode_true_false)
 
     df = encode_categorical(df, "Lane")
     print(df)
