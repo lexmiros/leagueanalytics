@@ -61,9 +61,9 @@ def get_first_match_history(user, region):
 """
 Get a list of match IDs for the match hisotry of the user and region given a specific start-point
 """
-def get_match_history_start(user, region):
+def get_match_history_start(user, region, start_index):
     puiid = get_puuid(user, region)
-    my_match_ids = watcher.match.matchlist_by_puuid(region,puiid, start=0,  count=100)
+    my_match_ids = watcher.match.matchlist_by_puuid(region,puiid, start=start_index,  count=100)
     return my_match_ids
 
 
@@ -81,7 +81,7 @@ def get_match_details(user, region, number_games):
 
     while i < number_games:
         
-        match_ids = get_match_history_start(user, region)
+        match_ids = get_match_history_start(user, region, start_index=i)
         if match_ids == []:
             print("Found all matches")
             break
@@ -89,7 +89,7 @@ def get_match_details(user, region, number_games):
             #For each match ID in the list of match_ids
             for id in match_ids:    
                 #Gets the information for the match
-                match_detail = watcher.match.by_id(my_region, id)
+                match_detail = watcher.match.by_id(region, id)
                 #For each participant in the match
                 for row in match_detail['info']['participants']:
                     #If the participant is the user, create a dictionary and populate
