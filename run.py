@@ -5,7 +5,7 @@ import pandas as pd
 if __name__ == "__main__":
     user = "Drakuns"
     region = "OC1"
-    no_games = 1000
+    no_games = 10000
     df = get_match_details(user, region, no_games)
     df.to_csv("./TestData")
   
