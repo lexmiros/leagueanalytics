@@ -1,6 +1,6 @@
 import pandas as pd
-from sqlalchemy import over
-from CleanData import encode_categorical, encode_true_false, col_to_string
+
+from CleanData import encode_categorical, encode_true_false, col_to_string, top_n_occurences
 import statsmodels.api as sm
 
 def logit_model(df, y, x_list):
@@ -20,20 +20,6 @@ def logit_model(df, y, x_list):
     result=logit_model.fit()
     return result
 
-
-def top_n_occurences(df, col_name, n = 3):
-    """
-    Returns the top n occurnces of a column in a data frame
-    Arguments:
-        df: A pandas dataframe
-        col_name: The column name for the results of interest in the dataframe
-        n: An integer value for how many of the top occurences you want returned 
-    Returns:
-        A pandas data frame with the top n occurnces
-    """
-    values = df[col_name].value_counts()
-    nlargest = values.nlargest(n)
-    return nlargest
 
 def top_n_win(df, col_name, n = 3):
     """
@@ -106,17 +92,46 @@ def overall_win_ratio(df):
     return win_rate
 
 
+def top_cast_champ(df, champ):
+    """
+    Finds the maximum casts for a given champ from Q, W, E, R casts
+    Arguments:
+        df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
+        champ: String of the champion of interest 
+    Returns:
+        A dictionary where the key is the ability and the value is the number of casts
+    """
+    df_champ = df[df["Champion"] == champ]
+    casts = {}
+    casts["Q"] = df_champ["Q casts"].sum()
+    casts["W"] = df_champ["W casts"].sum()
+    casts["E"] = df_champ["E casts"].sum()
+    casts["R"] = df_champ["R casts"].sum()
+
+    max_casts = {}
+    max_casts[max(casts, key=casts.get)] = casts[max(casts, key=casts.get)]
+
+    return max_casts
+
+
+
 
 if __name__ == "__main__":
 
-    df = pd.read_csv('./TestData')
+    df = pd.read_csv('./TestData_Cleaned')
     df = pd.DataFrame(df)
-    df = col_to_string(df, "WinLoss")
-    df['WinLoss'] = df['WinLoss'].map(encode_true_false)
 
-    df = encode_categorical(df, "Lane")
+    print(top_cast_champ(df, "Jhin"))
 
-    print(overall_win_ratio(df))
+    
+    
+    
+    
+
+    
+
+
+    
   
   
     
