@@ -122,7 +122,9 @@ def top_cast_champ(df, champ):
         df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
         champ: String of the champion of interest 
     Returns:
-        A dictionary where the key is the ability and the value is the number of casts
+        A dictionary 
+            Spell : the spell name
+            Casts : number of uses of that spell
     """
     df_champ = df[df["Champion"] == champ]
     casts = {}
@@ -131,27 +133,61 @@ def top_cast_champ(df, champ):
     casts["E"] = df_champ["E casts"].sum()
     casts["R"] = df_champ["R casts"].sum()
 
-    max_casts = {}
-    max_casts[max(casts, key=casts.get)] = casts[max(casts, key=casts.get)]
+    
+    max_casts = {"Spell" : max(casts, key=casts.get), "Casts" :  casts[max(casts, key=casts.get)]}
 
     return max_casts
 
 def top_cast_top_n_champs(df, n):
     """
-    Finds the most casted ability for a champ
+    Finds the most casted ability for the top n played champions
     Arguments:
         df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
         n: An integer representing the top n champs to find casts for 
     Returns:
-        A dictionary where the key is the champion name, in order for most played champ
+        A dictionary 
+            Name  : Champions name
+            Spell : the spell name
+            Casts : number of uses of that spell
     """
     n_champs = top_n_occurences(df,"Champion", n, True)
     
-    cast_dict = {}
+    cast_dict = []
     for champ in n_champs:
-        cast_dict[champ] = top_cast_champ(df, champ)
+        x = top_cast_champ(df, champ)
+        cast_dict.append({"Name" : champ, "Spell" : x["Spell"], "Casts": x["Casts"] })
+       
 
     return cast_dict
+
+
+def top_cast_top_wr_champs(df, n):
+    """
+    Finds the most casted ability for the champions with the top n highest win rates
+    Arguments:
+        df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
+        n: An integer representing the top n champs to find casts for 
+    R eturns:
+        A dictionary 
+            Name  : Champions name
+            Spell : the spell name
+            Casts : number of uses of that spell
+    """
+    n_champs = top_champs_by_wr(df, n)
+
+    champ_list = []
+    for i in range(0, len(n_champs)):
+        champ_list.append(n_champs[i]["Name"])
+    
+    cast_dict = []
+    for champ in champ_list:
+        x = top_cast_champ(df, champ)
+        cast_dict.append({"Name" : champ, "Spell" : x["Spell"], "Casts": x["Casts"] })
+       
+
+    return cast_dict
+
+
 
 if __name__ == "__main__":
 
@@ -160,6 +196,9 @@ if __name__ == "__main__":
 
     x = top_champs_by_wr(df, 5)
     print(x)
+    y = top_cast_top_wr_champs(df, 5)
+    print(y)
+    
 
     
 
