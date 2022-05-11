@@ -34,7 +34,8 @@ def top_n_occurences(df, col_name, n = 3, to_list = False):
     values = df[col_name].value_counts()
     nlargest = values.nlargest(n)
     if to_list:
-        nlargest = nlargest.values.tolist()
+        nlargest = df[col_name].value_counts().index.tolist()
+        nlargest = nlargest[0:n]
     return nlargest
 
 def champ_list_invalid(df):
@@ -81,7 +82,11 @@ if __name__ == "__main__":
 
     df = pd.read_csv('./TestData')
     df = pd.DataFrame(df)
-    
+    df = col_to_string(df, "WinLoss")
+    df['WinLoss'] = df['WinLoss'].map(encode_true_false)
+    df = impute_mode_lane(df)
+    df = encode_categorical(df, "Lane")
+    df.to_csv("./TestData_Cleaned")
   
 
 
