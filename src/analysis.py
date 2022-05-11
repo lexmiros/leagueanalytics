@@ -91,10 +91,33 @@ def overall_win_ratio(df):
 
     return win_rate
 
+def top_champs_by_wr(df,n):
+    """
+    Finds the highest n champions by win-rate
+    Arguments:
+        df: A pandas dataframe with a Champion column
+        n: An integer for how many champions to return
+    Returns:
+        A list of dictionaries where Name is the champion and Win Rate is the win rate
+    """
+    counts = df["Champion"].value_counts()
+    counts = counts[counts > 10]
+    
+    
+    wr_list = []
+    
+    for champ in counts.index:
+        entry = {"Name" : champ, "Win Rate":win_ratio_str(df,"Champion", champ)}
+        wr_list.append(entry)
+    
+    sorted_wr = sorted(wr_list, key=lambda d: d['Win Rate'], reverse=True)
+    sorted_wr = sorted_wr[:n] 
+
+    return sorted_wr
 
 def top_cast_champ(df, champ):
     """
-    Finds the maximum casts for a given champ from Q, W, E, R casts
+    Finds the most casted ability for a champ
     Arguments:
         df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
         champ: String of the champion of interest 
@@ -113,15 +136,32 @@ def top_cast_champ(df, champ):
 
     return max_casts
 
+def top_cast_top_n_champs(df, n):
+    """
+    Finds the most casted ability for a champ
+    Arguments:
+        df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
+        n: An integer representing the top n champs to find casts for 
+    Returns:
+        A dictionary where the key is the champion name, in order for most played champ
+    """
+    n_champs = top_n_occurences(df,"Champion", n, True)
+    
+    cast_dict = {}
+    for champ in n_champs:
+        cast_dict[champ] = top_cast_champ(df, champ)
 
-
+    return cast_dict
 
 if __name__ == "__main__":
 
     df = pd.read_csv('./TestData_Cleaned')
     df = pd.DataFrame(df)
 
-    print(top_cast_champ(df, "Jhin"))
+    x = top_champs_by_wr(df, 5)
+    print(x)
+
+    
 
     
     
