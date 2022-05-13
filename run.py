@@ -7,6 +7,7 @@ from src.DataScripts.GetData import *
 from src.DataScripts.CleanData import *
 import pandas as pd
 from src.flaskApp import app
+from src.flaskApp import routes
 
 if __name__ == "__main__":
     #user = "Drakuns"
@@ -26,15 +27,5 @@ if __name__ == "__main__":
         win_rates.append(champs["Win Rate"])
 
     
-    @app.route("/")
-    def home():
-        n = 10
-        top_wr_champs = top_champs_by_wr(df, n)
-        labels = []
-        win_rates = []
-        for champs in top_wr_champs:
-            labels.append(champs["Name"])
-            win_rates.append(champs["Win Rate"])
-
-        return render_template("graph.html", labels = labels, win_rates = win_rates, n = n)
+    
     app.run()
