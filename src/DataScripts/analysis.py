@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.CleanData import encode_categorical, encode_true_false, col_to_string, top_n_occurences
+from DataScripts.CleanData import encode_categorical, encode_true_false, col_to_string, top_n_occurences
 import statsmodels.api as sm
 
 def logit_model(df, y, x_list):

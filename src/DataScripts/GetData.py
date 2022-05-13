@@ -1,5 +1,5 @@
 from matplotlib.pyplot import get
-from src import *
+from src.DataScripts import *
 import time
 
 """

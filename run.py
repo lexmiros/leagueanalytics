@@ -1,10 +1,12 @@
 from re import U
 
 from flask import render_template
-from src.GetData import get_match_details
-from src.analysis import *
+
+from src.DataScripts.analysis import *
+from src.DataScripts.GetData import *
+from src.DataScripts.CleanData import *
 import pandas as pd
-from src import app
+from src.flaskApp import app
 
 if __name__ == "__main__":
     #user = "Drakuns"
@@ -35,5 +37,4 @@ if __name__ == "__main__":
             win_rates.append(champs["Win Rate"])
 
         return render_template("graph.html", labels = labels, win_rates = win_rates, n = n)
-    
     app.run()
