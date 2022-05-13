@@ -21,4 +21,4 @@ def graph():
         labels.append(champs["Name"])
         win_rates.append(champs["Win Rate"])
 
-    return render_template("graph.html", labels = labels, win_rates = win_rates, n = n)
+    return render_template("graph_temp.html", labels = labels, win_rates = win_rates, n = n)
