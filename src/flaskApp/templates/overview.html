@@ -21,8 +21,8 @@
         
         <div class="float-child">
             <h2 class="title2"> Champion breakdowns</h2>
-            <canvas class="barchart" id="playedChart" width="400" height="200"></canvas>
-            <canvas class="barchart" id="wrChart" width="400" height="200"></canvas>
+            <canvas class="barchart" id="playedChart" width="500" height="250"></canvas>
+            <canvas class="barchart" id="wrChart" width="500" height="250"></canvas>
         </div>
         
       </div>
@@ -34,23 +34,38 @@
         var lineChart = new Chart(ctx, {
             type: "bar",
             data: {
-                labels: {{labels | safe }},
+                labels: {{labels_top | safe }},
                 datasets: [
                     {
-                    label: "Most champions played",
-                    data: {{ win_rates | safe }},
+                    label: "Most played champions",
+                    data: {{ games | safe }},
                     fill: false,
                     borderColor: "rgb(75, 192, 192)",
                     }
                 ]
             },
             options: {
+               
                 responsive: false,
+                
                 scales: {
+                    
                     yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Games played"
+                        },
                         ticks: {
                             beginAtZero: true
                         }
+                    }],
+
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Champion"
+                        }
+                        
                     }]
                 }
             }
@@ -61,7 +76,7 @@
         var lineChart = new Chart(ctx, {
             type: "bar",
             data: {
-                labels: {{labels | safe }},
+                labels: {{labels_wr | safe }},
                 datasets: [
                     {
                     label: "Top champions by win-rate",
@@ -72,7 +87,25 @@
                 ]
             },
             options: {
-                responsive: false
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Win rate %"
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Champion"
+                        }
+                        
+                    }]
+                }
             }
         });
     </script>

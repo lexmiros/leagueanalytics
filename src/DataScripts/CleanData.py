@@ -20,22 +20,36 @@ def encode_categorical(df, col_name):
     df = df.drop(col_name, 1)
     return df
 
-def top_n_occurences(df, col_name, n = 3, to_list = False):
+def top_n_occurences(df, col_name, n = 3, to_dict = False):
     """
     Returns the top n occurnces of a column in a data frame
     Arguments:
         df: A pandas dataframe
         col_name: The column name for the results of interest in the dataframe
         n: An integer value for how many of the top occurences you want returned 
-        to_list : False to return pandas dataframe, True to return a list
+        to_dict : False to return pandas dataframe, True to return a list of dictionaries
     Returns:
-        A pandas data frame or list with the top n occurnces
+        A pandas data frame or list of dictionaries 
     """
     values = df[col_name].value_counts()
     nlargest = values.nlargest(n)
-    if to_list:
-        nlargest = df[col_name].value_counts().index.tolist()
-        nlargest = nlargest[0:n]
+
+    #Turns df to dictionary
+    if to_dict:
+        names_list = []
+        values_list = []
+        dictionary_list = []
+
+        for names in nlargest.index:
+            names_list.append(names)
+        for values in nlargest:
+            values_list.append(values)
+        
+        for i in range(0, len(names_list)):
+            entry = {"Name" : names_list[i], "Games" : values_list[i]}
+            dictionary_list.append(entry)
+        return dictionary_list
+
     return nlargest
 
 def champ_list_invalid(df):

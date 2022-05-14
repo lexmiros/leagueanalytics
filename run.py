@@ -1,5 +1,6 @@
 from re import U
 
+
 from flask import render_template
 
 from src.DataScripts.analysis import *
@@ -18,14 +19,10 @@ if __name__ == "__main__":
     
     df = pd.read_csv("./TestData_Cleaned")
     df = pd.DataFrame(df)
-    
-    top_wr_champs = top_champs_by_wr(df, 10)
-    labels = []
-    win_rates = []
-    for champs in top_wr_champs:
-        labels.append(champs["Name"])
-        win_rates.append(champs["Win Rate"])
 
+    y = "WinLoss"
+    x_list = ['Spell1Casts','SummonerSpell2','Spell2Casts','Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp','Damage','TotalDamageTaken','WardsPlace','WardsKilled']
     
-    
-    app.run()
+    model = build_logit_model(df, y, x_list, 0.05)
+
+    #app.run()
