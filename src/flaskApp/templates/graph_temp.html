@@ -4,19 +4,43 @@
     <h1 class="title">Welcome Summoner x!</h1>
     {%endblock title%}
     {% block content %}
-    <div class="container">
-        <canvas id="wrChart" width="400" height="200"></canvas>
-        </div>
-        
-        <div class="container">
-        <canvas id="wrChart" width="400" height="200"></canvas>
-        </div>        
-    <div>
+    <div class="container-graph">
+        <canvas id="wrChart" width="500" height="200"></canvas>
+        <canvas id="wrChart2" width="500" height="200"></canvas>
+    </div>      
     
+ 
     <script>
         var ctx = document.getElementById("wrChart").getContext("2d");
         var lineChart = new Chart(ctx, {
-            type: "line",
+            type: "bar",
+            data: {
+                labels: {{labels | safe }},
+                datasets: [
+                    {
+                    label: "Win Rates",
+                    data: {{ win_rates | safe }},
+                    fill: false,
+                    borderColor: "rgb(75, 192, 192)",
+                    }
+                ]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+           
+        });
+
+        var ctx = document.getElementById("wrChart2").getContext("2d");
+        var lineChart = new Chart(ctx, {
+            type: "bar",
             data: {
                 labels: {{labels | safe }},
                 datasets: [
@@ -33,30 +57,8 @@
             }
         });
     </script>
-    </div>
-    <div>
     
-    <script>
-        var ctx = document.getElementById("wrChart").getContext("2d");
-        var lineChart = new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: {{labels | safe }},
-                datasets: [
-                    {
-                    label: "Win Rates",
-                    data: {{ win_rates | safe }},
-                    fill: false,
-                    borderColor: "rgb(75, 192, 192)",
-                    }
-                ]
-            },
-            options: {
-                responsive: false
-            }
-        });
-    </script>
-    </div>
+    
     {%endblock content%}
     
     
