@@ -20,7 +20,7 @@ def encode_categorical(df, col_name):
     df = df.drop(col_name, 1)
     return df
 
-def top_n_occurences(df, col_name, n = 3, to_dict = False):
+def top_n_occurences(df, col_name, user ,n = 3, to_dict = False):
     """
     Returns the top n occurnces of a column in a data frame
     Arguments:
@@ -31,6 +31,7 @@ def top_n_occurences(df, col_name, n = 3, to_dict = False):
     Returns:
         A pandas data frame or list of dictionaries 
     """
+    df = df[df["SummonerName"] == user]
     values = df[col_name].value_counts()
     nlargest = values.nlargest(n)
 

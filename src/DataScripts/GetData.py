@@ -127,7 +127,7 @@ def get_match_details(user, region, number_games):
                         participants_row['Penta Kills']    = row['pentaKills']
                         participants_row['Game Time seconds']    = row['timePlayed']
                         participants_row['Total time CCing']    = row['totalTimeCCDealt']
-                        participants_row['Time spend dead']    = row['totalTimeSpentDead']
+                        participants_row['Time spent dead']    = row['totalTimeSpentDead']
                         participants_row['Kill participation'] = row["challenges"]["killParticipation"]
                         participants_row['Team damage percentage']    = row["challenges"]['teamDamagePercentage']
                         participants_row['Skillshots hit']    = row["challenges"]['skillshotsHit']

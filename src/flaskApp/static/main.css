@@ -10,11 +10,7 @@
   font-size: 500%;
 }
 
-.title{
-  color: #000000;
-  margin-left: 250px;
-  margin-top: 1%
- }
+
 
 .main {
   margin-left: 12.5%;
@@ -39,7 +35,7 @@
 
  .title{
   color: #000000;
-  margin-top: 1%;
+  
   text-align: center;
  }
  .title2{
@@ -150,7 +146,7 @@ button{
 }
 
 .float-container {
-  
+  margin-top: 5%;
   padding: 20px;
 }
 

@@ -103,8 +103,18 @@ def overall_win_ratio(df):
     win_rate = round(win_rate,2)
 
     return win_rate
+def user_win_loss_wr(df, user):
+    win_df = df[(df["WinLoss"] == 1) & (df["SummonerName"] == user)]
+    loss_df = df[(df["WinLoss"] == 0) & (df["SummonerName"] == user)]
+    wr_df = df[df["SummonerName"] == user]
 
-def top_champs_by_wr(df,n):
+    wins = len(win_df)
+    losses = len(loss_df)
+    wr =  100*round(wins / len(wr_df),4)
+
+    return wins, losses, wr
+
+def top_champs_by_wr(df,n, user):
     """
     Finds the highest n champions by win-rate
     Arguments:
@@ -113,6 +123,7 @@ def top_champs_by_wr(df,n):
     Returns:
         A list of dictionaries where Name is the champion and Win Rate is the win rate
     """
+    df = df[df["SummonerName"] == user]
     counts = df["Champion"].value_counts()
     counts = counts[counts > 10]
     
@@ -200,6 +211,23 @@ def top_cast_top_wr_champs(df, n):
 
     return cast_dict
 
+def get_model_coefs(model):
+    """
+    Finds the top 5 highest coefficients of a statsmodel model
+    Arguments:
+        model : a statsmodel model
+    Returns:
+       A list of coefficients in descending order
+    """
+    x = model.params
+    x = x.sort_values(ascending = False)
+    x = x.index
+    print(x)
+    coef_list = []
+    for i in range(0,5):
+        coef_list.append(x[i])
+    return coef_list
+    
 
 
 if __name__ == "__main__":
