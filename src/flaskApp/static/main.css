@@ -5,7 +5,8 @@
 
 .welcome{
   text-align: center;
-  padding-top: 20%;
+  padding-top: 10%;
+  margin-right: 12.5%;
   color: rgb(7, 7, 7);
   font-size: 500%;
 }
@@ -146,7 +147,7 @@ button{
 }
 
 .float-container {
-  margin-top: 5%;
+  margin-top: 2%;
   padding: 20px;
 }
 
@@ -156,3 +157,14 @@ button{
   padding: 20px;
   
 }  
+.float-child2 {
+  width: 100%;
+  float: left;
+  padding: 20px;
+  
+}  
+.float-child2 p {
+  text-align: center;
+  margin-right: 12.5%;
+}
+
