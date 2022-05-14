@@ -3,9 +3,10 @@ import pandas as pd
 from src.DataScripts.CleanData import encode_categorical, encode_true_false, col_to_string, top_n_occurences
 import statsmodels.api as sm
 
-def logit_model(df, y, x_list):
+def build_logit_model(df, y, x_list, p_value):
     """
     Creates a logistic regression model
+    Uses recursion to remove all x until all x have p < p_value
     Arguments: 
         df : A pandas dataframe containg the data
         y  : The name of the column housing the y or prediction values
@@ -16,9 +17,21 @@ def logit_model(df, y, x_list):
     """
     y = df[[y]]
     X = df[x_list]
-    logit_model=sm.Logit(y,X)
-    result=logit_model.fit()
-    return result
+
+    logit_model = sm.Logit(y,X)
+    model = logit_model.fit()
+
+    significant_x = model.pvalues < p_value
+    p_05 = significant_x.all()
+    if p_05 == True:
+        return model
+    else:
+        y = "WinLoss"
+        significant_x = significant_x[significant_x]
+        x = significant_x.index.tolist()
+        return build_logit_model(df = df,y = y, x_list = x, p_value= p_value)
+
+
 
 
 def top_n_win(df, col_name, n = 3):
