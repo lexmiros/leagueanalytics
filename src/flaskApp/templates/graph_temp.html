@@ -1,11 +1,18 @@
 
     {% extends "layout.html" %}
     {%block title%}
-    <h1 class="title">Welcome Summoner!</h1>
+    <h1 class="title">Welcome Summoner x!</h1>
     {%endblock title%}
     {% block content %}
+    <div class="container">
+        <canvas id="wrChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="container">
+        <canvas id="wrChart" width="400" height="200"></canvas>
+        </div>        
+    <div>
     
-    <canvas id ="wrChart" width="700px" height="200px"></canvas>  
     <script>
         var ctx = document.getElementById("wrChart").getContext("2d");
         var lineChart = new Chart(ctx, {
@@ -26,7 +33,30 @@
             }
         });
     </script>
-
+    </div>
+    <div>
+    
+    <script>
+        var ctx = document.getElementById("wrChart").getContext("2d");
+        var lineChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: {{labels | safe }},
+                datasets: [
+                    {
+                    label: "Win Rates",
+                    data: {{ win_rates | safe }},
+                    fill: false,
+                    borderColor: "rgb(75, 192, 192)",
+                    }
+                ]
+            },
+            options: {
+                responsive: false
+            }
+        });
+    </script>
+    </div>
     {%endblock content%}
     
     

@@ -13,24 +13,28 @@
 
 </head>
 <body class="body">
+    {%block sidebar%}
        <!-- Side navigation -->
     <div class="sidenav">
-        <a href="#">About</a>
+        <a href="#">Top three champions</a>
         <a href="#">Services</a>
         <a href="#">Clients</a>
         <a href="#">Contact</a>
     </div>
-    <h1 class="title">{%block title%} {%endblock title%}</h1>
-   
-   
-<div class="main">
-    
+    {%endblock sidebar%}
 
-    {%block content%}
+    {%block title%}
     
+    {%endblock title%}
+   
+    <div class="main">
+        <div class="contents">
+            {%block content%}
 
-    
-    {%endblock%}
-</div>
+            {%endblock%}
+        </div>
+       
+
+    </div>
 </body>
 </html>
