@@ -3,7 +3,7 @@ from flask import render_template
 from src.DataScripts.analysis import *
 import pandas as pd
 
-df = pd.read_csv("./TestData_cleaned")
+df = pd.read_csv("./TestData_1_cleaned")
 df = pd.DataFrame(df)
 
 @app.route("/")

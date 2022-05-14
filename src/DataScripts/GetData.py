@@ -1,3 +1,4 @@
+from unittest import skip
 from matplotlib.pyplot import get
 from src.DataScripts import *
 import time
@@ -96,6 +97,7 @@ def get_match_details(user, region, number_games):
                 for row in match_detail['info']['participants']:
                     #If the participant is the user, create a dictionary and populate
                     #if row['summonerName'] == user:
+                    try:
                         participants_row = {}
                         participants_row['SummonerName'] = row['summonerName']
                         participants_row['WinLoss']    = row['win']
@@ -135,9 +137,13 @@ def get_match_details(user, region, number_games):
                        
                         #Append the dictionary to the list
                         participants_1.append(participants_row)
+                    except:
+                        pass
+
 
             time.sleep(2)
             i = i + 100
+            print(i)
         #Create a dataframe from the list of dictionaries             
     df = pd.DataFrame(participants_1)
 
