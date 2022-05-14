@@ -1,6 +1,7 @@
 from matplotlib.pyplot import get
 from src.DataScripts import *
 import time
+import pandas as pd
 
 """
 Return the user accountID for the given username and region
@@ -76,7 +77,8 @@ def get_match_details(user, region, number_games):
     i = 0
     #Creates an empty list to populate with dictionaries
     #Each element of the list will be one game
-    participants = []
+    participants_1 = []
+    participants_2 = []
 
 
     while i < number_games:
@@ -93,7 +95,7 @@ def get_match_details(user, region, number_games):
                 #For each participant in the match
                 for row in match_detail['info']['participants']:
                     #If the participant is the user, create a dictionary and populate
-                    if row['summonerName'] == user:
+                    #if row['summonerName'] == user:
                         participants_row = {}
                         participants_row['SummonerName'] = row['summonerName']
                         participants_row['WinLoss']    = row['win']
@@ -114,15 +116,29 @@ def get_match_details(user, region, number_games):
                         participants_row['Assists']    = row['assists']
                         participants_row['Exp']    = row['champExperience']
                         participants_row['Damage'] = row['totalDamageDealtToChampions']
+                        participants_row['Shielding'] = row['totalDamageShieldedOnTeammates']
+                        participants_row['Healing'] = row['totalHeal']
                         participants_row['TotalDamageTaken'] = row['totalDamageTaken']
                         participants_row['WardsPlace']    = row['wardsPlaced']
                         participants_row['WardsKilled']    = row['wardsKilled']
-
+                        participants_row['Vision Score']    = row['visionScore']
+                        participants_row['Penta Kills']    = row['pentaKills']
+                        participants_row['Game Time seconds']    = row['timePlayed']
+                        participants_row['Total time CCing']    = row['totalTimeCCDealt']
+                        participants_row['Time spend dead']    = row['totalTimeSpentDead']
+                        participants_row['Kill participation'] = row["challenges"]["killParticipation"]
+                        participants_row['Team damage percentage']    = row["challenges"]['teamDamagePercentage']
+                        participants_row['Skillshots hit']    = row["challenges"]['skillshotsHit']
+                        participants_row['Skillshots dodged']    = row["challenges"]['skillshotsDodged']
+                        participants_row['Solo kills']    = row["challenges"]['soloKills']
+                        participants_row['Turret plates taken']    = row["challenges"]['turretPlatesTaken']
+                       
                         #Append the dictionary to the list
-                        participants.append(participants_row)
+                        participants_1.append(participants_row)
+
             time.sleep(2)
             i = i + 100
         #Create a dataframe from the list of dictionaries             
-    df = pd.DataFrame(participants)
+    df = pd.DataFrame(participants_1)
 
     return df
