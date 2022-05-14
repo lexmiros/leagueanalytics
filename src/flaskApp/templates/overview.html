@@ -1,24 +1,43 @@
 
     {% extends "layout.html" %}
-    {%block title%}
-    <h1 class="title">Welcome Summoner x!</h1>
-    {%endblock title%}
+  
     {% block content %}
-    <div class="container-graph">
-        <canvas id="wrChart" width="500" height="200"></canvas>
-        <canvas id="wrChart2" width="500" height="200"></canvas>
-    </div>      
-    
+
+    <div class="float-container">
+
+        <div class="float-child">
+          <h2 class="title2"> What's winning you games?</h2>
+          <h3> Ex1</h3>
+          <p>teeeext </p>
+          <h3> Ex1</h3>
+          <p>teeeext </p>
+          <h3> Ex1</h3>
+          <p>teeeext </p>
+          <h3> Ex1</h3>
+          <p>teeeext </p>
+          <h3> Ex1</h3>
+          <p>teeeext </p>
+        </div>
+        
+        <div class="float-child">
+            <h2 class="title2"> Champion breakdowns</h2>
+            <canvas class="barchart" id="playedChart" width="400" height="200"></canvas>
+            <canvas class="barchart" id="wrChart" width="400" height="200"></canvas>
+        </div>
+        
+      </div>
+
+
  
     <script>
-        var ctx = document.getElementById("wrChart").getContext("2d");
+        var ctx = document.getElementById("playedChart").getContext("2d");
         var lineChart = new Chart(ctx, {
             type: "bar",
             data: {
                 labels: {{labels | safe }},
                 datasets: [
                     {
-                    label: "Win Rates",
+                    label: "Most champions played",
                     data: {{ win_rates | safe }},
                     fill: false,
                     borderColor: "rgb(75, 192, 192)",
@@ -38,14 +57,14 @@
            
         });
 
-        var ctx = document.getElementById("wrChart2").getContext("2d");
+        var ctx = document.getElementById("wrChart").getContext("2d");
         var lineChart = new Chart(ctx, {
             type: "bar",
             data: {
                 labels: {{labels | safe }},
                 datasets: [
                     {
-                    label: "Win Rates",
+                    label: "Top champions by win-rate",
                     data: {{ win_rates | safe }},
                     fill: false,
                     borderColor: "rgb(75, 192, 192)",

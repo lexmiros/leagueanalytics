@@ -13,20 +13,35 @@
 
 </head>
 <body class="body">
+
+    {%block topnav%}
+    <div class="topnav">
+       <p>
+            Rank :  &emsp;&emsp;&emsp;&emsp;&emsp;
+            Games downloaded: &emsp;&emsp;&emsp;&emsp;&emsp;
+            Wins:&emsp;&emsp;&emsp;&emsp;&emsp;
+            Losses:&emsp;&emsp;&emsp;&emsp;&emsp;
+            Win-rate:  &emsp;&emsp;&emsp;&emsp;&emsp;
+       </p>
+    </div>
+    {%endblock topnav%}
+
     {%block sidebar%}
        <!-- Side navigation -->
     <div class="sidenav">
-        <a href="#">Top three champions</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
+        <a href="#">Overview</a>
+        <a href="#">Your game stats</a>
+        <a href="#">About</a>
+        <a href="#">New search</a>
     </div>
     {%endblock sidebar%}
 
     {%block title%}
-        <h1 class="title"></h1>
+        <h1 class="title">Welcome summoner x</h1>
+    
     {%endblock title%}
 
+    
         
         
     <div class="content">
