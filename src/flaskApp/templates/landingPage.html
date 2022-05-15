@@ -8,17 +8,31 @@
     {%endblock title%}
     {% block content %}
 
-
-
-        <div class="float-child2">
-                    
-          
-                xxxxxxxxx
-         
-          
-        </div>
-
     
+    <div class="userForm">
+        <form method="POST" action="">
+            {{form.hidden_tag()}}
+            
+            
+                        {% if form.user.errors %}
+                            {{form.user(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.user.errors %}
+                                        <span> {{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{form.user(class="form-control form-control-lg") }}
+                        {%endif%}
+        <div class="form-group">
+            {{form.submit(class="btn btn-outline-info")}}
+            {{form.example(class="btn btn-outline-info")}}
+            {{form.example(class="btn btn-outline-info")}}
+        </div>
+    </div>                        
+        
+    </form>
+
     {%endblock content%}
     
     

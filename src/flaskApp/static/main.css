@@ -6,7 +6,7 @@
 .welcome{
   text-align: center;
   padding-top: 10%;
-  margin-right: 12.5%;
+  margin-right: 17.5%;
   color: rgb(7, 7, 7);
   font-size: 500%;
 }
@@ -161,12 +161,12 @@ button{
 .float-child h5 {
   text-decoration-line: underline;
   text-align: left;
-  margin-left: 25%;
+  
 }
 
 .float-child p {
   text-align: left;
-  margin-left: 25%;
+  
 }
 .float-child2 {
   width: 100%;
@@ -179,3 +179,16 @@ button{
   margin-right: 12.5%;
 }
 
+
+.form-control{
+  width: 350%;
+  text-align: center;
+  padding: center;
+  margin-left: 225%;
+}
+
+.btn{
+  margin-top: 5%;
+  width: 200%;
+  margin-left: 300%;
+}
