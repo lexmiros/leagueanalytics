@@ -5,15 +5,31 @@
     {%block sidebar%}{%endblock sidebar%}
     {%block title%}
     <h1 class="welcome"> League Analytics</h1>
+    <h5 class="subtitle"> Hit submit WITHOUT entering a summoner name to use test data</h5>
+    
     {%endblock title%}
     {% block content %}
-
+   
     
     <div class="userForm">
         <form method="POST" action="">
+
+
+                    {% if form.region.errors %}
+                        {{form.region(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.region.errors %}
+                                    <span> {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{form.region(class="form-control form-control-lg") }}
+                    {%endif%}
+
+
+
             {{form.hidden_tag()}}
-            
-            
+        
                         {% if form.user.errors %}
                             {{form.user(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
@@ -24,14 +40,25 @@
                             {% else %}
                                 {{form.user(class="form-control form-control-lg") }}
                         {%endif%}
-        <div class="form-group">
+
             {{form.submit(class="btn btn-outline-info")}}
-            {{form.example(class="btn btn-outline-info")}}
-            {{form.example(class="btn btn-outline-info")}}
+           
+
+        </form>
+        
+
+
+        
+        
+                                     
+
+        
+
+            
         </div>
     </div>                        
         
-    </form>
+    
 
     {%endblock content%}
     

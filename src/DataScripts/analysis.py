@@ -16,7 +16,7 @@ def build_logit_model(df, y, x_list, p_value):
         A statsmodel model
     """
     y = df[[y]]
-    X = df[x_list]
+    X = df[df.columns & x_list]
 
     logit_model = sm.Logit(y,X)
     model = logit_model.fit()
@@ -26,11 +26,13 @@ def build_logit_model(df, y, x_list, p_value):
     if p_05 == True:
         return model
     else:
-        y = "WinLoss"
-        significant_x = significant_x[significant_x]
-        x = significant_x.index.tolist()
-        return build_logit_model(df = df,y = y, x_list = x, p_value= p_value)
-
+        try:
+            y = "WinLoss"
+            significant_x = significant_x[significant_x]
+            x = significant_x.index.tolist()
+            return build_logit_model(df = df,y = y, x_list = x, p_value= p_value)
+        except ValueError:  #raised if `y` is empty.
+            return model
 
 
 
@@ -103,6 +105,8 @@ def overall_win_ratio(df):
     win_rate = round(win_rate,2)
 
     return win_rate
+
+    
 def user_win_loss_wr(df, user):
     win_df = df[(df["WinLoss"] == 1) & (df["SummonerName"] == user)]
     loss_df = df[(df["WinLoss"] == 0) & (df["SummonerName"] == user)]
@@ -110,7 +114,7 @@ def user_win_loss_wr(df, user):
 
     wins = len(win_df)
     losses = len(loss_df)
-    wr =  100*round(wins / len(wr_df),4)
+    wr =  round(100*wins / len(wr_df),2)
 
     return wins, losses, wr
 
