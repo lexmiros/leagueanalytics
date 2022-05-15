@@ -1,5 +1,3 @@
-from distutils.fancy_getopt import wrap_text
-from glob import glob
 from src.flaskApp import app
 from flask import redirect, render_template, url_for
 from src.DataScripts.CleanData import *
@@ -7,7 +5,6 @@ from src.DataScripts.analysis import *
 from src.DataScripts.GetData import *
 import pandas as pd
 from src.flaskApp.forms import UserNameForm
-from run import *
 
 
 
@@ -18,7 +15,7 @@ def home():
 
 
     if form.validate_on_submit():
-       
+        #If the user enters a name get data and save in .csv
         if form.user.data != "":
             user = form.user.data
             region = form.region.data
@@ -44,8 +41,9 @@ def home():
 
             n = 10
             return redirect(url_for('overview', user = user, region = region, data = "./newdata", wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank, n = n))
+        
+        #If user doesnt enter a name, use test data
         else:
-
             user = "Drakuns"
             region = "OC1"
 
@@ -70,11 +68,11 @@ def home():
 
 @app.route("/overview/<user>/<region>/<data>/<wins>/<losses>/<wr>/<total_games>/<rank>/<n>")
 def overview(user,region,data,wins,losses,wr,total_games,rank,n):
-    n = 10
+
  
     df = pd.read_csv(data)
     df = pd.DataFrame(df)
-    print(df)
+
     #Top champs by winrate
     top_wr_champs = top_champs_by_wr(df, n, user)
     labels_wr = []
@@ -84,7 +82,6 @@ def overview(user,region,data,wins,losses,wr,total_games,rank,n):
         win_rates.append(champs["Win Rate"])
 
     #Top champs by played
-    
     labels_top = []
     games = []
     top_played = top_n_occurences(df, "Champion",user, n = n, to_dict=True)
