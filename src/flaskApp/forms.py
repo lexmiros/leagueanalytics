@@ -11,4 +11,7 @@ class UserNameForm(FlaskForm):
         validators=[DataRequired()])
     submit = SubmitField()
     example = SubmitField()
+
+class LoadForm(FlaskForm):
+    Load = SubmitField()
     
