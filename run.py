@@ -12,6 +12,7 @@ from src.flaskApp import routes
 
 if __name__ == "__main__":
     user = "Drakuns"
+    region = "OC1"
     #no_games = 5000
     #df = get_match_details(user, region, no_games)
     #df.to_csv("./TestData_1")
@@ -25,10 +26,6 @@ if __name__ == "__main__":
     #df = encode_categorical(df, "Lane")
     #df.to_csv("TestData_1_cleaned")
 
-    df = pd.read_csv("./TestData_1_cleaned")
-    df = pd.DataFrame(df)
-    
-    x = user_win_loss_wr(df, user = user)
-    print(x)
-
     app.run()
+
+  

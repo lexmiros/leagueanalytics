@@ -68,7 +68,16 @@ def get_match_history_start(user, region, start_index):
     my_match_ids = watcher.match.matchlist_by_puuid(region,puiid, start=start_index,  count=100)
     return my_match_ids
 
+def get_rank(user, region):
+    match_list = get_match_history_start(user, region, start_index=0)
+    id = match_list[0]
+    account_info = get_account_info(user, region)
+    tier = account_info[0]['tier']
+    rank = account_info[0]['rank']
 
+    current_rank = tier + " " + rank
+
+    return current_rank
 
 """
 Given a user and a region, returns a dataframe filled with information for the given users games

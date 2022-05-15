@@ -138,7 +138,7 @@ button{
 
 /* Style the links inside the navigation bar */
 .topnav p {
-  margin-left: auto;
+  margin-left: 10%;
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
@@ -157,6 +157,17 @@ button{
   padding: 20px;
   
 }  
+
+.float-child h5 {
+  text-decoration-line: underline;
+  text-align: left;
+  margin-left: 25%;
+}
+
+.float-child p {
+  text-align: left;
+  margin-left: 25%;
+}
 .float-child2 {
   width: 100%;
   float: left;

@@ -1,6 +1,7 @@
 from src.flaskApp import app
 from flask import render_template
 from src.DataScripts.analysis import *
+from src.DataScripts.GetData import *
 import pandas as pd
 
 
@@ -50,9 +51,11 @@ def graph():
     wr = results[2]
     total_games = wins + losses
 
+    rank = get_rank(user, region)
+
     
 
 
     return render_template("overview.html", labels_wr = labels_wr, win_rates = win_rates, labels_top = labels_top, \
-        games = games,n = n, coefs = coefs, wins = wins, losses = losses, wr = wr, total_games = total_games, user = user)
+        games = games,n = n, coefs = coefs, wins = wins, losses = losses, wr = wr, total_games = total_games, user = user, rank = rank)
 
