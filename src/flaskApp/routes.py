@@ -155,22 +155,10 @@ def stats():
     df = pd.read_csv(data_loc)
     df = pd.DataFrame(df)
     
+    
 
     
 
-    stats_variable_list = ['Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp','Damage','Shielding','Healing','TotalDamageTaken','WardsPlace','WardsKilled','Vision Score','Game Time seconds','Total time CCing','Time spent dead','Kill participation','Team damage percentage','Skillshots hit','Skillshots dodged','Solo kills','Turret plates taken']
-    x = get_user_stats(df, current_user, stats_variable_list)
-    user_list = []
-    name_list = x[0]
-    value_list = x[1]
-    print(value_list)
-
-    for i in range(len(name_list)):
-        name = name_list[i]
-        value = value_list[i]
-        combined = name + "  :  " + (str(value))
-        user_list.append(combined)
-    
 
 
 
@@ -181,4 +169,4 @@ def stats():
     
     
     return render_template("stats.html",  user = current_user, wins = wins, losses = losses, wr = wr, \
-        total_games = total_games, rank = rank, user_list = user_list)
+        total_games = total_games, rank = rank)
