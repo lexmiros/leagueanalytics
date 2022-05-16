@@ -3,69 +3,85 @@
     {%block title%}
         <h1 class="title">Key indicator averages for {{user}} </h1>
         <h6> Top 5 and bottom 5 averages for {{user}} vs other players in their matches</h6>
-        
+     
         {%endblock title%}
   
     {% block content %}
 
-        <div class="float-child">
-          <h2 class="title2"> {{user}} vs other player averages</h2>
-          <canvas class="barchart" id="playedChart" width="500" height="250"></canvas>
-          <canvas class="barchart" id="wrChart" width="500" height="250"></canvas>
-        </div>
+    <div class="float-child">
+    <h2 class="title2"> Top attributes for {{user}}</h2>     
+    <h6><b>{{top_vars_1}}</b> {{user}} : {{top_user_1}} | other players {{top_other_1}}</h6>
+    
+    <canvas id="myChart" width="400" height="200"></canvas>
+    </div>   
 
+    <div class="float-child">
+        <h2 class="title2"> Bottom attributes for {{user}}</h2>     
+        <h6><b>{{top_vars_1}}</b> {{user}} : {{top_user_1}} | other players {{top_other_1}}</h6>
         
-        <div class="float-child">
-            <h2 class="title2"> {{user}} vs other player averages</h2>
-            <canvas class="barchart" id="playedChart" width="500" height="250"></canvas>
-            <canvas class="barchart" id="wrChart" width="500" height="250"></canvas>
-          </div>
+        <canvas id="myChart" width="400" height="200"></canvas>
+        </div>   
     
     
     
-    {%endblock content%}
+    
     
     <script>
-      var ctx = document.getElementById("playedChart").getContext("2d");
-      var lineChart = new Chart(ctx, {
-          type: "bar",
-          data: {
-              labels: {{labels_top | safe }},
-              datasets: [
-                  {
-                  label: "Most played champions",
-                  data: {{ games | safe }},
-                  fill: false,
-                  borderColor: "rgb(75, 192, 192)",
-                  }
-              ]
-          },
-          options: {
-             
-              responsive: false,
-              
-              scales: {
-                  
-                  yAxes: [{
-                      scaleLabel: {
-                          display: true,
-                          labelString: "Games played"
-                      },
-                      ticks: {
-                          beginAtZero: true
-                      }
-                  }],
+      // Global parameters:
+      // do not resize the chart canvas when its container does (keep at 600x400px)
+      Chart.defaults.global.responsive = false;
 
-                  xAxes: [{
-                      scaleLabel: {
-                          display: true,
-                          labelString: "Champion"
-                      }
-                      
-                  }]
-              }
-          }
-         
+      // define the chart data
+      var chartData = {
+                    labels: [
+                        '{{user}}',
+                        'Other players',
+            
+                    ],
+                    datasets: [
+            
+                      {
+                        data: [{{top_user_1}},{{top_other_1}}],
+                        backgroundColor : ['#89CFF0','#f56954']
+                      },
+                    ]
+      }
+
+      // get chart canvas
+      var ctx = document.getElementById("myChart").getContext("2d");
+
+      var options = {
+              tooltips: {
+                enabled: false
+              },
+              plugins: {
+
+            
+
+                labels: [
+                        {
+                            render: 'label',
+                            position: 'outside',
+                            fontColor: '#000',
+                            fontSize: 15
+                        },
+                        {
+                            render: 'percentage',
+                            fontColor: '#000',
+                            fontSize: 10,
+                            position: 'border'
+                        }
+                ]
+                
+               }
+};
+
+      // create the chart using the chart canvas
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: chartData,
+          options:options
       });
-      </script>
-    
+
+    </script>
+{%endblock content%}

@@ -277,14 +277,12 @@ def get_user_stats(df, user, variables_list):
         Dictionary:
             Variable name : average
     """
-    name_list = []
-    values_list = []
+    user_stats = {}
     for variable in variables_list:
         avg = get_user_avg(df, user, variable)
-        name_list.append(variable)
-        values_list.append(avg)
+        user_stats[variable] = avg
     
-    return name_list, values_list
+    return user_stats
 
 def get_non_user_stats(df, user, variables_list):
     """
@@ -303,6 +301,45 @@ def get_non_user_stats(df, user, variables_list):
         user_stats[variable] = avg
     
     return user_stats
+
+
+def add(row):
+    ratio = (row[0] / row[1])
+    return ratio
+
+def get_user_top_stats(df, user, variable_list):
+
+    user_stats = get_user_stats(df, user, variable_list )
+    non_user_stats = get_non_user_stats(df, user, variable_list )
+
+    new_df = pd.DataFrame()
+    new_df["User"] = user_stats.values()
+    new_df["Non-user"] = non_user_stats.values()
+    new_df.index = user_stats.keys()
+
+    new_df['Ratio'] = new_df.apply(add, axis=1)
+
+    new_df = new_df.sort_values("Ratio", ascending=False)
+    top_df = new_df[0:5]
+
+    return top_df
+
+def get_user_bottom_stats(df, user, variable_list):
+
+    user_stats = get_user_stats(df, user, variable_list )
+    non_user_stats = get_non_user_stats(df, user, variable_list )
+
+    new_df = pd.DataFrame()
+    new_df["User"] = user_stats.values()
+    new_df["Non-user"] = non_user_stats.values()
+    new_df.index = user_stats.keys()
+
+    new_df['Ratio'] = new_df.apply(add, axis=1)
+
+    new_df = new_df.sort_values("Ratio", ascending=True)
+    bottom_df = new_df[0:5]
+
+    return bottom_df
 
 if __name__ == "__main__":
     """"""

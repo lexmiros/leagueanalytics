@@ -13,13 +13,14 @@ from src.flaskApp import routes
 
 if __name__ == "__main__":
     app.run()
-    #user = "Incursio"
+    #current_user = "Incursio"
     #region = "OC1"
 
-    #df = pd.read_csv('./TestData_Cleaned')
-    #df = pd.DataFrame(df)
-    #stats_variable_list = ['Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp','Damage','Shielding','Healing','TotalDamageTaken','WardsPlace','WardsKilled','Vision Score','Game Time seconds','Total time CCing','Time spent dead','Kill participation','Team damage percentage','Skillshots hit','Skillshots dodged','Solo kills','Turret plates taken']
-    #x = get_user_stats(df, user, stats_variable_list)
+
+    
+    
+    
+
  
 
 

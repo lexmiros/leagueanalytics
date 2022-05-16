@@ -8,7 +8,7 @@ from src.DataScripts.GetData import *
 import pandas as pd
 from src.flaskApp.forms import UserNameForm, LoadForm
 import time
-from flask_table import Table, Col
+
 
 user = ""
 current_user = ""
@@ -154,11 +154,27 @@ def stats():
     data_loc = f"./{data}"
     df = pd.read_csv(data_loc)
     df = pd.DataFrame(df)
-    
-    
+    stats_variable_list = ['Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp',\
+        'Damage','Shielding','Healing','TotalDamageTaken','WardsPlace','WardsKilled','Vision Score','Game Time seconds',\
+            'Total time CCing','Time spent dead','Kill participation','Team damage percentage','Skillshots hit',\
+                'Skillshots dodged','Solo kills','Turret plates taken']
 
-    
+    top = get_user_top_stats(df, current_user, stats_variable_list)
+    bottom = get_user_bottom_stats(df, current_user, stats_variable_list)
 
+    top_vars = top.index.to_list()
+    top_user = top["User"].to_list()
+    top_other = top["Non-user"].to_list()
+
+    bottom_vars = bottom.index.to_list()
+    bottom_user = bottom["User"].to_list()
+    bottom_other = bottom["Non-user"].to_list()
+    
+    top_vars_1 = top_vars[0]
+    top_user_1 = top_user[0]
+    top_other_1 = top_other[0]
+    
+    
 
 
 
@@ -169,4 +185,5 @@ def stats():
     
     
     return render_template("stats.html",  user = current_user, wins = wins, losses = losses, wr = wr, \
-        total_games = total_games, rank = rank)
+        total_games = total_games, rank = rank, top_vars_1 = top_vars_1, top_user_1 = top_user_1, \
+            top_other_1 = top_other_1)
