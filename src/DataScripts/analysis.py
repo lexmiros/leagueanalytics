@@ -231,19 +231,82 @@ def get_model_coefs(model):
     for i in range(0,5):
         coef_list.append(x[i])
     return coef_list
-    
 
+def get_user_avg(df, user, col_name):
+    """
+    Gets the avg for a column where summonername is the user
+    Arguments:  
+        df : a pandas dataframe
+        user : string for summonername within the df 
+        col_name : the column name of interest
+    Returns:
+        avg : a float average rounded to 2 decimal places
+            
+    """
+
+    df = df[df["SummonerName"] == user]
+    avg = df[col_name].mean()
+    avg = round(avg,2)
+    return avg
+
+def get_non_user_avg(df, user, col_name):
+    """
+    Gets the avg for a column where summonername is NOT the user
+    Arguments:  
+        df : a pandas dataframe
+        user : string for summonername within the df
+        col_name : the column name of interest
+    Returns:
+        avg : a float average rounded to 2 decimal places
+            
+    """
+
+    df = df[df["SummonerName"] != user]
+    avg = df[col_name].mean()
+    avg = round(avg,2)
+    return avg
+    
+def get_user_stats(df, user, variables_list):
+    """
+    Gets the avg for a list of columns for a given user
+    Arguments:  
+        df : a pandas dataframe
+        user : string for summonername within the df
+        varibale_list : list of column names of interest
+    Returns:
+        Dictionary:
+            Variable name : average
+    """
+    name_list = []
+    values_list = []
+    for variable in variables_list:
+        avg = get_user_avg(df, user, variable)
+        name_list.append(variable)
+        values_list.append(avg)
+    
+    return name_list, values_list
+
+def get_non_user_stats(df, user, variables_list):
+    """
+    Gets the avg for a list of columns for a everyone bar the given user
+    Arguments:  
+        df : a pandas dataframe
+        user : string for summonername within the df
+        varibale_list : list of column names of interest
+    Returns:
+        Dictionary:
+            Variable name : average
+    """
+    user_stats = {}
+    for variable in variables_list:
+        avg = get_non_user_avg(df, user, variable)
+        user_stats[variable] = avg
+    
+    return user_stats
 
 if __name__ == "__main__":
-
-    df = pd.read_csv('./TestData_Cleaned')
-    df = pd.DataFrame(df)
-
-    x = top_champs_by_wr(df, 5)
-    print(x)
-    y = top_cast_top_wr_champs(df, 5)
-    print(y)
-    
+    """"""
+ 
 
     
 

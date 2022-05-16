@@ -69,11 +69,13 @@ def get_match_history_start(user, region, start_index):
     return my_match_ids
 
 def get_rank(user, region):
-    match_list = get_match_history_start(user, region, start_index=0)
-    id = match_list[0]
     account_info = get_account_info(user, region)
-    tier = account_info[0]['tier']
-    rank = account_info[0]['rank']
+    for row in account_info:
+        try:
+            tier = row['tier']
+            rank = row['rank']
+        except:
+            pass
 
     current_rank = tier + " " + rank
 
