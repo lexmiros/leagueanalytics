@@ -173,17 +173,29 @@ def stats():
     top_vars_1 = top_vars[0]
     top_user_1 = top_user[0]
     top_other_1 = top_other[0]
+
+    top_vars_2 = top_vars[1]
+    top_user_2 = top_user[1]
+    top_other_2 = top_other[1]
+    
+    top_vars_3 = top_vars[2]
+    top_user_3 = top_user[2]
+    top_other_3 = top_other[2]
+    
+    top_vars_4 = top_vars[3]
+    top_user_4 = top_user[3]
+    top_other_4 = top_other[3]
+    
+    top_vars_5 = top_vars[4]
+    top_user_5 = top_user[4]
+    top_other_5 = top_other[4]
     
     
-
-
-
-  
  
-
-
-    
-    
     return render_template("stats.html",  user = current_user, wins = wins, losses = losses, wr = wr, \
         total_games = total_games, rank = rank, top_vars_1 = top_vars_1, top_user_1 = top_user_1, \
-            top_other_1 = top_other_1)
+            top_other_1 = top_other_1,\
+            top_vars_2 = top_vars_2, top_user_2 = top_user_2, top_other_2 = top_other_2,
+            top_vars_3 = top_vars_3, top_user_3 = top_user_3, top_other_3 = top_other_3,   
+            top_vars_4 = top_vars_4, top_user_4 = top_user_4, top_other_4 = top_other_4,
+            top_vars_5 = top_vars_5, top_user_5 = top_user_5, top_other_5 = top_other_5)
