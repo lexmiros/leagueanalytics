@@ -1,0 +1,529 @@
+    
+    {% extends "layout.html" %}
+    {%block title%}
+        <h1 class="title">Key indicator averages for {{user}} </h1>
+        <h6> Top 5 and bottom 5 averages for {{user}} relative to other players</h6>
+     
+        {%endblock title%}
+  
+    {% block content %}
+
+    <div class="float-child">
+        <h2 class="title2"> Top stats for {{user}}</h2>  
+        <div>
+            <canvas id="topChart" width="450" height="250"></canvas>
+            <canvas id="topChart2" width="450" height="250"></canvas>
+            <canvas id="topChart3" width="450" height="250"></canvas>
+            <canvas id="topChart4" width="450" height="250"></canvas>
+            <canvas id="topChart5" width="450" height="250"></canvas>
+          </div>
+    </div>   
+
+    <div class="float-child">
+        <h2 class="title2"> Bottom stats for {{user}}</h2>  
+        <div>
+            <canvas id="bottomChart" width="450" height="250"></canvas>
+            <canvas id="bottomChart2" width="450" height="250"></canvas>
+            <canvas id="bottomChart3" width="450" height="250"></canvas>
+            <canvas id="bottomChart4" width="450" height="250"></canvas>
+            <canvas id="bottomChart5" width="450" height="250"></canvas>
+          </div>
+    </div>  
+    
+    
+    
+    <!------------------------ TOP GRAPHS  ---------------------------------------->
+    <!----------------------------------------------------------------------------->
+    
+    <!------------------------Graph 1---------------------------------------------->
+    <script>
+     
+        const data = {
+                labels: [
+                    '{{user}}',
+                    'Other players',
+                ],
+                datasets: [{
+                    label: '{{top_vars_1}}',
+                    data: [{{top_user_1}}, {{top_other_1}}],
+                    backgroundColor: [
+                    'rgb(236, 107, 86)',
+                    'rgb(255, 193, 84)',
+                    
+                    ],
+                    hoverOffset: 4
+                }]
+                };
+      
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options:{
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '{{top_vars_1}}',
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            color: '#000000',
+                        }
+                    }
+                }
+
+                
+            }
+            };
+      </script>
+      <script>
+        const topChart = new Chart(
+          document.getElementById('topChart'),
+          config
+        );
+       
+      </script>
+<!------------------------Graph 2---------------------------------------------->
+<script>
+     
+    const data2 = {
+            labels: [
+                '{{user}}',
+                'Other players',
+            ],
+            datasets: [{
+                label: '{{top_vars_2}}',
+                data: [{{top_user_2}}, {{top_other_2}}],
+                backgroundColor: [
+                'rgb(236, 107, 86)',
+                'rgb(255, 193, 84)',
+                
+                ],
+                hoverOffset: 4
+            }]
+            };
+  
+    const config2 = {
+        type: 'doughnut',
+        data: data2,
+        options:{
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{top_vars_2}}',
+                    font: {   
+                        weight : 'bold',
+                        size : 20,
+                        color: '#000000',
+                    }
+                }
+            }
+
+            
+        }
+        };
+  </script>
+  <script>
+    const topChart2 = new Chart(
+      document.getElementById('topChart2'),
+      config2
+    );
+   
+  </script>
+
+<!------------------------Graph 3---------------------------------------------->
+<script>
+     
+    const data3 = {
+            labels: [
+                '{{user}}',
+                'Other players',
+            ],
+            datasets: [{
+                label: '{{top_vars_3}}',
+                data: [{{top_user_3}}, {{top_other_3}}],
+                backgroundColor: [
+                'rgb(236, 107, 86)',
+                'rgb(255, 193, 84)',
+                
+                ],
+                hoverOffset: 4
+            }]
+            };
+  
+    const config3 = {
+        type: 'doughnut',
+        data: data3,
+        options:{
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{top_vars_3}}',
+                    font: {   
+                        weight : 'bold',
+                        size : 20,
+                        color: '#000000',
+                    }
+                }
+            }
+
+            
+        }
+        };
+  </script>
+  <script>
+    const topChart3 = new Chart(
+      document.getElementById('topChart3'),
+      config3
+    );
+   
+  </script>
+
+  <!------------------------Graph 4---------------------------------------------->
+<script>
+     
+    const data4 = {
+            labels: [
+                '{{user}}',
+                'Other players',
+            ],
+            datasets: [{
+                label: '{{top_vars_4}}',
+                data: [{{top_user_4}}, {{top_other_4}}],
+                backgroundColor: [
+                'rgb(236, 107, 86)',
+                'rgb(255, 193, 84)',
+                
+                ],
+                hoverOffset: 4
+            }]
+            };
+  
+    const config4 = {
+        type: 'doughnut',
+        data: data4,
+        options:{
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{top_vars_4}}',
+                    font: {   
+                        weight : 'bold',
+                        size : 20,
+                        color: '#000000',
+                    }
+                }
+            }
+
+            
+        }
+        };
+  </script>
+  <script>
+    const topChart4 = new Chart(
+      document.getElementById('topChart4'),
+      config4
+    );
+   
+  </script>
+
+  <!------------------------Graph 3---------------------------------------------->
+<script>
+     
+    const data5 = {
+            labels: [
+                '{{user}}',
+                'Other players',
+            ],
+            datasets: [{
+                label: '{{top_vars_5}}',
+                data: [{{top_user_5}}, {{top_other_5}}],
+                backgroundColor: [
+                'rgb(236, 107, 86)',
+                'rgb(255, 193, 84)',
+                
+                ],
+                hoverOffset: 4
+            }]
+            };
+  
+    const config5 = {
+        type: 'doughnut',
+        data: data5,
+        options:{
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{top_vars_5}}',
+                    font: {   
+                        weight : 'bold',
+                        size : 20,
+                        color: '#000000',
+                    }
+                }
+            }
+
+            
+        }
+        };
+  </script>
+  <script>
+    const topChart5 = new Chart(
+      document.getElementById('topChart5'),
+      config5
+    );
+   
+  </script>
+
+
+ <!------------------------ BOTTOM GRAPHS  ---------------------------------------->
+    <!----------------------------------------------------------------------------->
+    
+    <!------------------------Graph 1---------------------------------------------->
+    <script>
+     
+        const data6 = {
+                labels: [
+                    '{{user}}',
+                    'Other players',
+                ],
+                datasets: [{
+                    label: '{{bottom_vars_1}}',
+                    data: [{{bottom_user_1}}, {{bottom_other_1}}],
+                    backgroundColor: [
+                    'rgb(236, 107, 86)',
+                    'rgb(255, 193, 84)',
+                    
+                    ],
+                    hoverOffset: 4
+                }]
+                };
+      
+        const config6 = {
+            type: 'doughnut',
+            data: data6,
+            options:{
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '{{bottom_vars_1}}',
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            color: '#000000',
+                        }
+                    }
+                }
+
+                
+            }
+            };
+      </script>
+      <script>
+        const bottomChart = new Chart(
+          document.getElementById('bottomChart'),
+          config6
+        );
+       
+      </script>
+<!------------------------Graph 2---------------------------------------------->
+<script>
+     
+    const data7 = {
+            labels: [
+                '{{user}}',
+                'Other players',
+            ],
+            datasets: [{
+                label: '{{bottom_vars_2}}',
+                data: [{{bottom_user_2}}, {{bottom_other_2}}],
+                backgroundColor: [
+                'rgb(236, 107, 86)',
+                'rgb(255, 193, 84)',
+                
+                ],
+                hoverOffset: 4
+            }]
+            };
+  
+    const config7 = {
+        type: 'doughnut',
+        data: data7,
+        options:{
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{bottom_vars_2}}',
+                    font: {   
+                        weight : 'bold',
+                        size : 20,
+                        color: '#000000',
+                    }
+                }
+            }
+
+            
+        }
+        };
+  </script>
+  <script>
+    const bottomChart2 = new Chart(
+      document.getElementById('bottomChart2'),
+      config7
+    );
+   
+  </script>
+
+<!------------------------Graph 3---------------------------------------------->
+<script>
+     
+    const data8 = {
+            labels: [
+                '{{user}}',
+                'Other players',
+            ],
+            datasets: [{
+                label: '{{bottom_vars_3}}',
+                data: [{{bottom_user_3}}, {{bottom_other_3}}],
+                backgroundColor: [
+                'rgb(236, 107, 86)',
+                'rgb(255, 193, 84)',
+                
+                ],
+                hoverOffset: 4
+            }]
+            };
+  
+    const config8 = {
+        type: 'doughnut',
+        data: data8,
+        options:{
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{bottom_vars_3}}',
+                    font: {   
+                        weight : 'bold',
+                        size : 20,
+                        color: '#000000',
+                    }
+                }
+            }
+
+            
+        }
+        };
+  </script>
+  <script>
+    const bottomChart8 = new Chart(
+      document.getElementById('bottomChart3'),
+      config8
+    );
+   
+  </script>
+
+  <!------------------------Graph 4---------------------------------------------->
+<script>
+     
+    const data9 = {
+            labels: [
+                '{{user}}',
+                'Other players',
+            ],
+            datasets: [{
+                label: '{{bottom_vars_4}}',
+                data: [{{bottom_user_4}}, {{bottom_other_4}}],
+                backgroundColor: [
+                'rgb(236, 107, 86)',
+                'rgb(255, 193, 84)',
+                
+                ],
+                hoverOffset: 4
+            }]
+            };
+  
+    const config9 = {
+        type: 'doughnut',
+        data: data9,
+        options:{
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{bottom_vars_4}}',
+                    font: {   
+                        weight : 'bold',
+                        size : 20,
+                        color: '#000000',
+                    }
+                }
+            }
+
+            
+        }
+        };
+  </script>
+  <script>
+    const bottomChart4 = new Chart(
+      document.getElementById('bottomChart4'),
+      config9
+    );
+   
+  </script>
+
+  <!------------------------Graph 5---------------------------------------------->
+<script>
+     
+    const data10 = {
+            labels: [
+                '{{user}}',
+                'Other players',
+            ],
+            datasets: [{
+                label: '{{bottom_vars_5}}',
+                data: [{{bottom_user_5}}, {{bottom_other_5}}],
+                backgroundColor: [
+                'rgb(236, 107, 86)',
+                'rgb(255, 193, 84)',
+                
+                ],
+                hoverOffset: 4
+            }]
+            };
+  
+    const config10 = {
+        type: 'doughnut',
+        data: data10,
+        options:{
+            responsive: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{bottom_vars_5}}',
+                    font: {   
+                        weight : 'bold',
+                        size : 20,
+                        color: '#000000',
+                    }
+                }
+            }
+
+            
+        }
+        };
+  </script>
+  <script>
+    const bottomChart5 = new Chart(
+      document.getElementById('bottomChart5'),
+      config10
+    );
+   
+  </script>
+{%endblock content%}

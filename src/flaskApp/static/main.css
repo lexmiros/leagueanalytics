@@ -218,6 +218,6 @@ h6 {
   text-align: center;
 }
 .float-child canvas {
-  margin-left: 12.5%;
-  margin-top: 5%;
+  margin: 0 auto;
+  
 }

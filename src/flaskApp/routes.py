@@ -161,15 +161,13 @@ def stats():
 
     top = get_user_top_stats(df, current_user, stats_variable_list)
     bottom = get_user_bottom_stats(df, current_user, stats_variable_list)
+    
+    #Top stats
 
     top_vars = top.index.to_list()
     top_user = top["User"].to_list()
     top_other = top["Non-user"].to_list()
 
-    bottom_vars = bottom.index.to_list()
-    bottom_user = bottom["User"].to_list()
-    bottom_other = bottom["Non-user"].to_list()
-    
     top_vars_1 = top_vars[0]
     top_user_1 = top_user[0]
     top_other_1 = top_other[0]
@@ -189,13 +187,49 @@ def stats():
     top_vars_5 = top_vars[4]
     top_user_5 = top_user[4]
     top_other_5 = top_other[4]
+
+    #Bottom stats
+    bottom_vars = bottom.index.to_list()
+    bottom_user = bottom["User"].to_list()
+    bottom_other = bottom["Non-user"].to_list()
+
+    bottom_vars_1 = bottom_vars[0]
+    bottom_user_1 = bottom_user[0]
+    bottom_other_1 = bottom_other[0]
+
+    bottom_vars_2 = bottom_vars[1]
+    bottom_user_2 = bottom_user[1]
+    bottom_other_2 = bottom_other[1]
+    
+    bottom_vars_3 = bottom_vars[2]
+    bottom_user_3 = bottom_user[2]
+    bottom_other_3 = bottom_other[2]
+    
+    bottom_vars_4 = bottom_vars[3]
+    bottom_user_4 = bottom_user[3]
+    bottom_other_4 = bottom_other[3]
+    
+    bottom_vars_5 = bottom_vars[4]
+    bottom_user_5 = bottom_user[4]
+    bottom_other_5 = bottom_other[4]
+
+
     
     
  
-    return render_template("stats.html",  user = current_user, wins = wins, losses = losses, wr = wr, \
-        total_games = total_games, rank = rank, top_vars_1 = top_vars_1, top_user_1 = top_user_1, \
-            top_other_1 = top_other_1,\
-            top_vars_2 = top_vars_2, top_user_2 = top_user_2, top_other_2 = top_other_2,
-            top_vars_3 = top_vars_3, top_user_3 = top_user_3, top_other_3 = top_other_3,   
-            top_vars_4 = top_vars_4, top_user_4 = top_user_4, top_other_4 = top_other_4,
-            top_vars_5 = top_vars_5, top_user_5 = top_user_5, top_other_5 = top_other_5)
+    return render_template("stats2.html",  user = current_user, wins = wins, losses = losses, wr = wr, \
+        total_games = total_games, rank = rank,
+
+        top_vars_1 = top_vars_1, top_user_1 = top_user_1, top_other_1 = top_other_1,\
+        top_vars_2 = top_vars_2, top_user_2 = top_user_2, top_other_2 = top_other_2,
+        top_vars_3 = top_vars_3, top_user_3 = top_user_3, top_other_3 = top_other_3,   
+        top_vars_4 = top_vars_4, top_user_4 = top_user_4, top_other_4 = top_other_4,
+        top_vars_5 = top_vars_5, top_user_5 = top_user_5, top_other_5 = top_other_5,
+        
+        bottom_vars_1 = bottom_vars_1, bottom_user_1 = bottom_user_1, bottom_other_1 = bottom_other_1,\
+        bottom_vars_2 = bottom_vars_2, bottom_user_2 = bottom_user_2, bottom_other_2 = bottom_other_2,
+        bottom_vars_3 = bottom_vars_3, bottom_user_3 = bottom_user_3, bottom_other_3 = bottom_other_3,   
+        bottom_vars_4 = bottom_vars_4, bottom_user_4 = bottom_user_4, bottom_other_4 = bottom_other_4,
+        bottom_vars_5 = bottom_vars_5, bottom_user_5 = bottom_user_5, bottom_other_5 = bottom_other_5
+        
+        )
