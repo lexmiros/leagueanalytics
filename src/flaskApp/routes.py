@@ -366,6 +366,9 @@ def roles():
         
         bottom_losses = bottom_losses ,jungle_losses = jungle_losses ,middle_losses = middle_losses ,top_losses = top_losses ,support_losses = support_losses,                    
         
-        labels_1 = labels_1, labels_2 = labels_2, labels_3 = labels_3, data_1 = data_1, data_2 = data_2, data_3 = data_3
+        labels_1 = labels_1, data_1 = data_1, labels_2 = labels_2, data_2 = data_2, labels_3 = labels_3, data_3 = data_3,
+
+        top_labels = top_labels, top_rates = top_rates, jungle_labels = jungle_labels, jungle_rates = jungle_rates, middle_labels = middle_labels,
+        middle_rates = middle_rates, bottom_labels = bottom_labels, bottom_rates = bottom_rates, support_labels = support_labels, support_rates = support_rates
         )
 

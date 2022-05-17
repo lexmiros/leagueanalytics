@@ -137,7 +137,8 @@ def top_champs_by_wr(df,n, user):
     elif len(counts) > 50:
         counts = counts[counts > 5]
     elif len(counts) > 15:
-        counts = counts[counts > 3]
+        counts = counts[counts > 2]
+
          
     
     

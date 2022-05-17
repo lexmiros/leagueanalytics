@@ -18,7 +18,7 @@
     <div class="float-child">
         <h2 class="title2"> Best champions by role</h2>  
         <div>
-            <canvas id="champWR" width="400" height="300"></canvas>
+            <canvas id="wrChart" width="400" height="300"></canvas>
         </div>
     </div>  
 
@@ -133,66 +133,105 @@
       </script>
 
       <!------------------------Win rates by role---------------------------------------------->
-    <script>
-        
+      <script>
+        const names1 = {{labels_1 | safe}};
+        const names2 = {{labels_2 | safe}};
+        const names3 = {{labels_3 | safe}};
 
+        Chart.defaults.set('plugins.datalabels', {
+            color: 'black'
+            });
+        
+        Chart.register(ChartDataLabels);
 
         const data2 = {
             labels: ["Top","Jungle","Middle","Bottom","Support"],
-            datasets: [
-                {
-                label: ["X"],
-                data: [1,2,3,4,5],
+            datasets: [{
+                label: '1',
+                data: {{data_1 | safe}},
                 backgroundColor: [
-                'rgb(147, 197, 114)',
+                '#ED5565',
+                '#FFCE54',
+                '#48CFAD',
+                '#5D9CEC',
+                '#EC87C0'
 
                 
                 ],
                 borderColor: [
-                'rgb(147, 197, 114)',    
+                '#ED5565',
+                '#FFCE54',
+                '#48CFAD',
+                '#5D9CEC',
+                '#EC87C0'   
                 ],
                 borderWidth: 3,
 
-                datalabels:{
-                    display : false
-                }
+                datalabels: {
+                    formatter: function(value, context) {
+                        return names1[context.dataIndex];;
+                        }
+                },
             },
 
             {
-                label: ["Y"],
-                data: [6,7,8,9,10],
+                label: '2',
+                data: {{data_2 | safe}},
                 backgroundColor: [
-                'rgb(147, 197, 114)',
+                '#ED5565',
+                '#FFCE54',
+                '#48CFAD',
+                '#5D9CEC',
+                '#EC87C0'
+            
+                ],
 
-                
-                ],
                 borderColor: [
-                'rgb(147, 197, 114)',    
+                '#ED5565',
+                '#FFCE54',
+                '#48CFAD',
+                '#5D9CEC',
+                '#EC87C0'   
                 ],
+
                 borderWidth: 3,
 
-                datalabels:{
-                    display : false
-                }
+                datalabels: {
+                    formatter: function(value, context) {
+                        return names2[context.dataIndex];;
+                        }
+                },
+          
             },
             {
-                label: ["Z"],
-                data: [6,7,8,9,10],
+                label: '3',
+                data: {{data_3 | safe}},
                 backgroundColor: [
-                'rgb(147, 197, 114)',
+                '#ED5565',
+                '#FFCE54',
+                '#48CFAD',
+                '#5D9CEC',
+                '#EC87C0'
+            
+                ],
 
-                
-                ],
                 borderColor: [
-                'rgb(147, 197, 114)',    
+                '#ED5565',
+                '#FFCE54',
+                '#48CFAD',
+                '#5D9CEC',
+                '#EC87C0'  
                 ],
+
                 borderWidth: 3,
 
-                datalabels:{
-                    display : false
-                }
-            },
-
+                datalabels: {
+                    formatter: function(value, context) {
+                        return names3[context.dataIndex];;
+                        }
+                },
+          
+            }
         
         ]
         };
@@ -201,6 +240,14 @@
             type: 'bar',
             data: data2,
             options: {
+                layout: {
+                padding: {
+                    
+                    
+                    top: 50,
+                    
+                }
+            },
                 responsive: false,
                 scales: {
                 x: {
@@ -217,11 +264,10 @@
                     
                 },
                 y: {
-                    beginAtZero: true,
-               
+                    
                     title:{
                         display: true,
-                        text: "Number of games",
+                        text: "Win rate (%)",
                         font: {   
                             weight : 'bold',
                             size : 16,
@@ -231,12 +277,26 @@
                     }
                 },
 
+                plugins:{
+                    legend: {
+                            display: false
+                        },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        rotation:90,
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
+
+                }
             },
         };
       </script>
       <script>
-        const champWR = new Chart(
-          document.getElementById('champWR'),
+        const wrChart = new Chart(
+          document.getElementById('wrChart'),
           config2
         );
        

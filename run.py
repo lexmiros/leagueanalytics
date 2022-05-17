@@ -12,16 +12,16 @@ from src.flaskApp import app
 from src.flaskApp import routes
 
 if __name__ == "__main__":
-    #app.run()
+    app.run()
     current_user = "Incursio"
     #region = "OC1"
 
     df = pd.read_csv("TestData_Cleaned")
     df = pd.DataFrame(df)
     n = 3
-    df = df[df["SummonerName"] == current_user]
-    
-  
+    df_user = df[df["SummonerName"] == current_user]
+
+   
     
 
     """

@@ -1,6 +1,4 @@
 from riotwatcher import LolWatcher, ApiError
 
-api_key = 'RGAPI-6bdcf172-54cf-4ed6-99cb-b905791c7ee6'
+api_key = "RGAPI-d3e1e389-1958-4fd9-9cd3-fae2c5f64c11"
 watcher = LolWatcher(api_key)
-user = "Drakuns"
-region = "OC1"
