@@ -129,7 +129,16 @@ def top_champs_by_wr(df,n, user):
     """
     df = df[df["SummonerName"] == user]
     counts = df["Champion"].value_counts()
-    counts = counts[counts > 10]
+
+
+    if len(counts) > 100:
+    #Counts is equal to all champs with at least z games
+        counts = counts[counts > 10]
+    elif len(counts) > 50:
+        counts = counts[counts > 5]
+    elif len(counts) > 15:
+        counts = counts[counts > 3]
+         
     
     
     wr_list = []
@@ -302,6 +311,20 @@ def get_non_user_stats(df, user, variables_list):
     
     return user_stats
 
+def played_role_count(df, role):
+    df = df[df[role] == 1]
+    count = len(df)
+    return count
+
+def role_wins(df, role):
+    df = df[(df[role] == 1) & (df["WinLoss"] == 1)]
+    count = len(df)
+    return count       
+
+def role_losses(df, role):
+    df = df[(df[role] == 1) & (df["WinLoss"] == 0)]
+    count = len(df)
+    return count   
 
 def add(row):
     ratio = (row[0] / row[1])
@@ -340,6 +363,31 @@ def get_user_bottom_stats(df, user, variable_list):
     bottom_df = new_df[0:5]
 
     return bottom_df
+
+def win_ratio_str_formatted(df, col_name, target):
+    """
+    Finds the winrate for a given column and target
+    Must be used on a column with string values 
+    Arguments:
+        df: A pandas dataframe
+        col_name: A string of the column name to find the win rate for
+        target: A string of the attribute to find the win rate for
+    Returns:
+        A two decimal floating point number
+    """
+    win_df = df[(df["WinLoss"] == 1) & (df[col_name] == target)]
+    total_df = df[df[col_name] == target]
+
+    wins = len(win_df)
+    total = len(total_df)
+
+    win_rate = wins / total * 100
+
+    win_rate = round(win_rate,2)
+    win_rate = str(win_rate)
+    win_rate = f"{win_rate}%"
+    return win_rate
+
 
 if __name__ == "__main__":
     """"""

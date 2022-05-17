@@ -9,7 +9,7 @@ import pandas as pd
 from src.flaskApp.forms import UserNameForm, LoadForm
 import time
 
-
+#Global variables 
 user = ""
 current_user = ""
 region = ""
@@ -19,10 +19,9 @@ wr = 0
 total_games = 0
 rank = ""
 n = 0
-
 data = ""
 
-
+#Landing page
 @app.route("/", methods = ["POST", "GET"])
 def home():
     form = UserNameForm()
@@ -47,6 +46,7 @@ def home():
     
     return render_template("landingPage.html", form = form)
 
+#Loading data function
 @app.route("/loading/<user>/<region>", methods=["POST","GET"])
 def loading(user, region):
 
@@ -94,12 +94,6 @@ def loading(user, region):
     return redirect(url_for('overview'))
 
     
-    
-
-    
-
-
-
 @app.route("/overview")
 def overview():
     
@@ -214,11 +208,8 @@ def stats():
     bottom_other_5 = bottom_other[4]
 
 
-    
-    
- 
-    return render_template("stats2.html",  user = current_user, wins = wins, losses = losses, wr = wr, \
-        total_games = total_games, rank = rank,
+    return render_template("stats2.html",  
+        user = current_user, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
 
         top_vars_1 = top_vars_1, top_user_1 = top_user_1, top_other_1 = top_other_1,\
         top_vars_2 = top_vars_2, top_user_2 = top_user_2, top_other_2 = top_other_2,
@@ -233,3 +224,148 @@ def stats():
         bottom_vars_5 = bottom_vars_5, bottom_user_5 = bottom_user_5, bottom_other_5 = bottom_other_5
         
         )
+
+@app.route("/roles")
+def roles():
+    """
+    """
+    data_loc = f"./{data}"
+    df = pd.read_csv(data_loc)
+    df = pd.DataFrame(df)
+
+    #Df for user only
+    df_user = df[df["SummonerName"] == current_user]
+
+    #Role win-rates
+    bottom_wr = win_ratio_str_formatted(df_user, "BOTTOM", 1)
+    jungle_wr = win_ratio_str_formatted(df_user, "JUNGLE", 1)
+    middle_wr = win_ratio_str_formatted(df_user, "MIDDLE", 1)
+    top_wr = win_ratio_str_formatted(df_user, "TOP", 1)
+    support_wr = win_ratio_str_formatted(df_user, "UTILITY", 1)
+
+    #Total wins per role
+    bottom_wins = role_wins(df_user, "BOTTOM")
+    jungle_wins = role_wins(df_user, "JUNGLE")
+    middle_wins = role_wins(df_user, "MIDDLE")
+    top_wins = role_wins(df_user, "TOP")
+    support_wins = role_wins(df_user, "UTILITY")
+
+    #Total losses per role
+    bottom_losses = role_losses(df_user, "BOTTOM")
+    jungle_losses = role_losses(df_user, "JUNGLE")
+    middle_losses = role_losses(df_user, "MIDDLE")
+    top_losses = role_losses(df_user, "TOP")
+    support_losses = role_losses(df_user, "UTILITY")
+
+    #Number of champs to get for each role
+    n = 3
+
+    #Top champs by winrate bottom
+    df_bottom = df_user[df_user["BOTTOM"] == 1]
+
+    top_wr_champs = top_champs_by_wr(df_bottom, n, current_user)
+    bottom_labels = []
+    bottom_rates = []
+    for champs in top_wr_champs:
+        bottom_labels.append(champs["Name"])
+        bottom_rates.append(champs["Win Rate"])
+    
+    #Top champs by winrate jungle
+    df_jungle = df_user[df_user["JUNGLE"] == 1]
+
+    top_wr_champs = top_champs_by_wr(df_jungle, n, current_user)
+    jungle_labels = []
+    jungle_rates = []
+    for champs in top_wr_champs:
+        jungle_labels.append(champs["Name"])
+        jungle_rates.append(champs["Win Rate"])
+
+    #Top champs by winrate middle
+    df_middle = df_user[df_user["MIDDLE"] == 1]
+
+    top_wr_champs = top_champs_by_wr(df_middle, n, current_user)
+    middle_labels = []
+    middle_rates = []
+    for champs in top_wr_champs:
+        middle_labels.append(champs["Name"])
+        middle_rates.append(champs["Win Rate"])
+
+    #Top champs by winrate top
+    df_top = df_user[df_user["TOP"] == 1]
+
+    top_wr_champs = top_champs_by_wr(df_top, n, current_user)
+    top_labels = []
+    top_rates = []
+    for champs in top_wr_champs:
+        top_labels.append(champs["Name"])
+        top_rates.append(champs["Win Rate"])
+
+    #Top champs by winrate support
+    df_support = df_user[df_user["UTILITY"] == 1]
+
+    top_wr_champs = top_champs_by_wr(df_support, n, current_user)
+    support_labels = []
+    support_rates = []
+    for champs in top_wr_champs:
+        support_labels.append(champs["Name"])
+        support_rates.append(champs["Win Rate"])
+    
+    labels_1 = []
+    data_1 = []
+    labels_2 = []
+    data_2 = []
+    labels_3 = []
+    data_3 = []
+ 
+    labels_1.append(top_labels[0])
+    labels_1.append(jungle_labels[0])
+    labels_1.append(middle_labels[0])
+    labels_1.append(bottom_labels[0])
+    labels_1.append(support_labels[0])
+
+    data_1.append(top_rates[0])
+    data_1.append(jungle_rates[0])
+    data_1.append(middle_rates[0])
+    data_1.append(bottom_rates[0])
+    data_1.append(support_rates[0])
+
+    labels_2.append(top_labels[1])
+    labels_2.append(jungle_labels[1])
+    labels_2.append(middle_labels[1])
+    labels_2.append(bottom_labels[1])
+    labels_2.append(support_labels[1])
+
+    data_2.append(top_rates[1])
+    data_2.append(jungle_rates[1])
+    data_2.append(middle_rates[1])
+    data_2.append(bottom_rates[1])
+    data_2.append(support_rates[1])
+
+    labels_3.append(top_labels[2])
+    labels_3.append(jungle_labels[2])
+    labels_3.append(middle_labels[2])
+    labels_3.append(bottom_labels[2])
+    labels_3.append(support_labels[2])
+
+    data_3.append(top_rates[2])
+    data_3.append(jungle_rates[2])
+    data_3.append(middle_rates[2])
+    data_3.append(bottom_rates[2])
+    data_3.append(support_rates[2])
+
+
+
+    
+
+    return render_template("roles.html",
+        user = current_user, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
+        
+        bottom_wr = bottom_wr, jungle_wr = jungle_wr, middle_wr = middle_wr , top_wr = top_wr ,support_wr = support_wr ,
+        
+        bottom_wins = bottom_wins,jungle_wins = jungle_wins ,middle_wins = middle_wins ,top_wins = top_wins ,support_wins = support_wins,
+        
+        bottom_losses = bottom_losses ,jungle_losses = jungle_losses ,middle_losses = middle_losses ,top_losses = top_losses ,support_losses = support_losses,                    
+        
+        labels_1 = labels_1, labels_2 = labels_2, labels_3 = labels_3, data_1 = data_1, data_2 = data_2, data_3 = data_3
+        )
+
