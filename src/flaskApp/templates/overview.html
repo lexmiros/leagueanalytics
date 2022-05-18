@@ -11,22 +11,120 @@
 
         <div class="float-child">
           <h2 class="title2"> What's winning {{user}} games?</h2>
-          {% for vars in coefs %}
-          <h5> {{vars}}</h5>
-          <p>teeeext </p>
-          {% endfor %}
+       
+          <canvas class="chart" id="radarChart" width="600" height="450"></canvas>
         </div>
         
         <div class="float-child">
-            <h2 class="title2"> Champion breakdowns</h2>
-            <canvas class="barchart" id="playedChart" width="500" height="250"></canvas>
-            <canvas class="barchart" id="wrChart" width="500" height="250"></canvas>
-        </div>
+            <h2 class="title2"> What's losing {{user}} games?</h2>
+         
+            <canvas class="chart" id="radarChart2" width="600" height="450"></canvas>
+          </div>
         
-      
+        <div class="float-child">
+            <h2 class="title2"> Most played champions</h2>
+            <canvas class="chart" id="playedChart" width="500" height="350"></canvas>
+           
+        </div>
+
+        <div class="float-child">
+            <h2 class="title2"> Highest win-rate champions</h2>
+            
+            <canvas class="chart" id="wrChart" width="500" height="350"></canvas>
+        </div>
+
+       
+
+        
+        
+    <!------------------------Radar chart---------------------------------------------->
+    <script>
+    var ctx = document.getElementById("radarChart").getContext("2d");
+            var lineChart = new Chart(ctx, {
+                type: "radar",
+                data: {
+                    labels: {{model_names | safe }},
+                    datasets: [
+                        {
+                        label: "{{user}}",
+                        data: {{ model_values | safe }},
+                        backgroundColor: 'rgba(154, 205, 50, 0.2)',
+                        borderColor: 'rgb(154, 205, 50)',
+                        pointBackgroundColor: 'rgb(154, 205, 50)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(154, 205, 50)'
+                        
+                        },
+   
+                    ],
+                
+                },
+                options: {
+                    scale: {
+                        
+                        ticks:{
+                            display: false
+                        },
+                       
+                            beginAtZero: false,
+                            min: {{pos_min}}-0.1,
+                            max: {{pos_max}}+0.1,
+                            },
+                    
+                    responsive: false,
+                    
+                  
+                }
+            
+            });
+      </script>
+       
+       <script>
+        var ctx = document.getElementById("radarChart2").getContext("2d");
+                var lineChart = new Chart(ctx, {
+                    type: "radar",
+                    data: {
+                        labels: {{model_names_neg | safe }},
+                        datasets: [
+                            {
+                            label: "{{user}}",
+                            data: {{ model_values_neg | safe }},
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            pointBackgroundColor: 'rgb(255, 99, 132)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(255, 99, 132)'
+                            },
+       
+                        ],
+                    
+                    },
+                    options: {
+                    scale: {
+                   
+                        ticks: {
+                            
+                            display: false,
+                            beginAtZero: false,
+                            min: {{neg_min}}-0.1,
+                            max: {{neg_max}}+0.1,
+          
+                        },
+                       
+                    },
+                    
+                    responsive: false,
+                    
+                  
+                }
+                
+                });
+          </script>
 
 
- 
+    <!------------------------Top champs played---------------------------------------------->
     <script>
         var ctx = document.getElementById("playedChart").getContext("2d");
         var lineChart = new Chart(ctx, {
@@ -35,8 +133,23 @@
                 labels: {{labels_top | safe }},
                 datasets: [
                     {
-                    label: "Most played champions",
+                    label: "",
                     data: {{ games | safe }},
+                    backgroundColor: [
+                    "#123757",
+                    "#18566B",
+                    "#1E7B7F",
+                    "#25927F",
+                    "#2CA576",
+                    "#46B375",
+                    "#61C078",
+                    "#7DCD81",
+                    "#A1D999",
+                    "#C4E4B5",
+                    "#E1EFD2"
+
+                        
+                        ],
                     fill: false,
                     borderColor: "rgb(75, 192, 192)",
                     }
@@ -77,8 +190,23 @@
                 labels: {{labels_wr | safe }},
                 datasets: [
                     {
-                    label: "Top champions by win-rate",
+                    label: "",
                     data: {{ win_rates | safe }},
+                    backgroundColor: [
+                    "#123757",
+                    "#18566B",
+                    "#1E7B7F",
+                    "#25927F",
+                    "#2CA576",
+                    "#46B375",
+                    "#61C078",
+                    "#7DCD81",
+                    "#A1D999",
+                    "#C4E4B5",
+                    "#E1EFD2"
+
+                        
+                        ],
                     fill: false,
                     borderColor: "rgb(75, 192, 192)",
                     }

@@ -74,11 +74,11 @@ def loading(user, region):
         data = "newdata"
     
     else:
-        current_user = "Incursio"
-        region = "OC1"
-        df = pd.read_csv("./TestData_Cleaned")
+        current_user = "Proosia"
+        region = "NA1"
+        df = pd.read_csv("./TestData_Cleaned_2")
         df = pd.DataFrame(df)
-        data = "TestData_Cleaned"
+        data = "TestData_Cleaned_2"
     
     #wins, losses, win-rate
     results = user_win_loss_wr(df, current_user)
@@ -132,15 +132,39 @@ def overview():
     
     #Logistic regression results
     
-    df = df[df["SummonerName"] == current_user]
-    y = "WinLoss"
-    X = ['Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp','Damage','Shielding','Healing','TotalDamageTaken','Vision Score','Game Time seconds','Total time CCing','Time spend dead','Kill participation','Team damage percentage','Skillshots hit','Skillshots dodged','Solo kills','Turret plates taken']
+    #subset df on user v non-user
+    df_user = df[df["SummonerName"] == current_user]
+    df_other = df[df["SummonerName"] != current_user]
 
-    model = build_logit_model(df, y, X, 0.05)
+    #model variables
+    y = "WinLoss"
+    X = ['Q casts','W casts','E casts','R casts','ChampLevel','CS',\
+        'Damage','Shielding','Healing','TotalDamageTaken','WardsPlace','WardsKilled','Game Time seconds',\
+            'Total time CCing','Time spent dead','Skillshots hit',\
+                'Skillshots dodged','Solo kills','Turret plates taken']
+
+    #build models and get coefficients
+    #user
+    model = build_logit_model(df_user, y, X, 0.5)
     coefs = get_model_coefs(model)
 
+    model_names = coefs[0]
+    model_values = coefs[1]
+    model_names_neg = coefs[2]
+    model_values_neg = coefs[3]
+    
+    pos_max = max(model_values)
+    pos_min = min(model_values)
+
+    neg_max = max(model_values_neg)
+    neg_min = min(model_values_neg)
+
+
+
     return render_template("overview.html", labels_wr = labels_wr, win_rates = win_rates, labels_top = labels_top, \
-        games = games,n = n,  wins = wins, losses = losses, wr = wr, total_games = total_games, user = current_user, rank = rank, coefs = coefs)
+        games = games,n = n,  wins = wins, losses = losses, wr = wr, total_games = total_games, user = current_user, rank = rank,
+        model_values = model_values, model_names = model_names, model_names_neg = model_names_neg, model_values_neg = model_values_neg,
+        pos_max = pos_max, pos_min = pos_min, neg_max = neg_max, neg_min = neg_min)
 
 @app.route("/stats")
 def stats():

@@ -19,7 +19,7 @@ def build_logit_model(df, y, x_list, p_value):
     X = df[df.columns & x_list]
 
     logit_model = sm.Logit(y,X)
-    model = logit_model.fit()
+    model = logit_model.fit_regularized(method='l1', alpha=1.0, L1_wt=0.3)
 
     significant_x = model.pvalues < p_value
     p_05 = significant_x.all()
@@ -235,12 +235,24 @@ def get_model_coefs(model):
     """
     x = model.params
     x = x.sort_values(ascending = False)
-    x = x.index
-    print(x)
-    coef_list = []
-    for i in range(0,5):
-        coef_list.append(x[i])
-    return coef_list
+
+    names = x.index.tolist()
+    values = x.tolist()
+    
+    coef_names_pos = []
+    coef_values_pos = []
+    coef_names_neg = []
+    coef_values_neg = []
+    for i in range(len(names)):
+        if values[i] > 0.0001:
+            coef_names_pos.append(names[i])
+            coef_values_pos.append(values[i])
+        elif values[i] < 0.0001:
+            values[i] = values[i] * (-1) 
+            coef_names_neg.append(names[i])
+            coef_values_neg.append(values[i])
+    
+    return coef_names_pos, coef_values_pos, coef_names_neg, coef_values_neg
 
 def get_user_avg(df, user, col_name):
     """

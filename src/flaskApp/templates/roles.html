@@ -11,14 +11,14 @@
     <div class="float-child">
         <h2 class="title2"> Win rates by role</h2>  
         <div>
-            <canvas id="topChart" width="400" height="300"></canvas>
+            <canvas id="topChart" width="500" height="350"></canvas>
         </div>
     </div>   
 
     <div class="float-child">
         <h2 class="title2"> Best champions by role</h2>  
         <div>
-            <canvas id="wrChart" width="400" height="300"></canvas>
+            <canvas id="wrChart" width="500" height="350"></canvas>
         </div>
     </div>  
 
@@ -38,12 +38,12 @@
                 label: 'Wins',
                 data: [{{top_wins}},{{jungle_wins}},{{middle_wins}},{{bottom_wins}},{{support_wins}}],
                 backgroundColor: [
-                '#ED5565',
+                'rgb(154, 205, 50)',
 
                 
                 ],
                 borderColor: [
-                '#ED5565', 
+                'rgb(154, 205, 50)', 
                 ],
                 borderWidth: 3,
 
@@ -56,12 +56,12 @@
                 label: 'Losses',
                 data: [{{top_losses}},{{jungle_losses}},{{middle_losses}},{{bottom_losses}},{{support_losses}}],
                 backgroundColor: [
-                '#48CFAD',
+                'rgb(255, 99, 132)',
             
                 ],
 
                 borderColor: [
-                '#48CFAD',    
+                'rgb(255, 99, 132)',    
                 ],
 
                 borderWidth: 3,
