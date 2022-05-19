@@ -1,6 +1,6 @@
 /* Style page content */
 .body{
-  background-color: rgba(221, 221, 221, 1);
+  background-color: #0C0032;
 }
 
 .welcome{
@@ -43,12 +43,12 @@
 
 
  .title{
-  color: #000000;
+  color: white;
   
   text-align: center;
  }
  .title2{
-  color: #000000;
+  color: white;
   margin-top: 1%;
   text-align: center;
   margin-bottom: 4%;
@@ -76,7 +76,7 @@
   z-index: 2; /* Stay on top */
   top: 0px; /* Stay at the top */
   left: 0;
-  background-color: #111; /* Black */
+  background-color: #240090; /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
   margin: auto;
@@ -139,9 +139,12 @@ button{
 /* Add a black background color to the top navigation */
 .topnav {
   margin-top: 0%;
-  background-color: #111;
+  border-bottom: #f1f1f1;
+  border-bottom: 1%;
+  border-color: #f1f1f1;
+  background-color: #240090;
   overflow: hidden;
-  height: 50px;
+  height: 5%;
   z-index: 1;
 }
 
@@ -222,6 +225,7 @@ button{
 h6 {
   text-align: center;
   margin-top: 5%;
+  color: #ffffff;
 }
 
 .float-child h6 {

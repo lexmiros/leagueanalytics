@@ -114,7 +114,7 @@ def get_match_details(user, region, number_games):
                 for row in match_detail['info']['participants']:
                     #If the participant is the user, create a dictionary and populate
                     #if row['summonerName'] == user:
-                        try:
+                        #try:
                             participants_row = {}
                             participants_row['SummonerName'] = row['summonerName']
                             participants_row['WinLoss']    = row['win']
@@ -141,23 +141,41 @@ def get_match_details(user, region, number_games):
                             participants_row['Game Time seconds']    = row['timePlayed']
                             participants_row['Crowd Control']    = row['totalTimeCCDealt']
                             participants_row['Time spent dead']    = row['totalTimeSpentDead']
-                            participants_row['Kill participation'] = row["challenges"]["killParticipation"]
-                            participants_row['Team damage percentage']    = row["challenges"]['teamDamagePercentage']
-                            participants_row['Skillshots hit']    = row["challenges"]['skillshotsHit']
-                            participants_row['Skillshots dodged']    = row["challenges"]['skillshotsDodged']
-                            participants_row['Solo kills']    = row["challenges"]['soloKills']
-                            participants_row['Turret plates taken']    = row["challenges"]['turretPlatesTaken']
+                            try:
+                                participants_row['Kill participation'] = row["challenges"]["killParticipation"]
+                            except:
+                                participants_row['Kill participation'] = 0
+                            try:
+                                participants_row['Team damage percentage']    = row["challenges"]['teamDamagePercentage']
+                            except:
+                                participants_row['Team damage percentage']    = 0
+                            try:
+                                participants_row['Skillshots hit']    = row["challenges"]['skillshotsHit']
+                            except:
+                                participants_row['Skillshots hit']    = 0 
+                            try:
+                                participants_row['Skillshots dodged']    = row["challenges"]['skillshotsDodged']
+                            except:
+                                participants_row['Skillshots dodged']    = 0
+                            try:
+                                participants_row['Solo kills']    = row["challenges"]['soloKills']
+                            except:
+                                participants_row['Solo kills']    = 0 
+                            try:
+                                participants_row['Turret plates taken']    = row["challenges"]['turretPlatesTaken']
+                            except:
+                                participants_row['Turret plates taken']    = 0 
                             
                             #Append the dictionary to the list
                             participants_1.append(participants_row)
-                        except:
-                            pass
+                        #except:
+                          #  pass
 
                 j = j + 1
                 print(j)
                
 
-        time.sleep(120)
+        #time.sleep(120)
         i = i + 100
         
         #Create a dataframe from the list of dictionaries             

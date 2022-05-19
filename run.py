@@ -14,6 +14,7 @@ from src.flaskApp import routes
 if __name__ == "__main__":
 
     app.run()
+    
     """
     current_user = "Frommoh"
     region = "OC1"

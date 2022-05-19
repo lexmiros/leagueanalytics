@@ -78,17 +78,33 @@
                 
                 },
                 options: {
-                    
-                    scale: {
-                        
+                    color : 'white',
+                    scales: {
+                       r:{
+                           angleLines:{
+                            color : 'white',
+                            lineWidth : 2, 
+                           },
+                       
+                       grid:{
+                        color : 'white',
+                        lineWidth : 2,
+                       },
+                       pointLabels:{
+                        color : 'white',
+                        font:{size : 15,},
+                       },
                         ticks:{
+                            color : 'white',
                             display: false
+                            
                         },
+                    },
                        
                             beginAtZero: false,
                             min: {{pos_min}}-0.1,
                             max: {{pos_max}}+0.1,
-                            },
+                    },
                     
                     responsive: false,
                     
@@ -120,17 +136,32 @@
                     
                     },
                     options: {
-                    scale: {
-                   
-                        ticks: {
-                            
-                            display: false,
-                            beginAtZero: false,
-                            min: {{neg_min}}-0.1,
-                            max: {{neg_max}}+0.1,
-          
-                        },
+                    color : 'white',
+                    scales: {
+                       r:{
+                           angleLines:{
+                            color : 'white',
+                            lineWidth : 2, 
+                           },
                        
+                       grid:{
+                        color : 'white',
+                        lineWidth : 2,
+                       },
+                       pointLabels:{
+                        color : 'white',
+                        font:{size : 15,},
+                       },
+                        ticks:{
+                            color : 'white',
+                            display: false
+                            
+                        },
+                    },
+                       
+                            beginAtZero: false,
+                            min: {{pos_min}}-0.1,
+                            max: {{pos_max}}+0.1,
                     },
                     
                     responsive: false,
@@ -147,27 +178,27 @@
         var ctx = document.getElementById("playedChart").getContext("2d");
         var lineChart = new Chart(ctx, {
             type: "bar",
+            scaleFontColor : "white",
             data: {
                 labels: {{labels_top | safe }},
                 datasets: [
                     {
                     label: "",
                     data: {{ games | safe }},
-                    backgroundColor: [
-                    "#123757",
-                    "#18566B",
-                    "#1E7B7F",
-                    "#25927F",
-                    "#2CA576",
-                    "#46B375",
-                    "#61C078",
-                    "#7DCD81",
-                    "#A1D999",
-                    "#C4E4B5",
-                    "#E1EFD2"
-
+                    backgroundColor: [                  
+                        "#E1EFD2",
+                        "#C4E4B5",
+                        "#A1D999",
+                        "#7DCD81",
+                        "#61C078",
+                        "#46B375",
+                        "#2CA576",
+                        "#25927F",
+                        "#1E7B7F",
+                        "#18566B",
+                        "#123757",
                         
-                        ],
+                    ],
                     fill: false,
                     borderColor: "rgb(75, 192, 192)",
                     }
@@ -178,11 +209,14 @@
                 responsive: false,
                 
                 scales: {
+                
                     
                     yAxes: [{
+                        color : 'white',
                         scaleLabel: {
                             display: true,
-                            labelString: "Games played"
+                            labelString: "Games played",
+                            
                         },
                         ticks: {
                             beginAtZero: true
@@ -190,6 +224,9 @@
                     }],
 
                     xAxes: [{
+                        grid:{
+                            borderColor : 'white',
+                        },
                         scaleLabel: {
                             display: true,
                             labelString: "Champion"
@@ -211,17 +248,17 @@
                     label: "",
                     data: {{ win_rates | safe }},
                     backgroundColor: [
-                    "#123757",
-                    "#18566B",
-                    "#1E7B7F",
-                    "#25927F",
-                    "#2CA576",
-                    "#46B375",
-                    "#61C078",
-                    "#7DCD81",
-                    "#A1D999",
-                    "#C4E4B5",
-                    "#E1EFD2"
+                        "#E1EFD2",
+                        "#C4E4B5",
+                        "#A1D999",
+                        "#7DCD81",
+                        "#61C078",
+                        "#46B375",
+                        "#2CA576",
+                        "#25927F",
+                        "#1E7B7F",
+                        "#18566B",
+                        "#123757",
 
                         
                         ],
@@ -231,6 +268,7 @@
                 ]
             },
             options: {
+                color : 'white',
                 responsive: false,
                 scales: {
                     yAxes: [{
