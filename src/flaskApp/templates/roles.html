@@ -11,14 +11,14 @@
     <div class="float-child">
         <h2 class="title2"> Win rates by role</h2>  
         <div>
-            <canvas id="topChart" width="500" height="350"></canvas>
+            <canvas id="topChart" width="600" height="350"></canvas>
         </div>
     </div>   
 
     <div class="float-child">
         <h2 class="title2"> Best champions by role</h2>  
         <div>
-            <canvas id="wrChart" width="500" height="350"></canvas>
+            <canvas id="wrChart" width="600" height="350"></canvas>
         </div>
     </div>  
 
@@ -407,6 +407,8 @@
                             
                         },
                         y: {
+                            max: 100,
+                            min : 0,
                             display: true,
                             title:{
                             display: true,
