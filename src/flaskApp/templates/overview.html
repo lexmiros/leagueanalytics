@@ -12,7 +12,7 @@
         <div class="float-child">
           <h2 class="title2"> What's winning {{user}} games?</h2>
        
-          <canvas class="chart" id="radarChart" width="600" height="450"></canvas>
+          <canvas class="chart" id="radarChart" width="550" height="450"></canvas>
         </div>
         {% else %}
         <div class="float-child">
@@ -26,7 +26,7 @@
         {% if show_radar_neg %}
         <div class="float-child">
             <h2 class="title2"> What's losing {{user}} games?</h2>
-            <canvas class="chart" id="radarChart2" width="600" height="450"></canvas>
+            <canvas class="chart" id="radarChart2" width="550" height="450"></canvas>
           </div>
           {% else %}
           <div class="float-child">
@@ -65,8 +65,8 @@
                         {
                         label: "{{user}}",
                         data: {{ model_values | safe }},
-                        backgroundColor: 'rgba(154, 205, 50, 0.2)',
-                        borderColor: 'rgb(154, 205, 50)',
+                        backgroundColor: 'rgba(170,219,30, 0.2)',
+                        borderColor: 'rgb(170,219,30)',
                         pointBackgroundColor: 'rgb(154, 205, 50)',
                         pointBorderColor: '#fff',
                         pointHoverBackgroundColor: '#fff',
@@ -106,7 +106,7 @@
                             max: {{pos_max}}+0.1,
                     },
                     
-                    responsive: false,
+                    responsive: true,
                     
                   
                 }
@@ -124,9 +124,9 @@
                             {
                             label: "{{user}}",
                             data: {{ model_values_neg | safe }},
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgb(255, 99, 132)',
-                            pointBackgroundColor: 'rgb(255, 99, 132)',
+                            backgroundColor: 'rgba(170,219,30, 0.2)',
+                            borderColor: 'rgb(170,219,30)',
+                            pointBackgroundColor: 'rgb(170,219,30)',
                             pointBorderColor: '#fff',
                             pointHoverBackgroundColor: '#fff',
                             pointHoverBorderColor: 'rgb(255, 99, 132)'
@@ -164,7 +164,7 @@
                             max: {{pos_max}}+0.1,
                     },
                     
-                    responsive: false,
+                    responsive: true,
                     
                   
                 }
@@ -206,11 +206,28 @@
             },
             options: {
                
-                responsive: false,
+                responsive: true,
                 
                 scales: {
                 
-                    
+                    x: {
+                        ticks:{
+                            color:"white",
+                            font: {   
+                            weight : 'bold',
+                            size : 16,       
+                        }
+                        },
+                    },
+                    y: {
+                        ticks:{
+                            color:"white",
+                            font: {   
+                            weight : 'bold',
+                            size : 16,       
+                        }
+                        },
+                    },
                     yAxes: [{
                         color : 'white',
                         scaleLabel: {
@@ -219,6 +236,7 @@
                             
                         },
                         ticks: {
+                            color: 'white',
                             beginAtZero: true
                         }
                     }],
@@ -269,15 +287,35 @@
             },
             options: {
                 color : 'white',
-                responsive: false,
+                responsive: true,
                 scales: {
+                    x: {
+                        ticks:{
+                            color:"white",
+                            font: {   
+                            weight : 'bold',
+                            size : 16,       
+                        }
+                        },
+                       
+                    },
+                    y: {
+                        ticks:{
+                            color:"white",
+                            font: {   
+                            weight : 'bold',
+                            size : 16,       
+                        }
+                        },
+                    },
                     yAxes: [{
                         scaleLabel: {
                             display: true,
                             labelString: "Win rate %"
                         },
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            
                         }
                     }],
                     xAxes: [{

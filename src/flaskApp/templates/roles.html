@@ -45,12 +45,12 @@
                 label: 'Wins',
                 data: [{{top_wins}},{{jungle_wins}},{{middle_wins}},{{bottom_wins}},{{support_wins}}],
                 backgroundColor: [
-                'rgb(154, 205, 50)',
+                'rgb(0,76,84)',
 
                 
                 ],
                 borderColor: [
-                'rgb(154, 205, 50)', 
+                'rgb(0,76,84)', 
                 ],
                 borderWidth: 3,
 
@@ -63,17 +63,22 @@
                 label: 'Losses',
                 data: [{{top_losses}},{{jungle_losses}},{{middle_losses}},{{bottom_losses}},{{support_losses}}],
                 backgroundColor: [
-                'rgb(255, 99, 132)',
+                'rgb(128, 0, 0)',
             
                 ],
 
                 borderColor: [
-                'rgb(255, 99, 132)',    
+                'rgb(128, 0, 0)',    
                 ],
 
                 borderWidth: 3,
 
                 datalabels: {
+                    color : 'white',  
+                    font: { 
+                        weight : 'bold',
+                        size : 10,       
+                        },
                     formatter: function(value, context) {
                         return win_rates[context.dataIndex];;
                         }
@@ -88,31 +93,50 @@
             type: 'bar',
             data: data,
             options: {
-                responsive: false,
+                responsive: true,
                 scales: {
                 x: {
+                    
+                    ticks:{
+                        color:"white",
+                        font: {   
+                            weight : 'bold',
+                            size : 16,       
+                        }
+                        
+                    },
                     stacked: true,
                     title:{
+                        color : 'white',
                         display: true,
                         text: "Role",
                         font: {   
                             weight : 'bold',
-                            size : 16,
-                            color: '#000000',
+                            size : 16,       
                         }
                     },
                     
                 },
                 y: {
+                    ticks:{
+                        color:"white",
+                        font: {   
+                            weight : 'bold',
+                            size : 16,       
+                        }
+                        
+                    },
                     beginAtZero: true,
                     stacked: true,
                     title:{
+
+                        color: 'white',
                         display: true,
                         text: "Number of games",
                         font: {   
                             weight : 'bold',
                             size : 16,
-                            color: '#000000',
+                            
                         }
                     },
                     }
@@ -146,12 +170,13 @@
         const names3 = {{labels_3 | safe}};
 
         Chart.defaults.set('plugins.datalabels', {
-            color: 'black'
+            color: 'white'
             });
         
         Chart.register(ChartDataLabels);
 
         const data2 = {
+            
             labels: ["Top","Jungle","Middle","Bottom","Support"],
             datasets: [{
                 label: '1',
@@ -175,6 +200,11 @@
                 borderWidth: 3,
 
                 datalabels: {
+                    color : 'white',  
+                    font: { 
+                        weight : 'bold',
+                        size : 10,       
+                        },
                     formatter: function(value, context) {
                         return names1[context.dataIndex];;
                         }
@@ -204,6 +234,11 @@
                 borderWidth: 3,
 
                 datalabels: {
+                    color : 'white',  
+                    font: { 
+                        weight : 'bold',
+                        size : 10,       
+                        },
                     formatter: function(value, context) {
                         return names2[context.dataIndex];;
                         }
@@ -233,6 +268,11 @@
                 borderWidth: 3,
 
                 datalabels: {
+                    color : 'white',  
+                    font: { 
+                        weight : 'bold',
+                        size : 10,       
+                        },
                     formatter: function(value, context) {
                         return names3[context.dataIndex];;
                         }
@@ -255,11 +295,19 @@
                     
                 }
             },
-                responsive: false,
+                responsive: true,
                 scales: {
                 x: {
+                    ticks:{
+                        color : 'white',  
+                    font: { 
+                        weight : 'bold',
+                        size : 16,       
+                        },
+                    },
                     
                     title:{
+                        color:'white',
                         display: true,
                         text: "Role",
                         font: {   
@@ -271,14 +319,21 @@
                     
                 },
                 y: {
-                    
+                    ticks:{
+                        color : 'white',  
+                    font: { 
+                        weight : 'bold',
+                        size : 16,       
+                        },
+                    },
                     title:{
+                        color: 'white',
                         display: true,
                         text: "Win rate (%)",
                         font: {   
                             weight : 'bold',
                             size : 16,
-                            color: '#000000',
+                            
                         }
                     },
                     }
@@ -392,10 +447,18 @@
                     },
                     scales: {
                         x: {
+                                    ticks:{
+                                color : 'white',  
+                            font: { 
+                                weight : 'bold',
+                                size : 16,       
+                                },
+                            },
                             min: 5,
                             display: true,
                             type: 'logarithmic',
                             title:{
+                            color : 'white',
                             display: true,
                             text: "Log Scale : cumulative time played",
                             font: {   
@@ -407,10 +470,18 @@
                             
                         },
                         y: {
+                            ticks:{
+                                color : 'white',  
+                            font: { 
+                                weight : 'bold',
+                                size : 16,       
+                                },
+                            },
                             max: 100,
                             min : 0,
                             display: true,
                             title:{
+                            color : 'white',
                             display: true,
                             text: "Win rate (%)",
                             font: {   
@@ -424,7 +495,7 @@
                         },
 
 
-                    responsive: false,
+                    responsive: true,
 
                     
                   

@@ -44,7 +44,7 @@
     <script>
       // Global parameters:
       // do not resize the chart canvas when its container does (keep at 600x400px)
-      Chart.defaults.global.responsive = false;
+      Chart.defaults.global.responsive = true;
 
       // define the chart data
       var chartData = {
@@ -131,12 +131,12 @@
                         {
                             render: 'label',
                             position: 'outside',
-                            fontColor: '#000',
+                            fontColor: 'white',
                             fontSize: 15
                         },
                         {
                             render: 'percentage',
-                            fontColor: '#000',
+                            fontColor: 'white',
                             fontSize: 10,
                             position: 'border'
                         }
