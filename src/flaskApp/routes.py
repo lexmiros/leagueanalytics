@@ -60,7 +60,7 @@ def loading(user, region):
     global current_user
 
     
-    no_games = 500
+    no_games = 2000
     n = 10
     
     if user != "test":
@@ -88,6 +88,8 @@ def loading(user, region):
     total_games = wins + losses
     #Rank
     rank = get_rank(current_user, region)
+    print(current_user)
+    print(rank)
 
     
     
@@ -159,12 +161,21 @@ def overview():
     neg_max = max(model_values_neg)
     neg_min = min(model_values_neg)
 
+    #Check that the model found at least 3 variables
+    show_radar_pos = True
+    show_radar_neg = True
+    if len(model_names) < 3:
+        show_radar_pos = False
+    if len(model_names_neg) < 3:
+        show_radar_pos = False
+
 
 
     return render_template("overview.html", labels_wr = labels_wr, win_rates = win_rates, labels_top = labels_top, \
         games = games,n = n,  wins = wins, losses = losses, wr = wr, total_games = total_games, user = current_user, rank = rank,
         model_values = model_values, model_names = model_names, model_names_neg = model_names_neg, model_values_neg = model_values_neg,
-        pos_max = pos_max, pos_min = pos_min, neg_max = neg_max, neg_min = neg_min)
+        pos_max = pos_max, pos_min = pos_min, neg_max = neg_max, neg_min = neg_min,
+        show_radar_neg = show_radar_neg, show_radar_pos = show_radar_pos)
 
 @app.route("/stats")
 def stats():
@@ -253,12 +264,20 @@ def stats():
 def roles():
     """
     """
+    #Set up dataframe
     data_loc = f"./{data}"
     df = pd.read_csv(data_loc)
     df = pd.DataFrame(df)
 
     #Df for user only
     df_user = df[df["SummonerName"] == current_user]
+
+    #Dataframes per role
+    df_top = df_user[df_user["TOP"] == 1]
+    df_jungle = df_user[df_user["JUNGLE"] == 1]
+    df_middle = df_user[df_user["MIDDLE"] == 1]
+    df_bottom = df_user[df_user["BOTTOM"] == 1]
+    df_support = df_user[df_user["UTILITY"] == 1]
 
     #Role win-rates
     bottom_wr = win_ratio_str_formatted(df_user, "BOTTOM", 1)
@@ -285,7 +304,6 @@ def roles():
     n = 3
 
     #Top champs by winrate bottom
-    df_bottom = df_user[df_user["BOTTOM"] == 1]
 
     top_wr_champs = top_champs_by_wr(df_bottom, n, current_user)
     bottom_labels = []
@@ -295,8 +313,7 @@ def roles():
         bottom_rates.append(champs["Win Rate"])
     
     #Top champs by winrate jungle
-    df_jungle = df_user[df_user["JUNGLE"] == 1]
-
+    
     top_wr_champs = top_champs_by_wr(df_jungle, n, current_user)
     jungle_labels = []
     jungle_rates = []
@@ -305,8 +322,7 @@ def roles():
         jungle_rates.append(champs["Win Rate"])
 
     #Top champs by winrate middle
-    df_middle = df_user[df_user["MIDDLE"] == 1]
-
+    
     top_wr_champs = top_champs_by_wr(df_middle, n, current_user)
     middle_labels = []
     middle_rates = []
@@ -315,8 +331,7 @@ def roles():
         middle_rates.append(champs["Win Rate"])
 
     #Top champs by winrate top
-    df_top = df_user[df_user["TOP"] == 1]
-
+    
     top_wr_champs = top_champs_by_wr(df_top, n, current_user)
     top_labels = []
     top_rates = []
@@ -325,8 +340,7 @@ def roles():
         top_rates.append(champs["Win Rate"])
 
     #Top champs by winrate support
-    df_support = df_user[df_user["UTILITY"] == 1]
-
+    
     top_wr_champs = top_champs_by_wr(df_support, n, current_user)
     support_labels = []
     support_rates = []
@@ -340,46 +354,51 @@ def roles():
     data_2 = []
     labels_3 = []
     data_3 = []
- 
-    labels_1.append(top_labels[0])
-    labels_1.append(jungle_labels[0])
-    labels_1.append(middle_labels[0])
-    labels_1.append(bottom_labels[0])
-    labels_1.append(support_labels[0])
 
-    data_1.append(top_rates[0])
-    data_1.append(jungle_rates[0])
-    data_1.append(middle_rates[0])
-    data_1.append(bottom_rates[0])
-    data_1.append(support_rates[0])
+    labels_list = [top_labels, jungle_labels, middle_labels, bottom_labels, support_labels]
+    rates_list = [top_rates, jungle_rates, middle_rates, bottom_rates, support_rates]
 
-    labels_2.append(top_labels[1])
-    labels_2.append(jungle_labels[1])
-    labels_2.append(middle_labels[1])
-    labels_2.append(bottom_labels[1])
-    labels_2.append(support_labels[1])
+    #Add first champ to labels, data lists
+    for list in labels_list:
+        labels_1.append(list[0])
+       
+    for list in rates_list:
+        data_1.append(list[0])
 
-    data_2.append(top_rates[1])
-    data_2.append(jungle_rates[1])
-    data_2.append(middle_rates[1])
-    data_2.append(bottom_rates[1])
-    data_2.append(support_rates[1])
+    #Add second champ to labels, data lists
+    for list in labels_list:
+        labels_2.append(list[1])
+       
+    for list in rates_list:
+        data_2.append(list[1])
 
-    labels_3.append(top_labels[2])
-    labels_3.append(jungle_labels[2])
-    labels_3.append(middle_labels[2])
-    labels_3.append(bottom_labels[2])
-    labels_3.append(support_labels[2])
+    #Add third champ to labels, data lists
+    for list in labels_list:
+        labels_3.append(list[2])
+       
+    for list in rates_list:
+        data_3.append(list[2])
 
-    data_3.append(top_rates[2])
-    data_3.append(jungle_rates[2])
-    data_3.append(middle_rates[2])
-    data_3.append(bottom_rates[2])
-    data_3.append(support_rates[2])
+    
+
+    #Get cumulative times
+    time_top = get_column_cumulative(df_top, "Game Time seconds")
+    time_jungle = get_column_cumulative(df_jungle, "Game Time seconds")
+    time_middle = get_column_cumulative(df_middle, "Game Time seconds")
+    time_bottom = get_column_cumulative(df_bottom, "Game Time seconds")
+    time_support = get_column_cumulative(df_support, "Game Time seconds")
+
+    #Get cumulative WRs
+    cum_wr_top = get_wr_cumulative(df_top)
+    cum_wr_jungle = get_wr_cumulative(df_jungle)
+    cum_wr_middle = get_wr_cumulative(df_middle)
+    cum_wr_bottom = get_wr_cumulative(df_bottom)
+    cum_wr_support = get_wr_cumulative(df_support)
 
 
 
     
+
 
     return render_template("roles.html",
         user = current_user, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
@@ -392,7 +411,8 @@ def roles():
         
         labels_1 = labels_1, data_1 = data_1, labels_2 = labels_2, data_2 = data_2, labels_3 = labels_3, data_3 = data_3,
 
-        top_labels = top_labels, top_rates = top_rates, jungle_labels = jungle_labels, jungle_rates = jungle_rates, middle_labels = middle_labels,
-        middle_rates = middle_rates, bottom_labels = bottom_labels, bottom_rates = bottom_rates, support_labels = support_labels, support_rates = support_rates
+        time_top = time_top, time_jungle = time_jungle, time_middle = time_middle, time_bottom = time_bottom, time_support = time_support,
+
+        cum_wr_top = cum_wr_top, cum_wr_jungle = cum_wr_jungle, cum_wr_middle = cum_wr_middle, cum_wr_bottom = cum_wr_bottom, cum_wr_support = cum_wr_support
         )
 

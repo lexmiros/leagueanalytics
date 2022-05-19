@@ -401,6 +401,41 @@ def win_ratio_str_formatted(df, col_name, target):
     win_rate = f"{win_rate}%"
     return win_rate
 
+def get_column_cumulative(df, col_name):
+    """
+    Finds the cumulative values for a column at each point
+    Arguments:
+        df: A pandas dataframe
+        col_name: string of the column of interest
+    Returns:
+        A list of the cumulative values
+    """
+    sum_list = []
+
+    for i in range(len(df.index)):
+        cumulative_point = df[col_name].iloc[:i].sum()
+        sum_list.append(cumulative_point)
+
+    return sum_list
+
+def get_wr_cumulative(df):
+    """
+    Finds the cumulative values for a column at each point
+    Arguments:
+        df: A pandas dataframe
+        col_name: string of the column of interest
+    Returns:
+        A list of the cumulative values
+    """
+    sum_list = []
+
+    for i in range(1, len(df.index)):
+        cumulative_df = df.iloc[:i]
+        wr = overall_win_ratio(cumulative_df)
+        sum_list.append(wr)
+
+    return sum_list
+                
 
 if __name__ == "__main__":
     """"""

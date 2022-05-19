@@ -14,11 +14,27 @@ from src.flaskApp import routes
 if __name__ == "__main__":
 
     app.run()
-
+    #current_user = "Proosia"
+    #region = "NA1"
+    #df = pd.read_csv("TestData_Cleaned_2")
+    #df = pd.DataFrame(df)
+  #
+    #df_user = df[df["SummonerName"] == current_user]
+#
+    #df_mid = df_user[df_user["UTILITY"] == 1]
+#
+    #x = get_wr_cumulative(df_mid)
+    #y = get_column_cumulative(df_mid, "Game Time seconds")
+#
+    #y = [val/3600 for val in y]
+    #y = [round(val,2) for val in y]
+    #
+    #print(x)
+    #print(y)
     """
-    current_user = "Proosia"
-    region = "NA1"
-    df = pd.read_csv("TestData_Cleaned_2")
+    current_user = "Frommoh"
+    region = "OC1"
+    df = pd.read_csv("newdata")
     df = pd.DataFrame(df)
   
     df_user = df[df["SummonerName"] == current_user]
@@ -36,7 +52,8 @@ if __name__ == "__main__":
     model_names_neg = coefs[2]
     model_values_neg = coefs[3]
 
-    print(model_values)
+    print(model_names)
+    print(model_names_neg)
 
     
     current_user = "Proosia"
@@ -47,7 +64,7 @@ if __name__ == "__main__":
     df = impute_mode_lane(df)
     df = encode_categorical(df, "Lane")
     df.to_csv("./TestData_Cleaned_2")
-    """
+    
  
 
     
@@ -56,7 +73,7 @@ if __name__ == "__main__":
 
     
 
-    """
+ 
 
     df = pd.read_csv("TestData_Cleaned2")
     df = pd.DataFrame(df)
