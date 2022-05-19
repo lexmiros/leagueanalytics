@@ -74,8 +74,8 @@ def loading(user, region):
         data = "newdata"
     
     else:
-        current_user = "Proosia"
-        region = "NA1"
+        current_user = "Frommoh"
+        region = "OC1"
         df = pd.read_csv("./TestData_Cleaned_2")
         df = pd.DataFrame(df)
         data = "TestData_Cleaned_2"
@@ -141,8 +141,8 @@ def overview():
     #model variables
     y = "WinLoss"
     X = ['Q casts','W casts','E casts','R casts','ChampLevel','CS',\
-        'Damage','Shielding','Healing','TotalDamageTaken','WardsPlace','WardsKilled','Game Time seconds',\
-            'Total time CCing','Time spent dead','Skillshots hit',\
+        'Damage','Shielding','Healing','Total Damage Taken','Wards Placed','Wards Killed','Game Time seconds',\
+            'Crowd Control','Time spent dead','Skillshots hit',\
                 'Skillshots dodged','Solo kills','Turret plates taken']
 
     #build models and get coefficients
@@ -184,8 +184,8 @@ def stats():
     df = pd.read_csv(data_loc)
     df = pd.DataFrame(df)
     stats_variable_list = ['Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp',\
-        'Damage','Shielding','Healing','TotalDamageTaken','WardsPlace','WardsKilled','Vision Score','Game Time seconds',\
-            'Total time CCing','Time spent dead','Kill participation','Team damage percentage','Skillshots hit',\
+        'Damage','Shielding','Healing','Total Damage Taken','Wards Placed','Wards Killed','Vision Score','Game Time seconds',\
+            'Crowd Control','Time spent dead','Kill participation','Team damage percentage','Skillshots hit',\
                 'Skillshots dodged','Solo kills','Turret plates taken']
 
     top = get_user_top_stats(df, current_user, stats_variable_list)

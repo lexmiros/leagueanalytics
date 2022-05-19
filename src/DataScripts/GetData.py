@@ -93,7 +93,7 @@ def get_match_details(user, region, number_games):
     #Creates an empty list to populate with dictionaries
     #Each element of the list will be one game
     participants_1 = []
-    participants_2 = []
+   
 
 
     while i < number_games:
@@ -120,10 +120,6 @@ def get_match_details(user, region, number_games):
                             participants_row['WinLoss']    = row['win']
                             participants_row['Lane'] = row['individualPosition']
                             participants_row['Champion'] = row['championName']
-                            participants_row['SummonerSpell1'] = row['summoner1Id']
-                            participants_row['Spell1Casts'] = row['summoner1Casts']
-                            participants_row['SummonerSpell2'] = row['summoner2Id']
-                            participants_row['Spell2Casts'] = row['summoner2Casts']
                             participants_row['Q casts'] = row['spell1Casts']
                             participants_row['W casts'] = row['spell2Casts']
                             participants_row['E casts'] = row['spell3Casts']
@@ -137,13 +133,13 @@ def get_match_details(user, region, number_games):
                             participants_row['Damage'] = row['totalDamageDealtToChampions']
                             participants_row['Shielding'] = row['totalDamageShieldedOnTeammates']
                             participants_row['Healing'] = row['totalHeal']
-                            participants_row['TotalDamageTaken'] = row['totalDamageTaken']
-                            participants_row['WardsPlace']    = row['wardsPlaced']
-                            participants_row['WardsKilled']    = row['wardsKilled']
+                            participants_row['Total Damage Taken'] = row['totalDamageTaken']
+                            participants_row['Wards Placed']    = row['wardsPlaced']
+                            participants_row['Wards Killed']    = row['wardsKilled']
                             participants_row['Vision Score']    = row['visionScore']
                             participants_row['Penta Kills']    = row['pentaKills']
                             participants_row['Game Time seconds']    = row['timePlayed']
-                            participants_row['Total time CCing']    = row['totalTimeCCDealt']
+                            participants_row['Crowd Control']    = row['totalTimeCCDealt']
                             participants_row['Time spent dead']    = row['totalTimeSpentDead']
                             participants_row['Kill participation'] = row["challenges"]["killParticipation"]
                             participants_row['Team damage percentage']    = row["challenges"]['teamDamagePercentage']
