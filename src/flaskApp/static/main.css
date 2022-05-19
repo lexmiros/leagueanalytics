@@ -44,8 +44,14 @@
 
  .title{
   color: white;
-  
+  margin: auto;
   text-align: center;
+  font-size: 5  00%;
+  
+ }
+
+ .content-title h1 {
+  font-size: 100;
  }
  .title2{
   color: white;
@@ -62,7 +68,7 @@
  }
  .rank{
   color: #000000;
-  margin-top: 1%;
+  margin-top: %;
   margin-left: 15%;
   font-size: 200%;
  }
@@ -200,6 +206,8 @@ button{
 }
 .float-child2 canvas {
   margin: 0 auto;
+  width: 80%;
+  height: 100%;
   
 }
 
@@ -234,7 +242,7 @@ h6 {
 }
 .float-child canvas {
   margin: 0 auto;
-  width: 100%;
+  width: 80%;
   height: 100%;
   
 }

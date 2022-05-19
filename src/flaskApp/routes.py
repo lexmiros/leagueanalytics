@@ -300,6 +300,11 @@ def roles():
     top_losses = role_losses(df_user, "TOP")
     support_losses = role_losses(df_user, "UTILITY")
 
+    #Find the max Y value for stacked bar chart to stop label clipping the legend
+    win_max = max(bottom_wins, top_wins, jungle_wins, middle_wins, support_wins) 
+    loss_max = max(bottom_losses, top_losses, jungle_losses, middle_losses, support_losses)
+    y_max = win_max + loss_max
+
     #Number of champs to get for each role
     n = 3
 
@@ -426,6 +431,8 @@ def roles():
 
 
     return render_template("roles.html",
+        y_max = y_max, 
+        
         user = current_user, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
         
         bottom_wr = bottom_wr, jungle_wr = jungle_wr, middle_wr = middle_wr , top_wr = top_wr ,support_wr = support_wr ,
