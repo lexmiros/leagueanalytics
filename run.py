@@ -14,24 +14,31 @@ from src.flaskApp import routes
 if __name__ == "__main__":
 
     app.run()
-    #current_user = "Proosia"
-    #region = "NA1"
-    #df = pd.read_csv("TestData_Cleaned_2")
-    #df = pd.DataFrame(df)
-  #
-    #df_user = df[df["SummonerName"] == current_user]
-#
-    #df_mid = df_user[df_user["UTILITY"] == 1]
-#
-    #x = get_wr_cumulative(df_mid)
-    #y = get_column_cumulative(df_mid, "Game Time seconds")
-#
-    #y = [val/3600 for val in y]
-    #y = [round(val,2) for val in y]
-    #
+    
+    """
+    current_user = "Proosia"
+    region = "NA1"
+    df = pd.read_csv("TestData_Cleaned_2")
+    df = pd.DataFrame(df)
+  
+    df_user = df[df["SummonerName"] == current_user]
+
+    df_mid = df_user[df_user["UTILITY"] == 1]
+
+    x = get_wr_cumulative(df_mid)
+    y = get_column_cumulative(df_mid, "Game Time seconds")
+
+    y = [val/3600 for val in y]
+    y = [round(val,2) for val in y]
+    
     #print(x)
     #print(y)
-    """
+
+    time_overall = get_column_cumulative(df_user, "Game Time seconds")
+    time_overall = [val/3600 for val in time_overall]
+    time_overall = [round(val,4) for val in time_overall]
+    print(time_overall)
+    
     current_user = "Frommoh"
     region = "OC1"
     df = pd.read_csv("newdata")

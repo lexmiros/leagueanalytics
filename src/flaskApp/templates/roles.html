@@ -22,6 +22,13 @@
         </div>
     </div>  
 
+    <div class="float-child2">
+        <h2 class="title2"> Win-rate vs cumulative time played by role</h2>  
+        <div>
+            <canvas id="lineChart" width="1000" height="500"></canvas>
+        </div>
+    </div>  
+
   
     <!------------------------Win rates by role---------------------------------------------->
     <script>
@@ -301,5 +308,129 @@
         );
        
       </script>
+
+ <!------------------------Win rates by time-played-role---------------------------------------------->
+
+ <script>
+    var ctx = document.getElementById("lineChart").getContext("2d");
+            var lineChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: {{time_overall | safe }},
+                    datasets: [
+                        {
+                        label: "Top",
+                        data: {{ cum_wr_top | safe }},
+                        pointRadius: 0,
+                        backgroundColor:'#ED5565',
+                        borderColor: '#ED5565',
+                        tension : 0.4,
+                        borderWidth : 4,
+                       
+                        },
+
+                        {
+                        label: "Jungle",
+                        data: {{ cum_wr_jungle | safe }},
+                        pointRadius: 0,
+                        backgroundColor:'#FFCE54',
+                        borderColor: '#FFCE54',
+                        tension : 0.4,
+                        borderWidth : 4,         
+                        },
+
+                        {
+                        label: "Middle",
+                        data: {{ cum_wr_middle | safe }},
+                        pointRadius: 0,
+                        backgroundColor:'#48CFAD',
+                        borderColor: '#48CFAD',
+                        tension : 0.4,
+                        borderWidth : 4,
+                        },
+
+                        {
+                        label: "Bottom",
+                        data: {{ cum_wr_bottom | safe }},
+                        pointRadius: 0,
+                        backgroundColor: '#5D9CEC',
+                        borderColor:  '#5D9CEC',
+                        tension : 0.4,
+                        borderWidth : 4,
+                        },
+
+                        {
+                        label: "Support",
+                        data: {{ cum_wr_support | safe }},
+                        pointRadius: 0,
+                        backgroundColor: '#EC87C0',
+                        borderColor:  '#EC87C0',
+                        tension : 0.4,    
+                        borderWidth : 4,                  
+                        },
+
+                        {
+                        label: "Overall",
+                        data: {{ cum_wr_overall | safe }},
+                        pointRadius: 0,
+                        backgroundColor: '#4F6D7A',
+                        borderColor:  '#4F6D7A',
+                        tension : 0.1,
+                        borderWidth : 4,                       
+                        
+                        },
+   
+                    ],
+                
+                },
+                options: {
+                   
+                    plugins: {
+                        datalabels: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        x: {
+                            min: 10,
+                            display: true,
+                            type: 'logarithmic',
+                            title:{
+                            display: true,
+                            text: "Log Scale : cumulative time played",
+                            font: {   
+                                weight : 'bold',
+                                size : 16,
+                                color: '#000000',
+                                    }
+                            },
+                            
+                        },
+                        y: {
+                            display: true,
+                            title:{
+                            display: true,
+                            text: "Win rate (%)",
+                            font: {   
+                                weight : 'bold',
+                                size : 16,
+                                color: '#000000',
+                                    }
+                            },
+                            
+                        }
+                        },
+
+
+                    responsive: false,
+
+                    
+                  
+                },
+            
+            });
+      </script>
+
+
 
       {%endblock content%}

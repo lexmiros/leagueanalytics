@@ -1,6 +1,6 @@
 /* Style page content */
 .body{
-  background-color: rgba(221, 221, 221, 0.37);
+  background-color: rgba(221, 221, 221, 1);
 }
 
 .welcome{
@@ -28,7 +28,7 @@
   width: 85%;
   height: 80%;
   
-  background-color: rgba(221, 221, 221, 0.37);
+  background-color: rgba(63, 61, 61, 0);
   
 }
 
@@ -167,6 +167,13 @@ button{
   
 }  
 
+.float-child2 {
+  width: 100%;
+  float: center;
+  padding: 20px;
+  
+}  
+
 .float-child h5 {
   
   text-align: left;
@@ -181,13 +188,17 @@ button{
   width: 100%;
   float: left;
   padding: 20px;
+  padding-bottom: 200px;
   
 }  
 .float-child2 p {
   text-align: center;
   margin-right: 12.5%;
 }
-
+.float-child2 canvas {
+  margin: 0 auto;
+  
+}
 
 .form-control{
   width: 350%;
