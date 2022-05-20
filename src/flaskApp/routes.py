@@ -365,25 +365,38 @@ def roles():
 
     #Add first champ to labels, data lists
     for list in labels_list:
-        labels_1.append(list[0])
+        try:
+            labels_1.append(list[0])
+        except:
+            pass
        
     for list in rates_list:
-        data_1.append(list[0])
-
+        try:
+            data_1.append(list[0])
+        except:
+            pass
     #Add second champ to labels, data lists
     for list in labels_list:
-        labels_2.append(list[1])
-       
+        try:
+            labels_2.append(list[1])
+        except:
+            pass
     for list in rates_list:
-        data_2.append(list[1])
-
+        try:
+            data_2.append(list[1])
+        except:
+            pass
     #Add third champ to labels, data lists
     for list in labels_list:
-        labels_3.append(list[2])
-       
+        try:
+            labels_3.append(list[2])
+        except:
+           pass
     for list in rates_list:
-        data_3.append(list[2])
-
+        try:
+            data_3.append(list[2])
+        except:
+            pass
     
 
     #Get cumulative times
