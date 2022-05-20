@@ -147,7 +147,7 @@ def overview():
 
     #build models and get coefficients
     #user
-    model = build_logit_model(df_user, y, X, 0.5)
+    model = build_logit_model(df_user, y, X, 0.1)
     coefs = get_model_coefs(model)
 
     model_names = coefs[0]
@@ -432,7 +432,7 @@ def roles():
 
     return render_template("roles.html",
         y_max = y_max, 
-        
+
         user = current_user, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
         
         bottom_wr = bottom_wr, jungle_wr = jungle_wr, middle_wr = middle_wr , top_wr = top_wr ,support_wr = support_wr ,

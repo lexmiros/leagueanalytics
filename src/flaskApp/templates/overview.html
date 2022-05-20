@@ -99,14 +99,30 @@
                             display: false
                             
                         },
+
+                        beginAtZero: false,
+                            min: {{pos_min}}-0.05,
+                            max: {{pos_max}}+0.05,
+
                     },
                        
-                            beginAtZero: false,
-                            min: {{pos_min}}-0.1,
-                            max: {{pos_max}}+0.1,
+                 
                     },
                     
                     responsive: true,
+                    plugins:{
+                    legend:{
+                        display:false,
+                        labels:{
+                            color: 'white'
+                        },
+                        title:{
+                            display:false,
+                        },
+                    },
+                    
+
+                },
                     
                   
                 }
@@ -115,7 +131,9 @@
       </script>
        
        <script>
+           
         var ctx = document.getElementById("radarChart2").getContext("2d");
+                
                 var lineChart = new Chart(ctx, {
                     type: "radar",
                     data: {
@@ -157,14 +175,30 @@
                             display: false
                             
                         },
+
+                        beginAtZero: false,
+                            min: {{pos_min}}-0.05,
+                            max: {{pos_max}}+0.05,
+
                     },
                        
-                            beginAtZero: false,
-                            min: {{pos_min}}-0.1,
-                            max: {{pos_max}}+0.1,
+
                     },
                     
                     responsive: true,
+                    plugins:{
+                    legend:{
+                        display:false,
+                        labels:{
+                            color: 'white'
+                        },
+                        title:{
+                            display:false,
+                        },
+                    },
+                    
+
+                },
                     
                   
                 }
@@ -211,6 +245,9 @@
                 scales: {
                 
                     x: {
+                        grid:{
+                            color:'rgba(255,255,255,0.0)',
+                        },
                         ticks:{
                             color:"white",
                             font: {   
@@ -218,8 +255,21 @@
                             size : 16,       
                         }
                         },
+                        title:{
+                        color: 'white',
+                        display: true,
+                        text: "Champion",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            
+                        }
+                    },
                     },
                     y: {
+                        grid:{
+                            color:'rgba(255,255,255,0.3)',
+                        },
                         ticks:{
                             color:"white",
                             font: {   
@@ -227,6 +277,16 @@
                             size : 16,       
                         }
                         },
+                        title:{
+                        color: 'white',
+                        display: true,
+                        text: "Games Played",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            
+                        }
+                    },
                     },
                     yAxes: [{
                         color : 'white',
@@ -251,7 +311,20 @@
                         }
                         
                     }]
-                }
+                },
+                plugins:{
+                    legend:{
+                        display:false,
+                        labels:{
+                            color: 'white'
+                        },
+                        title:{
+                            display:false,
+                        },
+                    },
+                    
+
+                },
             }
            
         });
@@ -290,6 +363,9 @@
                 responsive: true,
                 scales: {
                     x: {
+                        grid:{
+                            color:'rgba(255,255,255,0.0)',
+                        },
                         ticks:{
                             color:"white",
                             font: {   
@@ -297,9 +373,22 @@
                             size : 16,       
                         }
                         },
+                        title:{
+                        color: 'white',
+                        display: true,
+                        text: "Champion",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            
+                        }
+                    },
                        
                     },
                     y: {
+                        grid:{
+                            color:'rgba(255,255,255,0.3)',
+                        },
                         ticks:{
                             color:"white",
                             font: {   
@@ -307,6 +396,16 @@
                             size : 16,       
                         }
                         },
+                        title:{
+                        color: 'white',
+                        display: true,
+                        text: "Win rate (%)",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            
+                        }
+                    },
                     },
                     yAxes: [{
                         scaleLabel: {
@@ -325,7 +424,20 @@
                         }
                         
                     }]
-                }
+                },
+                plugins:{
+                    legend:{
+                        display:false,
+                        labels:{
+                            color: 'white'
+                        },
+                        title:{
+                            display:false,
+                        },
+                    },
+                    
+
+                },
             }
         });
     </script>

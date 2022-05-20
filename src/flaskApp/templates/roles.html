@@ -15,7 +15,7 @@
         </div>
     </div>   
 
-    <div class="float-child">
+    <div class="float-child9">
         <h2 class="title2"> Best champions by role</h2>  
         <div>
             <canvas id="wrChart" width="600" height="350"></canvas>
@@ -40,6 +40,7 @@
         Chart.register(ChartDataLabels);
 
         const data = {
+            color: 'white',
             labels: ["Top","Jungle","Middle","Bottom","Support"],
             datasets: [{
                 label: 'Wins',
@@ -77,7 +78,7 @@
                     color : 'white',  
                     font: { 
                         weight : 'bold',
-                        size : 10,       
+                        size : 14,       
                         },
                     formatter: function(value, context) {
                         return win_rates[context.dataIndex];;
@@ -95,13 +96,15 @@
             options: {
                 layout: {
                     padding: {
-                        top: 20
+                        top: 10
                     }
                     },
                 responsive: true,
                 scales: {
                 x: {
-                    
+                    grid:{
+                            color:'rgba(255,255,255,0.0)',
+                        },
                     ticks:{
                         color:"white",
                         font: {   
@@ -112,17 +115,20 @@
                     },
                     stacked: true,
                     title:{
-                        color : 'white',
+                        color : '#0C0032',
                         display: true,
                         text: "Role",
                         font: {   
                             weight : 'bold',
-                            size : 16,       
+                            size : 20,       
                         }
                     },
                     
                 },
                 y: {
+                    grid:{
+                            color:'rgba(255,255,255,0.3)',
+                        },
                     ticks:{
                         color:"white",
                         font: {   
@@ -141,7 +147,7 @@
                         text: "Number of games",
                         font: {   
                             weight : 'bold',
-                            size : 16,
+                            size : 20,
                             
                         }
                     },
@@ -149,15 +155,21 @@
                 },
 
                 plugins:{
+                    legend:{
+                        labels:{
+                            color: 'white'
+                        },
+                    },
                     datalabels: {
                         anchor: 'end',
                         align: 'top',
                         font: {
-                            weight: 'bold'
-                        }
-                    }
+                            weight: 'bold',
+                            size : 20,
+                        },
+                    },
 
-                }
+                },
             },
         };
       </script>
@@ -169,7 +181,7 @@
        
       </script>
 
-      <!------------------------Win rates by role---------------------------------------------->
+      <!------------------------Champ rates by role---------------------------------------------->
       <script>
         const names1 = {{labels_1 | safe}};
         const names2 = {{labels_2 | safe}};
@@ -210,7 +222,7 @@
                     color : 'white',  
                     font: { 
                         weight : 'bold',
-                        size : 20,       
+                        size : 14,       
                         },
                     formatter: function(value, context) {
                         return names1[context.dataIndex];;
@@ -244,7 +256,7 @@
                     color : 'white',  
                     font: { 
                         weight : 'bold',
-                        size : 20,       
+                        size : 14,       
                         },
                     formatter: function(value, context) {
                         return names2[context.dataIndex];;
@@ -278,7 +290,7 @@
                     color : 'white',  
                     font: { 
                         weight : 'bold',
-                        size : 20,       
+                        size : 14,       
                         },
                     formatter: function(value, context) {
                         return names3[context.dataIndex];;
@@ -297,35 +309,48 @@
                 layout: {
                 padding: {
                     
-                    
-                    top: 100,
+                    top: 40,
                     
                 }
             },
                 responsive: true,
                 scales: {
+                    xAxes: [
+                    {
+                        ticks: {
+                        
+                        },
+                    },
+                    ],
                 x: {
+                    grid:{
+                            color:'rgba(255,255,255,0.0)',
+                        },
                     ticks:{
-                        color : 'white',  
+                        color : 'white', 
+                        padding: 70, 
                     font: { 
                         weight : 'bold',
-                        size : 16,       
+                        size : 20,       
                         },
                     },
                     
                     title:{
                         color:'white',
-                        display: true,
+                        display: false,
                         text: "Role",
                         font: {   
                             weight : 'bold',
-                            size : 16,
+                            size : 20,
                             color: '#000000',
                         }
                     },
                     
                 },
                 y: {
+                    grid:{
+                            color:'rgba(255,255,255,0.3)',
+                        },
                     ticks:{
                         color : 'white',  
                     font: { 
@@ -339,7 +364,7 @@
                         text: "Win rate (%)",
                         font: {   
                             weight : 'bold',
-                            size : 16,
+                            size : 20,
                             
                         }
                     },
@@ -351,9 +376,9 @@
                             display: false
                         },
                     datalabels: {
-                        anchor: 'end',
-                        align: 'top',
-                        rotation:90,
+                        anchor: 'start',
+                        align: 'bottom',
+                        rotation:-45,
                         font: {
                             weight: 'bold'
                         }
@@ -389,11 +414,7 @@
                         tension : 0.4,
                         borderWidth : 4,
                        
-
-                        
-                        
-                        
-                        
+            
                        
                         },
 
@@ -453,6 +474,11 @@
                 },
                 options: {
                    
+                    layout: {
+                    padding: {
+                        top: 50
+                    }
+                    },
                     plugins: {
                         datalabels: {
                             display: false,
@@ -460,6 +486,7 @@
                     },
                     scales: {
                         x: {
+                            
                                     ticks:{
                                 color : 'white',  
                             font: { 
@@ -471,18 +498,21 @@
                             display: true,
                             type: 'logarithmic',
                             title:{
-                            color : 'white',
+                                color: 'white',
                             display: true,
-                            text: "Log Scale : cumulative time played",
+                            text: "Cumulative time played (Log Scale)",
                             font: {   
                                 weight : 'bold',
-                                size : 16,
-                                color: '#000000',
+                                size : 20,
+                                
                                     }
                             },
                             
                         },
                         y: {
+                            grid:{
+                            color:'rgba(255,255,255,0.3)',
+                        },
                             ticks:{
                                 color : 'white',  
                             font: { 
@@ -499,7 +529,7 @@
                             text: "Win rate (%)",
                             font: {   
                                 weight : 'bold',
-                                size : 16,
+                                size : 20,
                                 color: '#000000',
                                     }
                             },
@@ -509,6 +539,24 @@
 
 
                     responsive: true,
+
+                    plugins:{
+                    legend:{
+                        labels:{
+                            color: 'white'
+                        },
+                    },
+                    datalabels: {
+                        display : false,
+                        anchor: 'end',
+                        align: 'top',
+                        font: {
+                            weight: 'bold',
+                            size : 20,
+                        },
+                    },
+
+                },
 
                     
                   

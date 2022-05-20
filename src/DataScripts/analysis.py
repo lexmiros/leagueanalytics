@@ -19,7 +19,8 @@ def build_logit_model(df, y, x_list, p_value):
     X = df[df.columns & x_list]
 
     logit_model = sm.Logit(y,X)
-    model = logit_model.fit_regularized(method='l1', alpha=1.0, L1_wt=0.3)
+    #model = logit_model.fit_regularized(method='l1', alpha=1.0, L1_wt=0.3)
+    model = logit_model.fit()
 
     significant_x = model.pvalues < p_value
     p_05 = significant_x.all()
