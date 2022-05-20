@@ -35,7 +35,14 @@ def home():
             user = form.user.data
             region = form.region.data
             user = user.capitalize()
-            
+
+            #Check to see if user exists
+            try:
+                get_account_id(user, region)
+            except:
+                error_msg = "Account / Region combination not found!"
+                return render_template("landingPage.html", form = form, error_msg = error_msg)
+
         
         #If user doesnt enter a name, use test data
         else:
