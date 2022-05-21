@@ -81,11 +81,11 @@ def loading(user, region):
         data = "newdata"
     
     else:
-        current_user = "Frommoh"
+        current_user = "Ausfreak"
         region = "OC1"
-        df = pd.read_csv("./TestData_Cleaned_2")
+        df = pd.read_csv("./TestData_Cleaned_3")
         df = pd.DataFrame(df)
-        data = "TestData_Cleaned_2"
+        data = "TestData_Cleaned_3"
     
     #wins, losses, win-rate
     results = user_win_loss_wr(df, current_user)
@@ -161,6 +161,9 @@ def overview():
     model_values = coefs[1]
     model_names_neg = coefs[2]
     model_values_neg = coefs[3]
+
+    print(len(model_values_neg))
+    print(model_values_neg)
     
     pos_max = max(model_values)
     pos_min = min(model_values)
