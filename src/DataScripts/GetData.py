@@ -72,10 +72,7 @@ def get_match_details(user, region, number_games):
     #Each element of the list will be one game
     participants_1 = []
    
-
-
-    while i < number_games:
-        
+    while i < number_games: 
         match_ids = get_match_history_start(user, region, start_index=i)
         
         if match_ids == []:

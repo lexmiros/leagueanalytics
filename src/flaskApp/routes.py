@@ -429,15 +429,10 @@ def roles():
     time_support = get_column_cumulative(df_support, "Game Time seconds")
     time_support = [val/3600 for val in time_support]
     time_support = [round(val,4) for val in time_support]
-    df_user = df[df["SummonerName"] == current_user]
+    
     time_overall = get_column_cumulative(df_user, "Game Time seconds")
     time_overall = [val/3600 for val in time_overall]
     time_overall = [round(val,4) for val in time_overall]
-
-    
-
-
-
 
 
     #Get cumulative WRs
@@ -447,11 +442,6 @@ def roles():
     cum_wr_bottom = get_wr_cumulative(df_bottom)
     cum_wr_support = get_wr_cumulative(df_support)
     cum_wr_overall = get_wr_cumulative(df_user)
-
-
-
-
-
 
     return render_template("roles.html",
         y_max = y_max, 
