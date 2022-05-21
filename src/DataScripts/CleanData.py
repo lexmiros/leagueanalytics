@@ -93,24 +93,3 @@ def impute_mode_lane(df):
     return df
  
 
-if __name__ == "__main__":
-
-    df = pd.read_csv('./TestData')
-    df = pd.DataFrame(df)
-    df = col_to_string(df, "WinLoss")
-    df['WinLoss'] = df['WinLoss'].map(encode_true_false)
-    df = impute_mode_lane(df)
-    df = encode_categorical(df, "Lane")
-    df.to_csv("./TestData_Cleaned")
-  
-
-
-    
-    
-    #df = col_to_string(df, "WinLoss")
-    #df['WinLoss'] = df['WinLoss'].map(encode_true_false)
-    
-    #df = encode_categorical(df, "Lane")
-    #df.to_csv("./TestData_Cleaned")
-
-    

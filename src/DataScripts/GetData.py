@@ -36,28 +36,6 @@ def get_account_info(user, region):
     ranked_info = watcher.league.by_summoner(region, id)
     return(ranked_info)
 
-"""
-Get a list of match IDs for the match hisotry of the user and region
-"""
-def get_match_history(user, region, start_index):
-    puiid = get_puuid(user, region)
-    my_match_ids = watcher.match.matchlist_by_puuid(region,puiid, start = start_index, count=100)
-    return my_match_ids
-
-
-"""
-Get a match ID for the last match played for the user and region
-"""
-def get_last_match_history(user, region):
-    match_id = get_match_history(user,region)
-    return match_id[0]
-
-"""
-Get a match ID for the first match played for the user and region that is available
-"""
-def get_first_match_history(user, region):
-    match_id = get_match_history(user,region)
-    return match_id[-1]
 
 
 """

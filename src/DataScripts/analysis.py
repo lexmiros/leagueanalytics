@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.DataScripts.CleanData import encode_categorical, encode_true_false, col_to_string, top_n_occurences
+from src.DataScripts.CleanData import  top_n_occurences
 import statsmodels.api as sm
 
 def build_logit_model(df, y, x_list, p_value):
@@ -36,37 +36,9 @@ def build_logit_model(df, y, x_list, p_value):
             return build_logit_model(df = df,y = y, x_list = x, p_value= p_value)
         except ValueError:  #raised if `y` is empty.
             return model
+  
 
 
-
-def top_n_win(df, col_name, n = 3):
-    """
-    Returns the top n occuring values in a column where the game was a win
-    Arguments:
-        df: A pandas dataframe
-        col_name: The column name for the results of interest in the dataframe
-        n: An integer value for how many of the top occurences you want returned 
-    Returns
-        A pandas data frame with the top n occurnces
-    """
-    df = df[df["WinLoss"] == 1]
-    nlargest = top_n_occurences(df, col_name, n)
-    return nlargest
-    
-
-def column_mean(df, col_name):
-    """
-    Finds the average (mean) of a numerical column in a pandas df
-    Arguments:
-        df: A pandas dataframe
-        col_name: the column name to find the average for
-    Returns:
-        An average (mean) of type float
-    """
-    total = sum(df[col_name])
-    n = len(df[col_name])
-    avg = total / n
-    return avg
 
 def win_ratio_str(df, col_name, target):
     """
@@ -134,13 +106,11 @@ def top_champs_by_wr(df,n, user):
     counts = df["Champion"].value_counts()
 
 
-    if len(counts) > 100:
+    if len(counts) > 300:
     #Counts is equal to all champs with at least z games
         counts = counts[counts > 10]
-    elif len(counts) > 50:
+    else:
         counts = counts[counts > 5]
-    elif len(counts) > 15:
-        counts = counts[counts > 2]
 
          
     
@@ -156,77 +126,7 @@ def top_champs_by_wr(df,n, user):
 
     return sorted_wr
 
-def top_cast_champ(df, champ):
-    """
-    Finds the most casted ability for a champ
-    Arguments:
-        df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
-        champ: String of the champion of interest 
-    Returns:
-        A dictionary 
-            Spell : the spell name
-            Casts : number of uses of that spell
-    """
-    df_champ = df[df["Champion"] == champ]
-    casts = {}
-    casts["Q"] = df_champ["Q casts"].sum()
-    casts["W"] = df_champ["W casts"].sum()
-    casts["E"] = df_champ["E casts"].sum()
-    casts["R"] = df_champ["R casts"].sum()
 
-    
-    max_casts = {"Spell" : max(casts, key=casts.get), "Casts" :  casts[max(casts, key=casts.get)]}
-
-    return max_casts
-
-def top_cast_top_n_champs(df, n):
-    """
-    Finds the most casted ability for the top n played champions
-    Arguments:
-        df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
-        n: An integer representing the top n champs to find casts for 
-    Returns:
-        A dictionary 
-            Name  : Champions name
-            Spell : the spell name
-            Casts : number of uses of that spell
-    """
-    n_champs = top_n_occurences(df,"Champion", n, True)
-    
-    cast_dict = []
-    for champ in n_champs:
-        x = top_cast_champ(df, champ)
-        cast_dict.append({"Name" : champ, "Spell" : x["Spell"], "Casts": x["Casts"] })
-       
-
-    return cast_dict
-
-
-def top_cast_top_wr_champs(df, n):
-    """
-    Finds the most casted ability for the champions with the top n highest win rates
-    Arguments:
-        df: A pandas dataframe with Q casts,W casts,E casts,R casts, Champion columns
-        n: An integer representing the top n champs to find casts for 
-    R eturns:
-        A dictionary 
-            Name  : Champions name
-            Spell : the spell name
-            Casts : number of uses of that spell
-    """
-    n_champs = top_champs_by_wr(df, n)
-
-    champ_list = []
-    for i in range(0, len(n_champs)):
-        champ_list.append(n_champs[i]["Name"])
-    
-    cast_dict = []
-    for champ in champ_list:
-        x = top_cast_champ(df, champ)
-        cast_dict.append({"Name" : champ, "Spell" : x["Spell"], "Casts": x["Casts"] })
-       
-
-    return cast_dict
 
 def get_model_coefs(model):
     """
@@ -327,10 +227,6 @@ def get_non_user_stats(df, user, variables_list):
     
     return user_stats
 
-def played_role_count(df, role):
-    df = df[df[role] == 1]
-    count = len(df)
-    return count
 
 def role_wins(df, role):
     df = df[(df[role] == 1) & (df["WinLoss"] == 1)]
@@ -439,13 +335,6 @@ def get_wr_cumulative(df):
 
     return sum_list
 
-
-
-                
-
-if __name__ == "__main__":
-    """"""
- 
 
     
 

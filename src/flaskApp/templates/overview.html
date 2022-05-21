@@ -17,7 +17,7 @@
         {% else %}
         <div class="float-child">
             <h2 class="title2"> What's winning {{user}} games?</h2>
-            <p>Unfortunately it looks like the regression model couldn't find an adequate
+            <p style="color:white">Unfortunately it looks like the regression model couldn't find an adequate
                 number of statistically sagnificant variables for your wins. This is most likely
                 due to not having enough games to build an adequate model. 
             </p>
@@ -131,9 +131,7 @@
       </script>
        
        <script>
-           
         var ctx = document.getElementById("radarChart2").getContext("2d");
-                
                 var lineChart = new Chart(ctx, {
                     type: "radar",
                     data: {
@@ -144,64 +142,65 @@
                             data: {{ model_values_neg | safe }},
                             backgroundColor: 'rgba(170,219,30, 0.2)',
                             borderColor: 'rgb(170,219,30)',
-                            pointBackgroundColor: 'rgb(170,219,30)',
+                            pointBackgroundColor: 'rgb(154, 205, 50)',
                             pointBorderColor: '#fff',
                             pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgb(255, 99, 132)'
+                            pointHoverBorderColor: 'rgb(154, 205, 50)'
+                            
                             },
        
                         ],
                     
                     },
                     options: {
-                    color : 'white',
-                    scales: {
-                       r:{
-                           angleLines:{
+                        color : 'white',
+                        scales: {
+                           r:{
+                               angleLines:{
+                                color : 'white',
+                                lineWidth : 2, 
+                               },
+                           
+                           grid:{
                             color : 'white',
-                            lineWidth : 2, 
+                            lineWidth : 2,
                            },
-                       
-                       grid:{
-                        color : 'white',
-                        lineWidth : 2,
-                       },
-                       pointLabels:{
-                        color : 'white',
-                        font:{size : 15,},
-                       },
-                        ticks:{
+                           pointLabels:{
                             color : 'white',
-                            display: false
-                            
+                            font:{size : 15,},
+                           },
+                            ticks:{
+                                color : 'white',
+                                display: false
+                                
+                            },
+    
+                            beginAtZero: false,
+                                min: {{neg_min}}-0.05,
+                                max: {{neg_max}}+0.05,
+    
                         },
-
-                        beginAtZero: false,
-                            min: {{pos_min}}-0.05,
-                            max: {{pos_max}}+0.05,
-
-                    },
-                       
-
-                    },
-                    
-                    responsive: true,
-                    plugins:{
-                    legend:{
-                        display:false,
-                        labels:{
-                            color: 'white'
+                           
+                     
                         },
-                        title:{
+                        
+                        responsive: true,
+                        plugins:{
+                        legend:{
                             display:false,
+                            labels:{
+                                color: 'white'
+                            },
+                            title:{
+                                display:false,
+                            },
                         },
+                        
+    
                     },
-                    
-
-                },
-                    
-                  
-                }
+                        
+                      
+                    }
                 
                 });
           </script>
