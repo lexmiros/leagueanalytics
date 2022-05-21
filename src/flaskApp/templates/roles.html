@@ -3,11 +3,9 @@
     {%block title%}
         <h1 class="title">Role breakdown </h1>
         <h6> </h6>
-     
-        {%endblock title%}
+    {%endblock title%}
   
     {% block content %}
-
     <div class="float-child">
         <h2 class="title2"> Wins vs Losses by role</h2>  
         <div>
@@ -30,228 +28,205 @@
     </div>  
 
   
-    <!------------------------Win rates by role---------------------------------------------->
-    <script>
-        const win_rates = ['{{top_wr}}', '{{jungle_wr}}', '{{middle_wr}}', '{{bottom_wr}}', '{{support_wr}}'];
-        Chart.defaults.set('plugins.datalabels', {
-            color: '#FE777B'
-            });
-        
-        Chart.register(ChartDataLabels);
+<!------------------------Win rates by role---------------------------------------------->
+<script>
+    const win_rates = ['{{top_wr}}', '{{jungle_wr}}', '{{middle_wr}}', '{{bottom_wr}}', '{{support_wr}}'];
+    Chart.register(ChartDataLabels);
 
-        const data = {
-            color: 'white',
-            labels: ["Top","Jungle","Middle","Bottom","Support"],
-            datasets: [{
+    const data = {
+        color: 'white',
+        labels: ["Top","Jungle","Middle","Bottom","Support"],
+        datasets: [
+            {
                 label: 'Wins',
-                data: [{{top_wins}},{{jungle_wins}},{{middle_wins}},{{bottom_wins}},{{support_wins}}],
+                data: [
+                    {{top_wins}},
+                    {{jungle_wins}},
+                    {{middle_wins}},
+                    {{bottom_wins}},
+                    {{support_wins}}
+                ],
                 backgroundColor: [
-                "#228B22",
-
-                
+                "#228B22",   
                 ],
                 borderColor: [
                 "#228B22", 
                 ],
                 borderWidth: 3,
-
                 datalabels:{
                     display : false
                 }
             },
-
             {
                 label: 'Losses',
-                data: [{{top_losses}},{{jungle_losses}},{{middle_losses}},{{bottom_losses}},{{support_losses}}],
+                data: [
+                    {{top_losses}},
+                    {{jungle_losses}},
+                    {{middle_losses}},
+                    {{bottom_losses}},
+                    {{support_losses}}
+                ],
                 backgroundColor: [
                 '#800000',  
-            
                 ],
-
                 borderColor: [
                 '#800000',    
                 ],
-
                 borderWidth: 3,
-
                 datalabels: {
                     color : 'white',  
                     font: { 
                         weight : 'bold',
                         size : 14,       
-                        },
+                    },
                     formatter: function(value, context) {
                         return win_rates[context.dataIndex];;
-                        }
-                }
-          
-            }
-        
-        ]
-        };
-      
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
-                layout: {
-                    padding: {
-                        top: 10
                     }
-                    },
-                responsive: true,
-                scales: {
+                } 
+            }
+
+        ]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            layout: {
+                padding: {
+                    top: 10
+                }
+            },
+            responsive: true,
+            scales: {
                 x: {
                     grid:{
-                            color:'rgba(255,255,255,0.0)',
-                        },
+                        color:'rgba(255,255,255,0.0)',
+                    },
                     ticks:{
                         color:"white",
                         font: {   
                             weight : 'bold',
                             size : 16,       
-                        }
-                        
+                        }   
                     },
                     stacked: true,
                     title:{
-                        color : '#0C0032',
+                        color :'#0C0032',
                         display: true,
                         text: "Role",
                         font: {   
                             weight : 'bold',
                             size : 20,       
                         }
-                    },
-                    
+                    },   
                 },
                 y: {
                     grid:{
-                            color:'rgba(255,255,255,0.3)',
-                        },
+                        color:'rgba(255,255,255,0.3)',
+                    },
                     ticks:{
                         color:"white",
                         font: {   
                             weight : 'bold',
                             size : 16,       
-                        }
-                        
+                        }   
                     },
                     max: Math.round(({{y_max}} + 100)/100)*100,
                     beginAtZero: true,
                     stacked: true,
                     title:{
-
                         color: 'white',
                         display: true,
                         text: "Number of games",
                         font: {   
                             weight : 'bold',
-                            size : 20,
-                            
+                            size : 20,     
                         }
                     },
-                    }
+                }
+            },
+            plugins:{
+                legend:{
+                    labels:{
+                        color: 'white'
+                    },
                 },
-
-                plugins:{
-                    legend:{
-                        labels:{
-                            color: 'white'
-                        },
+                datalabels: {
+                    anchor: 'end',
+                    align: 'top',
+                    font: {
+                        weight: 'bold',
+                        size : 20,
                     },
-                    datalabels: {
-                        anchor: 'end',
-                        align: 'top',
-                        font: {
-                            weight: 'bold',
-                            size : 20,
-                        },
-                    },
-
                 },
             },
-        };
-      </script>
-      <script>
-        const topChart = new Chart(
-          document.getElementById('topChart'),
-          config
-        );
-       
-      </script>
+        },
+    };
+
+    const topChart = new Chart(
+        document.getElementById('topChart'),
+        config
+    );
+</script>
 
       <!------------------------Champ rates by role---------------------------------------------->
-      <script>
-        const names1 = {{labels_1 | safe}};
-        const names2 = {{labels_2 | safe}};
-        const names3 = {{labels_3 | safe}};
+<script>
+    const names1 = {{labels_1 | safe}};
+    const names2 = {{labels_2 | safe}};
+    const names3 = {{labels_3 | safe}};
+    Chart.register(ChartDataLabels);
 
-        Chart.defaults.set('plugins.datalabels', {
-            color: 'white'
-            });
-        
-        Chart.register(ChartDataLabels);
-
-        const data2 = {
-            
-            labels: ["Top","Jungle","Middle","Bottom","Support"],
-            datasets: [{
+    const data2 = {
+        labels: ["Top","Jungle","Middle","Bottom","Support"],
+        datasets:[
+            {
                 label: '1',
                 data: {{data_1 | safe}},
                 backgroundColor: [
-                "#003f5c",
-                "#228B22",
-                "#bc5090",
-                "#ff6361",
-                "#ffa600",
-                
-
-                
+                    "#003f5c",
+                    "#228B22",
+                    "#bc5090",
+                    "#ff6361",
+                    "#ffa600", 
                 ],
                 borderColor: [
-                "#003f5c",
-                "#228B22",
-                "#bc5090",
-                "#ff6361",
-                "#ffa600",
+                    "#003f5c",
+                    "#228B22",
+                    "#bc5090",
+                    "#ff6361",
+                    "#ffa600",
                 ],
                 borderWidth: 3,
-
                 datalabels: {
                     color : 'white',  
                     font: { 
                         weight : 'bold',
                         size : 14,       
-                        },
+                    },
                     formatter: function(value, context) {
                         return names1[context.dataIndex];;
-                        }
+                    }
                 },
             },
-
             {
                 label: '2',
                 data: {{data_2 | safe}},
                 backgroundColor: [
-                "#003f5c",
-                "#228B22",
-                "#bc5090",
-                "#ff6361",
-                "#ffa600",
-            
+                    "#003f5c",
+                    "#228B22",
+                    "#bc5090",
+                    "#ff6361",
+                    "#ffa600",
                 ],
-
                 borderColor: [
-                "#003f5c",
-                "#228B22",
-                "#bc5090",
-                "#ff6361",
-                "#ffa600",
+                    "#003f5c",
+                    "#228B22",
+                    "#bc5090",
+                    "#ff6361",
+                    "#ffa600",
                 ],
-
                 borderWidth: 3,
-
                 datalabels: {
                     color : 'white',  
                     font: { 
@@ -260,32 +235,27 @@
                         },
                     formatter: function(value, context) {
                         return names2[context.dataIndex];;
-                        }
+                    }
                 },
-          
             },
             {
                 label: '3',
                 data: {{data_3 | safe}},
                 backgroundColor: [
-                "#003f5c",
-                "#228B22",
-                "#bc5090",
-                "#ff6361",
-                "#ffa600",
-            
+                    "#003f5c",
+                    "#228B22",
+                    "#bc5090",
+                    "#ff6361",
+                    "#ffa600",
                 ],
-
                 borderColor: [
-                "#003f5c",
-                "#228B22",
-                "#bc5090",
-                "#ff6361",
-                "#ffa600",
+                    "#003f5c",
+                    "#228B22",
+                    "#bc5090",
+                    "#ff6361",
+                    "#ffa600",
                 ],
-
                 borderWidth: 3,
-
                 datalabels: {
                     color : 'white',  
                     font: { 
@@ -294,47 +264,41 @@
                         },
                     formatter: function(value, context) {
                         return names3[context.dataIndex];;
-                        }
+                    }
                 },
-          
             }
-        
+
         ]
-        };
-      
-        const config2 = {
-            type: 'bar',
-            data: data2,
-            options: {
-                layout: {
-                padding: {
-                    
-                    top: 40,
-                    
+    };
+    const config2 = {
+        type: 'bar',
+        data: data2,
+        options: {
+            layout: {
+                padding: { 
+                    top: 40,     
                 }
             },
-                responsive: true,
-                scales: {
-                    xAxes: [
-                    {
-                        ticks: {
-                        
-                        },
+            responsive: true,
+            scales: {
+                xAxes: [
+                {
+                    ticks: {
                     },
-                    ],
+                },
+                ],
                 x: {
                     grid:{
-                            color:'rgba(255,255,255,0.0)',
-                        },
+                        color:'rgba(255,255,255,0.0)',
+                    },
                     ticks:{
                         color : 'white', 
                         padding: 70, 
-                    font: { 
-                        weight : 'bold',
-                        size : 20,       
+                        font: { 
+                            weight : 'bold',
+                            size : 20,       
                         },
                     },
-                    
                     title:{
                         color:'white',
                         display: false,
@@ -349,13 +313,13 @@
                 },
                 y: {
                     grid:{
-                            color:'rgba(255,255,255,0.3)',
-                        },
+                        color:'rgba(255,255,255,0.3)',
+                    },
                     ticks:{
                         color : 'white',  
-                    font: { 
-                        weight : 'bold',
-                        size : 16,       
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
                         },
                     },
                     title:{
@@ -368,203 +332,175 @@
                             
                         }
                     },
-                    }
-                },
-
-                plugins:{
-                    legend: {
-                            display: false
-                        },
-                    datalabels: {
-                        anchor: 'start',
-                        align: 'bottom',
-                        rotation:-65,
-                        font: {
-                            weight: 'bold'
-                        }
-                    }
-
                 }
             },
-        };
-      </script>
-      <script>
-        const wrChart = new Chart(
-          document.getElementById('wrChart'),
-          config2
-        );
-       
-      </script>
+            plugins:{
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    anchor: 'start',
+                    align: 'bottom',
+                    rotation:-65,
+                    font: {
+                        weight: 'bold'
+                    }
+                }
+            }
+        },
+    };
+
+    const wrChart = new Chart(
+        document.getElementById('wrChart'),
+        config2
+    );
+
+</script>
 
  <!------------------------Win rates by time-played-role---------------------------------------------->
 
- <script>
+<script>
     var ctx = document.getElementById("lineChart").getContext("2d");
-            var lineChart = new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: {{time_overall | safe }},
-                    datasets: [
-                        {
-                        label: "Top",
-                        data: {{ cum_wr_top | safe }},
-                        pointRadius: 0,
-                        backgroundColor:"#003f5c",
-                        borderColor: "#003f5c",
-                        tension : 0.4,
-                        borderWidth : 4,
-                       
-            
-                       
-                        },
-
-                        {
-                        label: "Jungle",
-                        data: {{ cum_wr_jungle | safe }},
-                        pointRadius: 0,
-                        backgroundColor:"#228B22",
-                        borderColor: "#228B22",
-                        tension : 0.4,
-                        borderWidth : 4,         
-                        },
-
-                        {
-                        label: "Middle",
-                        data: {{ cum_wr_middle | safe }},
-                        pointRadius: 0,
-                        backgroundColor:"#bc5090",
-                        borderColor: "#bc5090",
-                        tension : 0.4,
-                        borderWidth : 4,
-                        },
-
-                        {
-                        label: "Bottom",
-                        data: {{ cum_wr_bottom | safe }},
-                        pointRadius: 0,
-                        backgroundColor: "#ff6361",
-                        borderColor:  "#ff6361",
-                        tension : 0.4,
-                        borderWidth : 4,
-                        },
-
-                        {
-                        label: "Support",
-                        data: {{ cum_wr_support | safe }},
-                        pointRadius: 0,
-                        backgroundColor:  "#ffa600",
-                        borderColor:   "#ffa600",
-                        tension : 0.4,    
-                        borderWidth : 4,                  
-                        },
-
-                        {
-                        label: "Overall",
-                        data: {{ cum_wr_overall | safe }},
-                        pointRadius: 0,
-                        backgroundColor: "#E1EFD2",
-                        borderColor:  "#E1EFD2",
-                        tension : 0.1,
-                        borderWidth : 4,                       
-                        
-                        },
-   
-                    ],
-                
+    var lineChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: {{time_overall | safe }},
+            datasets: [
+                {
+                label: "Top",
+                data: {{ cum_wr_top | safe }},
+                pointRadius: 0,
+                backgroundColor:"#003f5c",
+                borderColor: "#003f5c",
+                tension : 0.4,
+                borderWidth : 4,
                 },
-                options: {
-                   
-                    layout: {
-                    padding: {
-                        top: 50
-                    }
-                    },
-                    plugins: {
-                        datalabels: {
-                            display: false,
-                        },
-                    },
-                    scales: {
-                        x: {
-                            
-                                    ticks:{
-                                color : 'white',  
-                            font: { 
-                                weight : 'bold',
-                                size : 16,       
-                                },
-                            },
-                            min: 5,
-                            display: true,
-                            type: 'logarithmic',
-                            title:{
-                                color: 'white',
-                            display: true,
-                            text: "Cumulative time played (Log Scale)",
-                            font: {   
-                                weight : 'bold',
-                                size : 20,
-                                
-                                    }
-                            },
-                            
-                        },
-                        y: {
-                            grid:{
-                            color:'rgba(255,255,255,0.3)',
-                        },
-                            ticks:{
-                                color : 'white',  
-                            font: { 
-                                weight : 'bold',
-                                size : 16,       
-                                },
-                            },
-                            max: 100,
-                            min : 0,
-                            display: true,
-                            title:{
-                            color : 'white',
-                            display: true,
-                            text: "Win rate (%)",
-                            font: {   
-                                weight : 'bold',
-                                size : 20,
-                                color: '#000000',
-                                    }
-                            },
-                            
-                        }
-                        },
+                {
+                label: "Jungle",
+                data: {{ cum_wr_jungle | safe }},
+                pointRadius: 0,
+                backgroundColor:"#228B22",
+                borderColor: "#228B22",
+                tension : 0.4,
+                borderWidth : 4,         
+                },
+                {
+                label: "Middle",
+                data: {{ cum_wr_middle | safe }},
+                pointRadius: 0,
+                backgroundColor:"#bc5090",
+                borderColor: "#bc5090",
+                tension : 0.4,
+                borderWidth : 4,
+                },
+                {
+                label: "Bottom",
+                data: {{ cum_wr_bottom | safe }},
+                pointRadius: 0,
+                backgroundColor: "#ff6361",
+                borderColor:  "#ff6361",
+                tension : 0.4,
+                borderWidth : 4,
+                },
+                {
+                label: "Support",
+                data: {{ cum_wr_support | safe }},
+                pointRadius: 0,
+                backgroundColor:  "#ffa600",
+                borderColor:   "#ffa600",
+                tension : 0.4,    
+                borderWidth : 4,                  
+                },
+                {
+                label: "Overall",
+                data: {{ cum_wr_overall | safe }},
+                pointRadius: 0,
+                backgroundColor: "#E1EFD2",
+                borderColor:  "#E1EFD2",
+                tension : 0.1,
+                borderWidth : 4,                       
+                },
 
-
-                    responsive: true,
-
-                    plugins:{
-                    legend:{
-                        labels:{
-                            color: 'white'
+            ],  
+        },
+        options: {
+            layout: {
+                padding: {
+                    top: 50
+                }
+            },
+            plugins: {
+                datalabels: {
+                    display: false,
+                },
+            },
+            scales: {
+                x: {
+                    ticks:{
+                        color : 'white',  
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
                         },
                     },
-                    datalabels: {
-                        display : false,
-                        anchor: 'end',
-                        align: 'top',
-                        font: {
-                            weight: 'bold',
+                    min: 5,
+                    display: true,
+                    type: 'logarithmic',
+                    title:{
+                        color: 'white',
+                        display: true,
+                        text: "Cumulative time played (Log Scale)",
+                        font: {   
+                            weight : 'bold',
                             size : 20,
+                        }
+                    },    
+                },
+                y: {
+                    grid:{
+                        color:'rgba(255,255,255,0.3)',
+                    },
+                    ticks:{
+                        color : 'white',  
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
                         },
                     },
-
+                    max: 100,
+                    min : 0,
+                    display: true,
+                    title:{
+                        color : 'white',
+                        display: true,
+                        text: "Win rate (%)",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            color: '#000000',
+                        }
+                    },     
+                }
+            },
+            responsive: true,
+            plugins:{
+                legend:{
+                    labels:{
+                        color: 'white'
+                    },
+                },
+                datalabels: {
+                    display : false,
+                    anchor: 'end',
+                    align: 'top',
+                    font: {
+                        weight: 'bold',
+                        size : 20,
+                    },
                 },
 
-                    
-                  
-                },
-            
-            });
-      </script>
-
-
-
-      {%endblock content%}
+            },                  
+        },   
+    });
+</script>
+{%endblock content%}

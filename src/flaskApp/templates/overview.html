@@ -1,447 +1,398 @@
 
-    {% extends "layout.html" %}
-    
-    {%block title%}
-        <h1 class="title">Overview</h1>
-        
-        {%endblock title%}
-    {% block content %}
+{% extends "layout.html" %}
 
-    
-        {% if show_radar_pos %}
+{%block title%}
+    <h1 class="title">Overview</h1>
+{%endblock title%}
+
+{% block content %}
+    {% if show_radar_pos %}
+    <div class="float-child">
+        <h2 class="title2"> What's winning {{user}} games?</h2>
+        <canvas class="chart" id="radarChart" width="550" height="450"></canvas>
+    </div>
+
+    {% else %}
+    <div class="float-child">
+        <h2 class="title2"> What's winning {{user}} games?</h2>
+        <p style="color:white">Unfortunately it looks like the regression model couldn't find an adequate
+            number of statistically sagnificant variables for your wins. This is most likely
+            due to not having enough games to build an adequate model. 
+        </p>
+    </div>
+    {%endif%}
+
+    {% if show_radar_neg %}
+    <div class="float-child">
+        <h2 class="title2"> What's losing {{user}} games?</h2>
+        <canvas class="chart" id="radarChart2" width="550" height="450"></canvas>
+    </div>
+    {% else %}
         <div class="float-child">
-          <h2 class="title2"> What's winning {{user}} games?</h2>
-       
-          <canvas class="chart" id="radarChart" width="550" height="450"></canvas>
-        </div>
-        {% else %}
-        <div class="float-child">
-            <h2 class="title2"> What's winning {{user}} games?</h2>
-            <p style="color:white">Unfortunately it looks like the regression model couldn't find an adequate
+            <h2 class="title2"> What's losing {{user}} games?</h2>
+            <p>Unfortunately it looks like the regression model couldn't find an adequate
                 number of statistically sagnificant variables for your wins. This is most likely
                 due to not having enough games to build an adequate model. 
             </p>
-          </div>
+        </div>
         {%endif%}
-        {% if show_radar_neg %}
-        <div class="float-child">
-            <h2 class="title2"> What's losing {{user}} games?</h2>
-            <canvas class="chart" id="radarChart2" width="550" height="450"></canvas>
-          </div>
-          {% else %}
-          <div class="float-child">
-              <h2 class="title2"> What's losing {{user}} games?</h2>
-              <p>Unfortunately it looks like the regression model couldn't find an adequate
-                  number of statistically sagnificant variables for your wins. This is most likely
-                  due to not having enough games to build an adequate model. 
-              </p>
-            </div>
-            {%endif%}
-        
-        <div class="float-child">
-            <h2 class="title2"> Most played champions</h2>
-            <canvas class="chart" id="playedChart" width="600" height="350"></canvas>
-           
-        </div>
+    
+    <div class="float-child">
+        <h2 class="title2"> Most played champions</h2>
+        <canvas class="chart" id="playedChart" width="600" height="350"></canvas>   
+    </div>
 
-        <div class="float-child">
-            <h2 class="title2"> Highest win-rate champions</h2>
-            
-            <canvas class="chart" id="wrChart" width="600" height="350"></canvas>
-        </div>
+    <div class="float-child">
+        <h2 class="title2"> Highest win-rate champions</h2>
+        <canvas class="chart" id="wrChart" width="600" height="350"></canvas>
+    </div>
 
-       
+    
 
-        
-        
-    <!------------------------Radar chart---------------------------------------------->
-    <script>
-    var ctx = document.getElementById("radarChart").getContext("2d");
-            var lineChart = new Chart(ctx, {
-                type: "radar",
-                data: {
-                    labels: {{model_names | safe }},
-                    datasets: [
-                        {
-                        label: "{{user}}",
-                        data: {{ model_values | safe }},
-                        backgroundColor: 'rgba(170,219,30, 0.2)',
-                        borderColor: 'rgb(170,219,30)',
-                        pointBackgroundColor: 'rgb(154, 205, 50)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(154, 205, 50)'
-                        
-                        },
-   
-                    ],
+    
+    
+<!------------------------Radar chart Winning games---------------------------------------------->
+<script>
+var ctx = document.getElementById("radarChart").getContext("2d");
+    var lineChart = new Chart(ctx, {
+        type: "radar",
+        data: {
+            labels: {{model_names | safe }},
+            datasets: [
+                {
+                label: "{{user}}",
+                data: {{ model_values | safe }},
+                backgroundColor: 'rgba(170,219,30, 0.2)',
+                borderColor: 'rgb(170,219,30)',
+                pointBackgroundColor: 'rgb(154, 205, 50)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(154, 205, 50)'
                 
                 },
-                options: {
+            ],
+        
+        },
+        options: {
+            color : 'white',
+            scales: {
+                r:{
+                    angleLines:{
                     color : 'white',
-                    scales: {
-                       r:{
-                           angleLines:{
-                            color : 'white',
-                            lineWidth : 2, 
-                           },
-                       
-                       grid:{
+                    lineWidth : 2, 
+                    },
+                
+                    grid:{
                         color : 'white',
                         lineWidth : 2,
-                       },
-                       pointLabels:{
+                    },
+                    pointLabels:{
                         color : 'white',
                         font:{size : 15,},
-                       },
-                        ticks:{
-                            color : 'white',
-                            display: false
-                            
-                        },
-
-                        beginAtZero: false,
-                            min: {{pos_min}}-0.05,
-                            max: {{pos_max}}+0.05,
-
                     },
-                       
-                 
-                    },
-                    
-                    responsive: true,
-                    plugins:{
-                    legend:{
-                        display:false,
-                        labels:{
-                            color: 'white'
-                        },
-                        title:{
-                            display:false,
-                        },
-                    },
-                    
-
-                },
-                    
-                  
-                }
-            
-            });
-      </script>
-       
-       <script>
-        var ctx = document.getElementById("radarChart2").getContext("2d");
-                var lineChart = new Chart(ctx, {
-                    type: "radar",
-                    data: {
-                        labels: {{model_names_neg | safe }},
-                        datasets: [
-                            {
-                            label: "{{user}}",
-                            data: {{ model_values_neg | safe }},
-                            backgroundColor: 'rgba(170,219,30, 0.2)',
-                            borderColor: 'rgb(170,219,30)',
-                            pointBackgroundColor: 'rgb(154, 205, 50)',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgb(154, 205, 50)'
-                            
-                            },
-       
-                        ],
-                    
-                    },
-                    options: {
+                    ticks:{
                         color : 'white',
-                        scales: {
-                           r:{
-                               angleLines:{
-                                color : 'white',
-                                lineWidth : 2, 
-                               },
-                           
-                           grid:{
-                            color : 'white',
-                            lineWidth : 2,
-                           },
-                           pointLabels:{
-                            color : 'white',
-                            font:{size : 15,},
-                           },
-                            ticks:{
-                                color : 'white',
-                                display: false
-                                
-                            },
-    
-                            beginAtZero: false,
-                                min: {{neg_min}}-0.05,
-                                max: {{neg_max}}+0.05,
-    
-                        },
-                           
-                     
-                        },
-                        
-                        responsive: true,
-                        plugins:{
-                        legend:{
-                            display:false,
-                            labels:{
-                                color: 'white'
-                            },
-                            title:{
-                                display:false,
-                            },
-                        },
-                        
-    
+                        display: false     
                     },
-                        
-                      
-                    }
-                
-                });
-          </script>
 
-
-    <!------------------------Top champs played---------------------------------------------->
-    <script>
-        var ctx = document.getElementById("playedChart").getContext("2d");
-        var lineChart = new Chart(ctx, {
-            type: "bar",
-            scaleFontColor : "white",
-            data: {
-                labels: {{labels_top | safe }},
-                datasets: [
-                    {
-                    label: "",
-                    data: {{ games | safe }},
-                    backgroundColor: [                  
-                        "#E1EFD2",
-                        "#C4E4B5",
-                        "#A1D999",
-                        "#7DCD81",
-                        "#61C078",
-                        "#46B375",
-                        "#2CA576",
-                        "#25927F",
-                        "#1E7B7F",
-                        "#18566B",
-                        "#123757",
-                        
-                    ],
-                    fill: false,
-                    borderColor: "rgb(75, 192, 192)",
-                    }
-                ]
+                    beginAtZero: false,
+                        min: {{pos_min}}-0.05,
+                        max: {{pos_max}}+0.05,
+                },                  
             },
-            options: {
-               
-                responsive: true,
+            
+            responsive: true,
+            plugins: {
+                legend:{
+                    display:false,
+                    labels: {
+                        color: 'white'
+                    },
+                    title:{
+                        display:false,
+                    },
+                },
+            },       
+        }  
+    });
+</script>
+ 
+<!------------------------Radar chart Losing games---------------------------------------------->
+<script>
+var ctx = document.getElementById("radarChart2").getContext("2d");
+    var lineChart = new Chart(ctx, {
+        type: "radar",
+        data: {
+            labels: {{model_names_neg | safe }},
+            datasets: [
+                {
+                label: "{{user}}",
+                data: {{ model_values_neg | safe }},
+                backgroundColor: 'rgba(170,219,30, 0.2)',
+                borderColor: 'rgb(170,219,30)',
+                pointBackgroundColor: 'rgb(154, 205, 50)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(154, 205, 50)'
+                },
+            ], 
+        },
+        options: {
+            color : 'white',
+            scales: {
+                r:{
+                    angleLines:{
+                        color : 'white',
+                        lineWidth : 2, 
+                    },
                 
-                scales: {
-                
-                    x: {
-                        grid:{
-                            color:'rgba(255,255,255,0.0)',
-                        },
-                        ticks:{
-                            color:"white",
-                            font: {   
+                    grid:{
+                        color : 'white',
+                        lineWidth : 2,
+                    },
+                    pointLabels:{
+                        color : 'white',
+                        font:{size : 15,},
+                    },
+                    ticks:{
+                        color : 'white',
+                        display: false
+                        
+                    },
+                    beginAtZero: false,
+                        min: {{neg_min}}-0.05,
+                        max: {{neg_max}}+0.05,
+                },      
+            },
+            responsive: true,
+            plugins:{
+                legend:{
+                    display: false,
+                    labels: {
+                        color: 'white'
+                    },
+                    title: {
+                        display:false,
+                    },
+                },
+            },    
+        }  
+    });
+</script>
+
+
+<!------------------------Top champs played---------------------------------------------->
+<script>
+    var ctx = document.getElementById("playedChart").getContext("2d");
+    var lineChart = new Chart(ctx, {
+        type: "bar",
+        scaleFontColor : "white",
+        data: {
+            labels: {{labels_top | safe }},
+            datasets: [{
+                label: "",
+                data: {{ games | safe }},
+                backgroundColor: [                  
+                    "#E1EFD2",
+                    "#C4E4B5",
+                    "#A1D999",
+                    "#7DCD81",
+                    "#61C078",
+                    "#46B375",
+                    "#2CA576",
+                    "#25927F",
+                    "#1E7B7F",
+                    "#18566B",
+                    "#123757",
+                    
+                ],
+                fill: false,
+                borderColor: "rgb(75, 192, 192)",
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    grid:{
+                        color:'rgba(255,255,255,0.0)',
+                    },
+                    ticks:{
+                        color:"white",
+                        font: {   
                             weight : 'bold',
                             size : 16,       
                         }
-                        },
-                        title:{
+                    },
+                    title:{
                         color: 'white',
                         display: true,
                         text: "Champion",
                         font: {   
                             weight : 'bold',
-                            size : 20,
-                            
+                            size : 20, 
                         }
                     },
+                },
+                y: {
+                    grid:{
+                        color:'rgba(255,255,255,0.3)',
                     },
-                    y: {
-                        grid:{
-                            color:'rgba(255,255,255,0.3)',
-                        },
-                        ticks:{
-                            color:"white",
-                            font: {   
+                    ticks:{
+                        color:"white",
+                        font: {   
                             weight : 'bold',
                             size : 16,       
                         }
-                        },
-                        title:{
+                    },
+                    title:{
                         color: 'white',
                         display: true,
                         text: "Games Played",
                         font: {   
                             weight : 'bold',
-                            size : 20,
-                            
+                            size : 20,   
                         }
                     },
-                    },
-                    yAxes: [{
-                        color : 'white',
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Games played",
-                            
-                        },
-                        ticks: {
-                            color: 'white',
-                            beginAtZero: true
-                        }
-                    }],
-
-                    xAxes: [{
-                        grid:{
-                            borderColor : 'white',
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Champion"
-                        }
-                        
-                    }]
                 },
-                plugins:{
-                    legend:{
-                        display:false,
-                        labels:{
-                            color: 'white'
-                        },
-                        title:{
-                            display:false,
-                        },
+                yAxes: [{
+                    color : 'white',
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Games played",    
                     },
-                    
-
-                },
-            }
-           
-        });
-
-        var ctx = document.getElementById("wrChart").getContext("2d");
-        var lineChart = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: {{labels_wr | safe }},
-                datasets: [
-                    {
-                    label: "",
-                    data: {{ win_rates | safe }},
-                    backgroundColor: [
-                        "#E1EFD2",
-                        "#C4E4B5",
-                        "#A1D999",
-                        "#7DCD81",
-                        "#61C078",
-                        "#46B375",
-                        "#2CA576",
-                        "#25927F",
-                        "#1E7B7F",
-                        "#18566B",
-                        "#123757",
-
-                        
-                        ],
-                    fill: false,
-                    borderColor: "rgb(75, 192, 192)",
+                    ticks: {
+                        color: 'white',
+                        beginAtZero: true
                     }
-                ]
+                }],
+                xAxes: [{
+                    grid:{
+                        borderColor : 'white',
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Champion"
+                    }      
+                }]
             },
-            options: {
-                color : 'white',
-                responsive: true,
-                scales: {
-                    x: {
-                        grid:{
-                            color:'rgba(255,255,255,0.0)',
-                        },
-                        ticks:{
-                            color:"white",
-                            font: {   
+            plugins:{
+                legend:{
+                    display:false,
+                    labels:{
+                        color: 'white'
+                    },
+                    title:{
+                        display:false,
+                    },
+                },
+            },
+        }     
+    });
+
+    var ctx = document.getElementById("wrChart").getContext("2d");
+    var lineChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: {{labels_wr | safe }},
+            datasets: [{
+                label: "",
+                data: {{ win_rates | safe }},
+                backgroundColor: [
+                    "#E1EFD2",
+                    "#C4E4B5",
+                    "#A1D999",
+                    "#7DCD81",
+                    "#61C078",
+                    "#46B375",
+                    "#2CA576",
+                    "#25927F",
+                    "#1E7B7F",
+                    "#18566B",
+                    "#123757",     
+                ],
+                fill: false,
+                borderColor: "rgb(75, 192, 192)",
+            }]
+        },
+        options: {
+            color : 'white',
+            responsive: true,
+            scales: {
+                x: {
+                    grid:{
+                        color:'rgba(255,255,255,0.0)',
+                    },
+                    ticks:{
+                        color:"white",
+                        font: {   
                             weight : 'bold',
                             size : 16,       
                         }
-                        },
-                        title:{
+                    },
+                    title:{
                         color: 'white',
                         display: true,
                         text: "Champion",
                         font: {   
                             weight : 'bold',
-                            size : 20,
-                            
+                            size : 20,  
                         }
+                    },      
+                },
+                y: {
+                    grid:{
+                        color:'rgba(255,255,255,0.3)',
                     },
-                       
-                    },
-                    y: {
-                        grid:{
-                            color:'rgba(255,255,255,0.3)',
-                        },
-                        ticks:{
-                            color:"white",
-                            font: {   
+                    ticks:{
+                        color:"white",
+                        font: {   
                             weight : 'bold',
                             size : 16,       
                         }
-                        },
-                        title:{
+                    },
+                    title:{
                         color: 'white',
                         display: true,
                         text: "Win rate (%)",
                         font: {   
                             weight : 'bold',
-                            size : 20,
-                            
+                            size : 20,     
                         }
                     },
-                    },
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Win rate %"
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                            
-                        }
-                    }],
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Champion"
-                        }
-                        
-                    }]
                 },
-                plugins:{
-                    legend:{
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Win rate %"
+                    },
+                    ticks: {
+                        beginAtZero: true,   
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Champion"
+                    }  
+                }]
+            },
+            plugins:{
+                legend:{
+                    display:false,
+                    labels:{
+                        color: 'white'
+                    },
+                    title:{
                         display:false,
-                        labels:{
-                            color: 'white'
-                        },
-                        title:{
-                            display:false,
-                        },
                     },
-                    
-
                 },
-            }
-        });
-    </script>
-    
-    
-    {%endblock content%}
-    
-    
+            },
+        }
+    });
+</script>
+
+
+{%endblock content%}
+
+

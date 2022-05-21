@@ -105,12 +105,10 @@ def top_champs_by_wr(df,n, user):
     df = df[df["SummonerName"] == user]
     counts = df["Champion"].value_counts()
 
+    #Counts is equal to all champs with at least 5 games
+    counts = counts[counts > 5]
+    
 
-    if len(counts) > 300:
-    #Counts is equal to all champs with at least z games
-        counts = counts[counts > 10]
-    else:
-        counts = counts[counts > 5]
 
          
     

@@ -1,69 +1,55 @@
-    <!-- Load icon library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    {% extends "layout.html" %}
-    {%block topnav%}{%endblock topnav%}
-    {%block sidebar%}{%endblock sidebar%}
-    {%block title%}
-    <h1 class="welcome"> League Analytics</h1>
-    <h5 class="subtitle"> Hit submit WITHOUT entering a summoner name to use test data</h5>
-    {% if error_msg%}
-    <h6 class="subtitle"> {{error_msg}}</h6>
-    <h5 class="subtitle"> Please try again or clear the username form to use test data</h5>
-    {%endif%}
-    
-    {%endblock title%}
-    {% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends "layout.html" %}
+{%block topnav%}{%endblock topnav%}
+{%block sidebar%}{%endblock sidebar%}
+{%block title%}
+<h1 class="welcome"> League Analytics</h1>
+<h5 class="subtitle"> Hit submit WITHOUT entering a summoner name to use test data</h5>
+{% if error_msg%}
+<h6 class="subtitle"> {{error_msg}}</h6>
+<h5 class="subtitle"> Please try again or clear the username form to use test data</h5>
+{%endif%}
+
+{%endblock title%}
+{% block content %}
+
+
+<div class="userForm">
+    <form method="POST" action="">
+        {% if form.region.errors %}
+            {{form.region(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.region.errors %}
+                        <span> {{ error }}</span>
+                    {% endfor %}
+                </div>
+        {% else %}
+            {{form.region(class="form-control form-control-lg") }}
+        {%endif%}
+
+
+
+        {{form.hidden_tag()}}
+
+            {% if form.user.errors %}
+                {{form.user(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.user.errors %}
+                            <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+            {% else %}
+                {{form.user(class="form-control form-control-lg") }}
+            {%endif%}
+
+        {{form.submit(class="btn btn-outline-info")}}
+        
+    </form>
+       
    
+</div>                        
     
-    <div class="userForm">
-        <form method="POST" action="">
+{%endblock content%}
 
 
-                    {% if form.region.errors %}
-                        {{form.region(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.region.errors %}
-                                    <span> {{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{form.region(class="form-control form-control-lg") }}
-                    {%endif%}
-
-
-
-            {{form.hidden_tag()}}
-        
-                        {% if form.user.errors %}
-                            {{form.user(class="form-control form-control-lg is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.user.errors %}
-                                        <span> {{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{form.user(class="form-control form-control-lg") }}
-                        {%endif%}
-
-            {{form.submit(class="btn btn-outline-info")}}
-           
-
-        </form>
-        
-
-
-        
-        
-                                     
-
-        
-
-            
-        </div>
-    </div>                        
-        
-    
-
-    {%endblock content%}
-    
-    

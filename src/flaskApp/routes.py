@@ -81,11 +81,11 @@ def loading(user, region):
         data = "newdata"
     
     else:
-        current_user = "Ausfreak"
+        current_user = "Frommoh"
         region = "OC1"
-        df = pd.read_csv("./TestData_Cleaned_3")
+        df = pd.read_csv("./TestData_Cleaned_2")
         df = pd.DataFrame(df)
-        data = "TestData_Cleaned_3"
+        data = "TestData_Cleaned_2"
     
     #wins, losses, win-rate
     results = user_win_loss_wr(df, current_user)
