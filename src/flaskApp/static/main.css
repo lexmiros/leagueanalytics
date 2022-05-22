@@ -1,12 +1,13 @@
 /* Style page content */
 .body{
-  background-color: #0C0032;
+  background-image: linear-gradient(to bottom right, rgb(52, 0, 174), #0C0032);
+  
 }
 
 .welcome{
   text-align: center;
   padding-top: 10%;
-  margin-right: 17.5%;
+  
   color: white;
   font-size: 500%;
 }
@@ -14,20 +15,21 @@
 .subtitle {
   text-align: center;
   padding-top: 3%;
-  margin-right: 17.5%;
   color: white;
   font-size: 200%;
   text-decoration: double;
 }
 
+.userForm div{
+  margin:0;
+}
 
 .main {
-  margin-left: 12.5%;
+  margin:auto;
   padding-top: 10%;
   padding-bottom: 10%;
-  width: 85%;
+  width: 100%;
   height: 100%;
-  
   background-color: rgba(63, 61, 61, 0);
   
 }
@@ -66,45 +68,6 @@
   text-align: left;
   
  }
- .rank{
-  color: #000000;
-  margin-top: %;
-  margin-left: 15%;
-  font-size: 200%;
- }
-
-
-/* The sidebar menu */
-.sidenav {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 10%; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 2; /* Stay on top */
-  top: 0px; /* Stay at the top */
-  left: 0;
-  background-color: #240090; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
-  margin: auto;
-
-}
-
-/* The navigation menu links */
-.sidenav a {
-  margin-top: 50px;
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 18px;
-  color: #ffffff;
-  display: block;
-  text-align: center;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
 
 .chart{
   
@@ -112,10 +75,10 @@
   padding: auto;
 }
 .content {
-  width: 75%;
+  width: 100%;
   margin: auto;
   margin-top: 5%;
-  margin-left: 17.50%;
+  
 }
 
 form {
@@ -142,27 +105,6 @@ button{
 }
 
 
-/* Add a black background color to the top navigation */
-.topnav {
-  margin-top: 0%;
-  border-bottom: #f1f1f1;
-  border-bottom: 1%;
-  border-color: #f1f1f1;
-  background-color: #240090;
-  overflow: hidden;
-  height: 5%;
-  z-index: 1;
-}
-
-/* Style the links inside the navigation bar */
-.topnav p {
-  margin-left: 10%;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  font-size: 17px;
-  height: 30%;
-}
 
 .float-container {
   margin-top: 2%;
@@ -252,13 +194,14 @@ button{
   width: 350%;
   text-align: center;
   padding: center;
-  margin-left: 225%;
+  margin-left: 300%;
+  
 }
 
 .btn{
   margin-top: 5%;
   width: 200%;
-  margin-left: 300%;
+  margin-left: 375%;
 }
 
 .float-child h4 {
@@ -275,5 +218,68 @@ h6 {
 
 .float-child h6 {
   
+  text-align: center;
+}
+
+nav {
+  margin:0 auto;
+  width:100%;
+  height:auto;
+  display:inline-block;
+  background:#282828;
+  text-align: center;
+}
+
+nav ul {
+  margin:0;
+  padding:0;
+  display: inline-block;
+  list-style-type:none;
+  text-align: center;
+}
+
+nav ul li {
+  position:relative;
+  margin:0 20px 0 0;
+  text-align: center;
+  display:inline-block;
+}
+
+li > a:after { content: ' »'; } /* Change this in order to change the Dropdown symbol */
+
+li > a:only-child:after { content: ''; }
+
+nav ul li a {
+  text-align: center;
+  padding:20px;
+  display:inline-block;
+  color:white;
+  text-decoration:none;
+  text-align: center;
+  
+}
+
+nav ul li a:hover {
+  opacity:0.5;
+  text-align: center;
+}
+
+nav ul li ul {
+  display:none;
+  position:absolute;
+  left:0;
+  background:#282828;
+  text-align: center;
+  
+}
+
+nav ul li ul li {
+  width:100%;
+  border-bottom:1px solid rgba(255,255,255,.3);
+  text-align: center;
+}
+
+nav ul li:hover ul {
+  display:block;
   text-align: center;
 }
