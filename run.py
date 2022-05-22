@@ -13,19 +13,8 @@ from src.flaskApp import routes
 
 if __name__ == "__main__":
 
-    #app.run()
+    app.run()
 
-    df = pd.read_csv("./TestData_Cleaned_2")
-    df = pd.DataFrame(df)
-    user = "Frommoh"
-
-    x = top_n_occurences(df, "Champion", user)
-    print(x)
-    print(type(x))
-
-    x = top_n_occurences(df, "Champion", user, to_dict=True)
-    print(x)
-    print(type(x))
 
     """
     current_user = "Ausfreak"
