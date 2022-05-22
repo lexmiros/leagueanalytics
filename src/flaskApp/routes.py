@@ -95,8 +95,7 @@ def loading(user, region):
     total_games = wins + losses
     #Rank
     rank = get_rank(current_user, region)
-    print(current_user)
-    print(rank)
+  
 
     
     
@@ -161,9 +160,6 @@ def overview():
     model_values = coefs[1]
     model_names_neg = coefs[2]
     model_values_neg = coefs[3]
-
-    print(len(model_values_neg))
-    print(model_values_neg)
     
     pos_max = max(model_values)
     pos_min = min(model_values)

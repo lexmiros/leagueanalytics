@@ -25,16 +25,22 @@ def build_logit_model(df: pd.DataFrame, y: str, x_list: list, p_value: float) ->
     Statsmodel 
         The logistic regression model
     """
+    #Set y and X
     y = df[[y]]
     X = df[df.columns & x_list]
 
-    X = ( X-  X.mean()) / X.std()
+    #Normalise X values
+    X = ( X -  X.mean()) / X.std()
 
+    #Build model
     logit_model = sm.Logit(y,X)
     model = logit_model.fit()
 
+    #Check significance of X coefficients
     significant_x = model.pvalues < p_value
     p_05 = significant_x.all()
+
+    #Recursively run to remove all x > p_value
     if p_05 == True:
         return model
     else:
