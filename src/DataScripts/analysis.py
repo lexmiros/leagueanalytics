@@ -1,6 +1,5 @@
-import pandas as pd
 
-from src.DataScripts.CleanData import  top_n_occurences
+from src import pd
 import statsmodels.api as sm
 
 def build_logit_model(df: pd.DataFrame, y: str, x_list: list, p_value: float) -> sm.regression.linear_model:

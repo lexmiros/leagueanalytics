@@ -1,6 +1,4 @@
-import pandas as pd
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
+from src import pd
 
 def encode_true_false(df_column: pd.Series) -> pd.Series:
     """

@@ -1,13 +1,14 @@
-from graphviz import render
-from matplotlib.pyplot import table
+from src import pd
 from src.flaskApp import app
-from flask import redirect, render_template, url_for, request
-from src.DataScripts.CleanData import *
-from src.DataScripts.analysis import *
-from src.DataScripts.GetData import *
-import pandas as pd
-from src.flaskApp.forms import UserNameForm, LoadForm
-import time
+from flask import redirect, render_template, url_for
+
+from src.DataScripts.GetData import get_account_id, get_match_details, get_rank
+from src.DataScripts.CleanData import encode_true_false, col_to_string, encode_categorical, top_n_occurences, impute_mode_lane
+from src.DataScripts.analysis import  build_logit_model, get_model_coefs, get_user_top_stats, get_user_bottom_stats, get_column_cumulative, get_wr_cumulative, role_losses, role_wins, top_champs_by_wr, user_win_loss_wr, win_ratio_str_formatted, get_wr_cumulative, win_ratio_str_formatted, user_win_loss_wr, top_champs_by_wr,  role_wins, role_losses
+
+
+from src.flaskApp.forms import UserNameForm
+
 
 #Global variables 
 user = ""
