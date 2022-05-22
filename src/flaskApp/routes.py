@@ -2,33 +2,17 @@ from src import pd
 from src.flaskApp import app
 from flask import redirect, render_template, url_for
 
-from src.DataScripts.GetData import get_account_id, get_match_details, get_rank
+from src.DataScripts.GetData import get_account_id, get_match_details, get_rank, webpage_transfer
 from src.DataScripts.CleanData import encode_true_false, col_to_string, encode_categorical, top_n_occurences, impute_mode_lane
 from src.DataScripts.analysis import  build_logit_model, get_model_coefs, get_user_top_stats, get_user_bottom_stats, get_column_cumulative, get_wr_cumulative, role_losses, role_wins, top_champs_by_wr, user_win_loss_wr, win_ratio_str_formatted, get_wr_cumulative, win_ratio_str_formatted, user_win_loss_wr, top_champs_by_wr,  role_wins, role_losses
 
 
 from src.flaskApp.forms import UserNameForm
 
-
-#Global variables 
-user = ""
-current_user = ""
-region = ""
-wins = 0
-losses = 0
-wr = 0
-total_games = 0
-rank = ""
-n = 0
-data = ""
-
 #Landing page
 @app.route("/", methods = ["POST", "GET"])
 def home():
     form = UserNameForm()
-
-    global user
-    global region 
 
     if form.validate_on_submit():
         #If the user enters a name get data and save in .csv
@@ -57,73 +41,54 @@ def home():
 #Loading data function
 @app.route("/loading/<user>/<region>", methods=["POST","GET"])
 def loading(user, region):
-
-    global wins
-    global losses 
-    global wr 
-    global total_games 
-    global rank
-    global n   
-    global data
-    global current_user
-
     
-    no_games = 2000
-    n = 10
+    user = user
+    region = region
+    no_games = 1000
     
+
     if user != "test":
-        current_user = user
+        test = False
         df = get_match_details(user, region, no_games)
         df = col_to_string(df, "WinLoss")
         df["WinLoss"] = df["WinLoss"].map(encode_true_false)
         df = impute_mode_lane(df)
         df = encode_categorical(df, "Lane")
-        df.to_csv("./newdata")
-        data = "newdata"
+        df.to_csv(f"./newdata{user}.csv")
     
     else:
-        current_user = "Frommoh"
+        test = True
+        user = "Frommoh"
         region = "OC1"
-        df = pd.read_csv("./TestData_Cleaned_2")
-        df = pd.DataFrame(df)
-        data = "TestData_Cleaned_2"
-    
-    #wins, losses, win-rate
-    results = user_win_loss_wr(df, current_user)
-    wins = results[0]
-    losses = results[1]
-    wr = results[2]
-    total_games = wins + losses
-    #Rank
-    rank = get_rank(current_user, region)
-  
+
+    return redirect(url_for('overview', user = user, test = test, region = region))
 
     
+@app.route("/overview/<user>/<region>/<test>")
+def overview(user, region, test):
     
-    return redirect(url_for('overview'))
+    user = user
+    print(user)
+    region = region
+    test = test
+    print(test)
+    print(type(test))
 
-    
-@app.route("/overview")
-def overview():
-    
-    global current_user
-    global region 
-    global wins
-    global losses 
-    global wr 
-    global total_games 
-    global rank
-    global n   
-    global data
 
- 
-    n = int(n)
-    data_loc = f"./{data}"
-    df = pd.read_csv(data_loc)
-    df = pd.DataFrame(df)
+    #Set up passed in info from webpage
+    info = webpage_transfer(user, region, test)
+
+
+    df = info[0]
+    rank = info[1]
+    wins = info[2]
+    losses = info[3]
+    wr = info[4]
+    total_games = info[5]
+    
     
     #Top champs by winrate
-    top_wr_champs = top_champs_by_wr(df, n, current_user)
+    top_wr_champs = top_champs_by_wr(df, 10, user)
     labels_wr = []
     win_rates = []
     for champs in top_wr_champs:
@@ -133,18 +98,16 @@ def overview():
     #Top champs by played
     labels_top = []
     games = []
-    top_played = top_n_occurences(df, "Champion",current_user, n = n, to_dict=True)
+    top_played = top_n_occurences(df, "Champion",user, n = 10, to_dict=True)
     for champs in top_played:
         labels_top.append(champs["Name"])
         games.append(champs["Games"])
 
     
     #Logistic regression results
-    
     #subset df on user v non-user
-    df_user = df[df["SummonerName"] == current_user]
-    df_other = df[df["SummonerName"] != current_user]
-
+    df_user = df[df["SummonerName"] == user]
+    
     #model variables
     y = "WinLoss"
     X = ['Q casts','W casts','E casts','R casts','ChampLevel','CS',\
@@ -168,6 +131,12 @@ def overview():
     neg_max = max(model_values_neg)
     neg_min = min(model_values_neg)
 
+        
+    print(model_names)
+    print(model_names_neg)
+    print(user)
+    print(total_games)
+
     #Check that the model found at least 3 variables
     show_radar_pos = True
     show_radar_neg = True
@@ -179,24 +148,36 @@ def overview():
 
 
     return render_template("overview.html", labels_wr = labels_wr, win_rates = win_rates, labels_top = labels_top, \
-        games = games,n = n,  wins = wins, losses = losses, wr = wr, total_games = total_games, user = current_user, rank = rank,
+        games = games, wins = wins, losses = losses, wr = wr, total_games = total_games, user = user, rank = rank,
         model_values = model_values, model_names = model_names, model_names_neg = model_names_neg, model_values_neg = model_values_neg,
         pos_max = pos_max, pos_min = pos_min, neg_max = neg_max, neg_min = neg_min,
-        show_radar_neg = show_radar_neg, show_radar_pos = show_radar_pos)
+        show_radar_neg = show_radar_neg, show_radar_pos = show_radar_pos, test = test, region = region)
 
-@app.route("/stats")
-def stats():
+@app.route("/stats/<user>/<region>/<test>")
+def stats(user, region, test):
+
+    #Set up passed in info from webpage
+    user = user
+    region = region
+    test = test
+
+    info = webpage_transfer(user, region, test)
+
+    df = info[0]
+    rank = info[1]
+    wins = info[2]
+    losses = info[3]
+    wr = info[4]
+    total_games = info[5]
     
-    data_loc = f"./{data}"
-    df = pd.read_csv(data_loc)
-    df = pd.DataFrame(df)
+
     stats_variable_list = ['Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp',\
         'Damage','Shielding','Healing','Total Damage Taken','Wards Placed','Wards Killed','Vision Score','Game Time seconds',\
             'Crowd Control','Time spent dead','Kill participation','Team damage percentage','Skillshots hit',\
                 'Skillshots dodged','Solo kills','Turret plates taken']
 
-    top = get_user_top_stats(df, current_user, stats_variable_list)
-    bottom = get_user_bottom_stats(df, current_user, stats_variable_list)
+    top = get_user_top_stats(df, user, stats_variable_list)
+    bottom = get_user_bottom_stats(df, user, stats_variable_list)
     
     #Top stats
 
@@ -251,7 +232,7 @@ def stats():
 
 
     return render_template("stats2.html",  
-        user = current_user, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
+        user = user, region = region, test = test, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
 
         top_vars_1 = top_vars_1, top_user_1 = top_user_1, top_other_1 = top_other_1,\
         top_vars_2 = top_vars_2, top_user_2 = top_user_2, top_other_2 = top_other_2,
@@ -267,17 +248,25 @@ def stats():
         
         )
 
-@app.route("/roles")
-def roles():
-    """
-    """
-    #Set up dataframe
-    data_loc = f"./{data}"
-    df = pd.read_csv(data_loc)
-    df = pd.DataFrame(df)
+@app.route("/roles/<user>/<region>/<test>")
+def roles(user, region, test):
+    
+    #Set up passed in info from webpage
+    user = user
+    region = region
+    test = test
+
+    info = webpage_transfer(user, region, test)
+
+    df = info[0]
+    rank = info[1]
+    wins = info[2]
+    losses = info[3]
+    wr = info[4]
+    total_games = info[5]
 
     #Df for user only
-    df_user = df[df["SummonerName"] == current_user]
+    df_user = df[df["SummonerName"] == user]
 
     #Dataframes per role
     df_top = df_user[df_user["TOP"] == 1]
@@ -317,7 +306,7 @@ def roles():
 
     #Top champs by winrate bottom
 
-    top_wr_champs = top_champs_by_wr(df_bottom, n, current_user)
+    top_wr_champs = top_champs_by_wr(df_bottom, n, user)
     bottom_labels = []
     bottom_rates = []
     for champs in top_wr_champs:
@@ -326,7 +315,7 @@ def roles():
     
     #Top champs by winrate jungle
     
-    top_wr_champs = top_champs_by_wr(df_jungle, n, current_user)
+    top_wr_champs = top_champs_by_wr(df_jungle, n, user)
     jungle_labels = []
     jungle_rates = []
     for champs in top_wr_champs:
@@ -335,7 +324,7 @@ def roles():
 
     #Top champs by winrate middle
     
-    top_wr_champs = top_champs_by_wr(df_middle, n, current_user)
+    top_wr_champs = top_champs_by_wr(df_middle, n, user)
     middle_labels = []
     middle_rates = []
     for champs in top_wr_champs:
@@ -344,7 +333,7 @@ def roles():
 
     #Top champs by winrate top
     
-    top_wr_champs = top_champs_by_wr(df_top, n, current_user)
+    top_wr_champs = top_champs_by_wr(df_top, n, user)
     top_labels = []
     top_rates = []
     for champs in top_wr_champs:
@@ -353,7 +342,7 @@ def roles():
 
     #Top champs by winrate support
     
-    top_wr_champs = top_champs_by_wr(df_support, n, current_user)
+    top_wr_champs = top_champs_by_wr(df_support, n, user)
     support_labels = []
     support_rates = []
     for champs in top_wr_champs:
@@ -443,7 +432,7 @@ def roles():
     return render_template("roles.html",
         y_max = y_max, 
 
-        user = current_user, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
+        user = user, region = region, test = test, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
         
         bottom_wr = bottom_wr, jungle_wr = jungle_wr, middle_wr = middle_wr , top_wr = top_wr ,support_wr = support_wr ,
         

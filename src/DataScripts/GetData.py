@@ -1,5 +1,6 @@
 from src import pd
 from src.DataScripts import watcher
+from src.DataScripts.analysis import user_win_loss_wr
 
 
 def get_account_id(user: str, region:str) -> str:
@@ -276,3 +277,26 @@ def get_match_details(user, region, number_games):
     df = pd.DataFrame(participants_1)
 
     return df
+
+def webpage_transfer(user, region, test):
+
+    if test == "False":
+        data_loc = f"./newdata{user}.csv"
+        df = pd.read_csv(data_loc)
+        df = pd.DataFrame(df)
+    else:
+        data_loc = f"./TestData_Cleaned_2.csv"
+        df = pd.read_csv(data_loc)
+        df = pd.DataFrame(df)
+    
+    #Get top nav bar info
+    results = user_win_loss_wr(df, user)
+    rank = get_rank(user, region)
+  
+    #Build topnav info
+    wins = results[0]
+    losses = results[1]
+    wr = results[2]
+    total_games = wins + losses
+
+    return(df, rank, wins, losses, wr, total_games)

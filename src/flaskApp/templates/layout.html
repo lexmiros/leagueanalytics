@@ -34,9 +34,9 @@
     {%block sidebar%}
        <!-- Side navigation -->
     <div class="sidenav">
-        <a href="{{url_for('overview')}}">Overview</a>
-        <a href="{{url_for('stats')}}">Game stats</a>
-        <a href="{{url_for('roles')}}">Roles</a>
+        <a href="{{url_for('overview', user = user, region = region, test = test)}}">Overview</a>
+        <a href="{{url_for('stats', user = user, region = region, test = test)}}">Game stats</a>
+        <a href="{{url_for('roles', user = user, region = region, test = test)}}">Roles</a>
         <a href="{{url_for('home')}}">New search</a>
     </div>
     {%endblock sidebar%}
