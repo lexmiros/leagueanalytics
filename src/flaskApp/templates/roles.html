@@ -37,26 +37,7 @@
         color: 'white',
         labels: ["Top","Jungle","Middle","Bottom","Support"],
         datasets: [
-            {
-                label: 'Wins',
-                data: [
-                    {{top_wins}},
-                    {{jungle_wins}},
-                    {{middle_wins}},
-                    {{bottom_wins}},
-                    {{support_wins}}
-                ],
-                backgroundColor: [
-                "#228B22",   
-                ],
-                borderColor: [
-                "#228B22", 
-                ],
-                borderWidth: 3,
-                datalabels:{
-                    display : false
-                }
-            },
+
             {
                 label: 'Losses',
                 data: [
@@ -67,13 +48,33 @@
                     {{support_losses}}
                 ],
                 backgroundColor: [
-                '#800000',  
+                "#b30000",  
                 ],
                 borderColor: [
-                '#800000',    
+                "#b30000",    
                 ],
                 borderWidth: 3,
                 datalabels: {
+                    display: false
+                } 
+            },
+            {
+                label: 'Wins',
+                data: [
+                    {{top_wins}},
+                    {{jungle_wins}},
+                    {{middle_wins}},
+                    {{bottom_wins}},
+                    {{support_wins}}
+                ],
+                backgroundColor: [
+                "#5ad45a",  
+                ],
+                borderColor: [
+                "#5ad45a",
+                ],
+                borderWidth: 3,
+                datalabels:{
                     color : 'white',  
                     font: { 
                         weight : 'bold',
@@ -82,8 +83,9 @@
                     formatter: function(value, context) {
                         return win_rates[context.dataIndex];;
                     }
-                } 
-            }
+                }
+            },
+            
 
         ]
     };
@@ -184,18 +186,18 @@
                 label: '1',
                 data: {{data_1 | safe}},
                 backgroundColor: [
-                    "#003f5c",
-                    "#228B22",
-                    "#bc5090",
-                    "#ff6361",
-                    "#ffa600", 
+                    "#b30000", 
+                    "#7c1158", 
+                    "#ebdc78",
+                    "#5ad45a",
+                    "#0d88e6"
                 ],
                 borderColor: [
-                    "#003f5c",
-                    "#228B22",
-                    "#bc5090",
-                    "#ff6361",
-                    "#ffa600",
+                    "#b30000", 
+                    "#7c1158", 
+                    "#ebdc78", 
+                    "#5ad45a",
+                    "#0d88e6"
                 ],
                 borderWidth: 3,
                 datalabels: {
@@ -213,18 +215,18 @@
                 label: '2',
                 data: {{data_2 | safe}},
                 backgroundColor: [
-                    "#003f5c",
-                    "#228B22",
-                    "#bc5090",
-                    "#ff6361",
-                    "#ffa600",
+                    "#b30000", 
+                    "#7c1158", 
+                    "#ebdc78", 
+                    "#5ad45a",
+                    "#0d88e6"
                 ],
                 borderColor: [
-                    "#003f5c",
-                    "#228B22",
-                    "#bc5090",
-                    "#ff6361",
-                    "#ffa600",
+                    "#b30000", 
+                    "#7c1158", 
+                    "#ebdc78", 
+                    "#5ad45a",
+                    "#0d88e6"
                 ],
                 borderWidth: 3,
                 datalabels: {
@@ -242,18 +244,18 @@
                 label: '3',
                 data: {{data_3 | safe}},
                 backgroundColor: [
-                    "#003f5c",
-                    "#228B22",
-                    "#bc5090",
-                    "#ff6361",
-                    "#ffa600",
+                    "#b30000", 
+                    "#7c1158", 
+                    "#ebdc78", 
+                    "#5ad45a", 
+                    "#0d88e6"
                 ],
                 borderColor: [
-                    "#003f5c",
-                    "#228B22",
-                    "#bc5090",
-                    "#ff6361",
-                    "#ffa600",
+                    "#b30000", 
+                    "#7c1158", 
+                    "#ebdc78", 
+                    "#5ad45a",
+                    "#0d88e6"
                 ],
                 borderWidth: 3,
                 datalabels: {
