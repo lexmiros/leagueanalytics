@@ -202,6 +202,9 @@ button{
   margin-top: 5%;
   width: 200%;
   margin-left: 400%;
+  background-color: #115e91;
+  color: #ffffff;
+  
 }
 
 .float-child h4 {
@@ -236,6 +239,7 @@ nav ul {
   display: inline-block;
   list-style-type:none;
   text-align: center;
+  font-size: 20px;
 }
 
 nav ul li {
@@ -245,7 +249,7 @@ nav ul li {
   display:inline-block;
 }
 
-li > a:after { content: ' »'; } /* Change this in order to change the Dropdown symbol */
+li > a:after { content: '»»'; } /* Change this in order to change the Dropdown symbol */
 
 li > a:only-child:after { content: ''; }
 
