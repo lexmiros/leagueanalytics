@@ -303,3 +303,94 @@ def webpage_transfer(user, region, test):
     total_games = wins + losses
 
     return(df, rank, wins, losses, wr, total_games)
+
+def get_time_series_user_id(user:str, region:str, match_detail:dict) -> str:
+    """
+    Finds the puuid for a user and matches it against timeline
+    record data to find the user's participant iD within
+    the match
+
+    Parameters:
+    -----------
+    user : str
+        The username of the account
+    region : str
+        The region associated with the account
+    match_detail : dict
+        The match details returend from 
+        riotWatcher.match.timeline_by_match
+    Returns:
+    --------
+    str:
+        user's participant ID for the match as a string
+    """
+    puiid = get_puuid(user, region)
+
+    puuid_list = match_detail['info']['participants']
+    for row in puuid_list:
+        if row['puuid'] == puiid:
+            userId = row['participantId']
+            userId = str(userId)
+
+    return userId
+
+
+def get_time_series_cs(user: str, region: str) -> pd.DataFrame:
+    """
+    Gets the CS score for the user for every minute
+    of the game. Builds a dataframe where each game is a column
+    and every minute is the index
+
+    Parameters:
+    -----------
+    user : str
+        The username of the account
+    region : str
+        The region associated with the account
+    
+    Returns:
+    --------
+    Pandas dataframe
+    """
+    #Get puuid for user
+    puiid = get_puuid(user, region)
+
+    #Get timeline match information
+    my_match_ids = watcher.match.matchlist_by_puuid(region, puiid, start=0,  count=10)    
+    
+    #Initialise dataframes
+    df_full = pd.DataFrame()
+    df_temp = pd.DataFrame()
+    
+    #For each match found
+    for match_id in my_match_ids:
+        participants = []
+
+        #Get timeline data for the match 
+        match_detail = watcher.match.timeline_by_match(region, match_id)
+        
+
+        #Match user puuid to match information data to find user participant ID
+        userId = get_time_series_user_id(user, region, match_detail)
+        
+        data = match_detail['info']['frames']
+        
+        #For each minute in the game
+        for row in data:
+            participants_row = {}
+            minion_kills = row['participantFrames'][userId]['minionsKilled']
+            jg_camps = row['participantFrames'][userId]['jungleMinionsKilled']
+            total_cs_point = minion_kills + jg_camps
+
+            participants_row["Minion Kills"] = total_cs_point
+       
+            participants.append(participants_row)
+
+        #Merge main df with temp, reset temp
+        df_temp = pd.DataFrame(participants)
+        df_full = pd.merge(df_full, df_temp, how='outer', left_index=True, right_index=True)
+        df_temp = pd.DataFrame()
+        
+ 
+
+    return df_full
