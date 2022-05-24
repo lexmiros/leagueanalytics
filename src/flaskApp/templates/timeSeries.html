@@ -1,33 +1,33 @@
 {% extends "layout.html" %}
     {%block title%}
-        <h1 class="title">Role breakdown </h1>
+        <h1 class="title"> Time Series </h1>
         <h6> </h6>
     {%endblock title%}
   
     {% block content %}
-    <div class="float-child2">
+    <div class="float-child">
         <h2 class="title2"> CS vs Elapsed Game Time</h2>  
         <div>
             <canvas id="lineChart" width="1000" height="500"></canvas>
         </div>
     </div>  
 
-    <div class="float-child2">
-        <h2 class="title2"> CS vs Elapsed Game Time</h2>  
+    <div class="float-child">
+        <h2 class="title2"> Damage vs Elapsed Game Time</h2>  
         <div>
             <canvas id="lineChartdmg" width="1000" height="500"></canvas>
         </div>
     </div>  
 
-    <div class="float-child2">
-        <h2 class="title2"> CS vs Elapsed Game Time</h2>  
+    <div class="float-child">
+        <h2 class="title2"> Experience vs Elapsed Game Time</h2>  
         <div>
             <canvas id="lineChartexp" width="1000" height="500"></canvas>
         </div>
     </div>  
 
-    <div class="float-child2">
-        <h2 class="title2"> CS vs Elapsed Game Time</h2>  
+    <div class="float-child">
+        <h2 class="title2"> Total Gold vs Elapsed Game Time</h2>  
         <div>
             <canvas id="lineChartgold" width="1000" height="500"></canvas>
         </div>
@@ -79,7 +79,7 @@
                         title:{
                             color: 'white',
                             display: true,
-                            text: "Cumulative time played (Log Scale)",
+                            text: "Elapsed Time (Minutes)",
                             font: {   
                                 weight : 'bold',
                                 size : 20,
@@ -102,7 +102,7 @@
                         title:{
                             color : 'white',
                             display: true,
-                            text: "Win rate (%)",
+                            text: "CS",
                             font: {   
                                 weight : 'bold',
                                 size : 20,
@@ -180,7 +180,7 @@
                     title:{
                         color: 'white',
                         display: true,
-                        text: "Cumulative time played (Log Scale)",
+                        text: "Elapsed Time (Minutes)",
                         font: {   
                             weight : 'bold',
                             size : 20,
@@ -203,7 +203,7 @@
                     title:{
                         color : 'white',
                         display: true,
-                        text: "Win rate (%)",
+                        text: "Damage",
                         font: {   
                             weight : 'bold',
                             size : 20,
@@ -281,7 +281,7 @@
                     title:{
                         color: 'white',
                         display: true,
-                        text: "Cumulative time played (Log Scale)",
+                        text: "Elapsed Time (Minutes)",
                         font: {   
                             weight : 'bold',
                             size : 20,
@@ -304,7 +304,7 @@
                     title:{
                         color : 'white',
                         display: true,
-                        text: "Win rate (%)",
+                        text: "Experience Points",
                         font: {   
                             weight : 'bold',
                             size : 20,
@@ -382,7 +382,7 @@
                     title:{
                         color: 'white',
                         display: true,
-                        text: "Cumulative time played (Log Scale)",
+                        text: "Elapsed Time (Minutes)",
                         font: {   
                             weight : 'bold',
                             size : 20,
@@ -405,7 +405,7 @@
                     title:{
                         color : 'white',
                         display: true,
-                        text: "Win rate (%)",
+                        text: "Gold",
                         font: {   
                             weight : 'bold',
                             size : 20,
