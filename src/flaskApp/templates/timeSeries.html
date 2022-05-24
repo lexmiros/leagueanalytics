@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
     {%block title%}
         <h1 class="title"> Time Series </h1>
-        <h6> </h6>
+        <h5 class="subtext"> Metric averages at a given elapsed game time</h5>
+        <p class="subtext">For each minute of elapsed game time for 100 games, four metrics for {{user}} are found and averaged.<br>
+            The above process is completed for all other players in {{user}}'s games and plotted against each other. 
+        </p>
     {%endblock title%}
   
     {% block content %}

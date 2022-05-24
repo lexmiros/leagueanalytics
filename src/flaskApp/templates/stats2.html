@@ -2,7 +2,12 @@
 {% extends "layout.html" %}
 {%block title%}
     <h1 class="title">Key indicator averages for {{user}} </h1>
-    <h6> Top 5 and bottom 5 averages for {{user}} relative to other players</h6>
+    <h5 class="subtext"> Top 5 and bottom 5 metrics for {{user}}</h5>
+    <p class="subtext">Finds the averages for all metrics for {{user}} and the other players in {{user}}'s games.<br>
+        Finds the top and bottom 5 by finding the highest / lowest ratios for the metrics. 
+    </p>
+    
+    
     
 {%endblock title%}
 
