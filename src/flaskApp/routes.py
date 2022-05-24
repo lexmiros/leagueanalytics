@@ -442,9 +442,19 @@ def roles(user, region, test):
 @app.route("/timeseries/<user>/<region>/<test>")
 def timeseries(user, region, test):
     """"""
+    #Set up passed in info from webpage
     user = user
     region = region
     test = test
+
+    info = webpage_transfer(user, region, test)
+
+    df = info[0]
+    rank = info[1]
+    wins = info[2]
+    losses = info[3]
+    wr = info[4]
+    total_games = info[5]
 
     #Check if using test data
     if test == 'True':
@@ -461,18 +471,46 @@ def timeseries(user, region, test):
         data_gold = pd.read_csv("./TestData_gold.csv")
         data_gold = pd.DataFrame(data_gold)
 
+        data_non_cs = pd.read_csv("./TestData_non_cs.csv")
+        data_non_cs = pd.DataFrame(data_non_cs)
+
+        data_non_dmg = pd.read_csv("./TestData_non_dmg.csv")
+        data_non_dmg = pd.DataFrame(data_non_dmg)
+
+        data_non_exp = pd.read_csv("./TestData_non_exp.csv")
+        data_non_exp = pd.DataFrame(data_non_exp)
+
+        data_non_gold = pd.read_csv("./TestData_non_gold.csv")
+        data_non_gold = pd.DataFrame(data_non_gold)
+
+
+
     #Subet data 3 due to limited activity before 3mins, 35 due to low games running past 35
     data_cs = data_cs.iloc[3:36,]
     data_dmg = data_dmg.iloc[3:36,]
     data_exp = data_exp.iloc[3:36,]
     data_gold = data_gold.iloc[3:36,]
+
+    data_non_cs = data_non_cs.iloc[3:36,]
+    data_non_dmg = data_non_dmg.iloc[3:36,]
+    data_non_exp = data_non_exp.iloc[3:36,]
+    data_non_gold = data_non_gold.iloc[3:36,]
+
     data_range = list(range(3,36))
+
+
+
 
     #Average each row for the dfs and turn to list
     avg_cs = data_cs.mean(axis=1, skipna=True).to_list()
     avg_dmg = data_dmg.mean(axis=1, skipna=True).to_list()
     avg_exp = data_exp.mean(axis=1, skipna=True).to_list()
     avg_gold = data_gold.mean(axis=1, skipna=True).to_list()
+
+    avg_non_cs = data_non_cs.mean(axis=1, skipna=True).to_list()
+    avg_non_dmg = data_non_dmg.mean(axis=1, skipna=True).to_list()
+    avg_non_exp = data_non_exp.mean(axis=1, skipna=True).to_list()
+    avg_non_gold = data_non_gold.mean(axis=1, skipna=True).to_list()
 
 
 
@@ -486,6 +524,12 @@ def timeseries(user, region, test):
         
 
     return render_template('timeSeries.html', 
-        user = user, region = region, test = test,
-        avg_cs = avg_cs, avg_dmg = avg_dmg, avg_exp = avg_exp, avg_gold = avg_gold, data_range = data_range)
+        user = user, region = region, test = test, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank,
+
+        avg_cs = avg_cs, avg_dmg = avg_dmg, avg_exp = avg_exp, avg_gold = avg_gold, data_range = data_range,
+        
+        avg_non_cs = avg_non_cs, avg_non_dmg = avg_non_dmg, avg_non_exp = avg_non_exp, avg_non_gold = avg_non_gold
+        )
+
+
 

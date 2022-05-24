@@ -3,7 +3,7 @@ from ntpath import join
 from re import match
 
 import pandas
-from pyrsistent import v
+
 from src.flaskApp import app, routes
 from src.DataScripts.analysis import *
 from src.DataScripts.CleanData import *
@@ -15,6 +15,8 @@ if __name__ == "__main__":
     
     user = "Frommoh"
     region = "OC1"
+
+    
  
 
     

@@ -335,11 +335,12 @@ def get_time_series_user_id(user:str, region:str, match_detail:dict) -> str:
     return userId
 
 
-def get_time_series_cs(user: str, region: str) -> pd.DataFrame:
+def get_time_series_user(user: str, region: str) -> pd.DataFrame:
     """
-    Gets the CS score for the user for every minute
-    of the game. Builds a dataframe where each game is a column
-    and every minute is the index
+    Get minute-by-minute cs, dmg, exp, gold for 100 games 
+
+    For the user, get four dataframes that contain elapsed time
+    in minutes as the index, a metric per game as the column
 
     Parameters:
     -----------
@@ -448,5 +449,148 @@ def get_time_series_cs(user: str, region: str) -> pd.DataFrame:
 
     return df_cs, df_xp, df_gold, df_dmg
 
+def get_time_series_non_user(user: str, region: str) -> pd.DataFrame:
+    """
+    Get minute-by-minute cs, dmg, exp, gold for 100 games 
+
+    For the user, get four dataframes that contain elapsed time
+    in minutes as the index, a metric per game as the column
+
+    Parameters:
+    -----------
+    user : str
+        The username of the account
+    region : str
+        The region associated with the account
+    
+    Returns:
+    --------
+    Pandas dataframe
+    """
+    
+    #Get puuid for user
+    puiid = get_puuid(user, region)
+
+    #Get timeline match information
+    my_match_ids = watcher.match.matchlist_by_puuid(region, puiid, start=0,  count=100)    
+    
+    #Initialise dataframes for each metric
+    df_cs = pd.DataFrame()
+    df_cs_temp = pd.DataFrame()
+
+    df_xp = pd.DataFrame()
+    df_xp_temp = pd.DataFrame()
+
+    df_gold = pd.DataFrame()
+    df_gold_temp = pd.DataFrame()
+
+    df_dmg = pd.DataFrame()
+    df_dmg_temp = pd.DataFrame()
+    
+    #For each match found
+    for match_id in my_match_ids:
+
+        #Empty list for each metric
+        participants_cs = []
+        participants_xp = []
+        participants_gold = []
+        participants_dmg = []
+
+        #Get timeline data for the match 
+        match_detail = watcher.match.timeline_by_match(region, match_id)
+        
+        #Match user puuid to match information data to find user participant ID
+        userId = get_time_series_user_id(user, region, match_detail)
+        data = match_detail['info']['frames']
+
+        #Get a list of 1 - 10 (participant IDs for 10 players)
+        all_ids = list(range(1,11))
+        all_ids = [str(x) for x in all_ids]
+        #Remove user from all participant IDs
+        all_ids.remove(userId)
+
+        #For each minute in the game
+        for row in data:
+            #CS
+            cs_avg_list = []
+            for userId in all_ids:
+                participants_row_cs = {}
+                minion_kills = row['participantFrames'][userId]['minionsKilled']
+                jg_camps = row['participantFrames'][userId]['jungleMinionsKilled']
+                total_cs_point = minion_kills + jg_camps
+                #participants_row_cs["Minion Kills"] = total_cs_point
+                cs_avg_list.append(total_cs_point)
+            
+            cs_avg = sum(cs_avg_list) / len(cs_avg_list)
+
+            participants_row_cs["Minion Kills"] = cs_avg
+
+            participants_cs.append(cs_avg)
+
+            #exp
+            xp_avg_list = []
+            for userId in all_ids:
+                participants_row_xp = {}
+                xp = row['participantFrames'][userId]['xp']
+                xp_avg_list.append(xp)
+
+            xp_avg = sum(xp_avg_list) / len(xp_avg_list)
+            participants_row_xp["Experience"] = xp_avg
+            participants_xp.append(xp_avg)
+            
+
+            #gold
+            gold_avg_list = []
+            for userId in all_ids:
+                participants_row_gold = {}
+                gold = row['participantFrames'][userId]['totalGold']
+                gold_avg_list.append(gold)
+
+            gold_avg = sum(gold_avg_list) / len(gold_avg_list)
+            participants_row_gold["Experience"] = gold_avg
+            participants_gold.append(gold_avg)
+
+            #damage
+            dmg_avg_list = []
+            for userId in all_ids:
+                participants_row_dmg = {}
+                dmg = row['participantFrames'][userId]['damageStats']['totalDamageDoneToChampions']
+                dmg_avg_list.append(dmg)
+
+            dmg_avg = sum(dmg_avg_list) / len(dmg_avg_list)
+            participants_row_dmg["Experience"] = dmg_avg
+            participants_dmg.append(gold_avg)
+
+
+
+
+        #Merge main df with temp, reset temp
+
+        #CS
+        df_cs_temp = pd.DataFrame(participants_cs)
+        df_cs = pd.merge(df_cs, df_cs_temp, how='outer', left_index=True, right_index=True)
+        df_cs_temp = pd.DataFrame()
+
+        #xp
+        df_xp_temp = pd.DataFrame(participants_xp)
+        df_xp = pd.merge(df_xp, df_xp_temp, how='outer', left_index=True, right_index=True)
+        df_xp_temp = pd.DataFrame()
+
+        #gold
+        df_gold_temp = pd.DataFrame(participants_gold)
+        df_gold = pd.merge(df_gold, df_gold_temp, how='outer', left_index=True, right_index=True)
+        df_gold_temp = pd.DataFrame()
+
+        #damage
+        df_dmg_temp = pd.DataFrame(participants_dmg)
+        df_dmg = pd.merge(df_dmg, df_dmg_temp, how='outer', left_index=True, right_index=True)
+        df_dmg_temp = pd.DataFrame()
+
+
+
+
+ 
+
+    return df_cs, df_xp, df_gold, df_dmg
 
     

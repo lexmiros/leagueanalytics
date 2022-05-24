@@ -41,11 +41,21 @@
                 labels: {{data_range | safe}},
                 datasets: [
                     {
-                    label: "CS",
+                    label: "User",
                     data: {{avg_cs | safe}},
                     pointRadius: 0,
                     backgroundColor:"#b30000", 
                     borderColor: "#b30000", 
+                    tension : 0.4,
+                    borderWidth : 4,
+                    },
+
+                    {
+                    label: "Non-sser",
+                    data: {{avg_non_cs | safe}},
+                    pointRadius: 0,
+                    backgroundColor:"white", 
+                    borderColor: "white", 
                     tension : 0.4,
                     borderWidth : 4,
                     },
@@ -142,11 +152,21 @@
             labels: {{data_range | safe}},
             datasets: [
                 {
-                label: "CS",
+                label: "User",
                 data: {{avg_dmg | safe}},
                 pointRadius: 0,
                 backgroundColor:"#b30000", 
                 borderColor: "#b30000", 
+                tension : 0.4,
+                borderWidth : 4,
+                },
+
+                {
+                label: "Non-user",
+                data: {{avg_non_dmg | safe}},
+                pointRadius: 0,
+                backgroundColor:"white", 
+                borderColor: "white", 
                 tension : 0.4,
                 borderWidth : 4,
                 },
@@ -243,11 +263,20 @@
             labels: {{data_range | safe}},
             datasets: [
                 {
-                label: "CS",
+                label: "User",
                 data: {{avg_exp | safe}},
                 pointRadius: 0,
                 backgroundColor:"#b30000", 
                 borderColor: "#b30000", 
+                tension : 0.4,
+                borderWidth : 4,
+                },
+                {
+                label: "Non-user",
+                data: {{avg_non_exp | safe}},
+                pointRadius: 0,
+                backgroundColor:"white", 
+                borderColor: "white", 
                 tension : 0.4,
                 borderWidth : 4,
                 },
@@ -344,11 +373,20 @@
             labels: {{data_range | safe}},
             datasets: [
                 {
-                label: "CS",
+                label: "User",
                 data: {{avg_gold | safe}},
                 pointRadius: 0,
                 backgroundColor:"#b30000", 
                 borderColor: "#b30000", 
+                tension : 0.4,
+                borderWidth : 4,
+                },
+                {
+                label: "Non-user",
+                data: {{avg_non_gold | safe}},
+                pointRadius: 0,
+                backgroundColor:"white", 
+                borderColor: "white", 
                 tension : 0.4,
                 borderWidth : 4,
                 },
