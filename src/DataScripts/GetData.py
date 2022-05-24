@@ -453,8 +453,9 @@ def get_time_series_non_user(user: str, region: str) -> pd.DataFrame:
     """
     Get minute-by-minute cs, dmg, exp, gold for 100 games 
 
-    For the user, get four dataframes that contain elapsed time
-    in minutes as the index, a metric per game as the column
+    For everyone except the user, get four dataframes that contain elapsed time
+    in minutes as the index, a metric per game as the column. Average each non-user's
+    metric and return the average as a single point in time
 
     Parameters:
     -----------
@@ -521,6 +522,13 @@ def get_time_series_non_user(user: str, region: str) -> pd.DataFrame:
                 #participants_row_cs["Minion Kills"] = total_cs_point
                 cs_avg_list.append(total_cs_point)
             
+            #Remove lowest two numbers from average
+            #LIEKLY to be two in players in support role
+            #Who do not traditionally CS
+            cs_avg_list.sort()
+            cs_avg_list.pop(0)
+            cs_avg_list.pop(0)
+
             cs_avg = sum(cs_avg_list) / len(cs_avg_list)
 
             participants_row_cs["Minion Kills"] = cs_avg
@@ -545,6 +553,13 @@ def get_time_series_non_user(user: str, region: str) -> pd.DataFrame:
                 participants_row_gold = {}
                 gold = row['participantFrames'][userId]['totalGold']
                 gold_avg_list.append(gold)
+            
+            #Remove lowest two numbers from average
+            #LIEKLY to be two in players in support role
+            #Who traditionally do not generate much gold
+            gold_avg_list.sort()
+            gold_avg_list.pop(0)
+            gold_avg_list.pop(0)
 
             gold_avg = sum(gold_avg_list) / len(gold_avg_list)
             participants_row_gold["Experience"] = gold_avg
@@ -556,6 +571,13 @@ def get_time_series_non_user(user: str, region: str) -> pd.DataFrame:
                 participants_row_dmg = {}
                 dmg = row['participantFrames'][userId]['damageStats']['totalDamageDoneToChampions']
                 dmg_avg_list.append(dmg)
+            
+            #Remove lowest two numbers from average
+            #LIEKLY to be two in players in support role
+            #Who traditioanlly don't deal a lot of damage
+            dmg_avg_list.sort()
+            dmg_avg_list.pop(0)
+            dmg_avg_list.pop(0)
 
             dmg_avg = sum(dmg_avg_list) / len(dmg_avg_list)
             participants_row_dmg["Experience"] = dmg_avg
