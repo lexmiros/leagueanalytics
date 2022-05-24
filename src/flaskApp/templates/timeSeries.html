@@ -1,0 +1,439 @@
+{% extends "layout.html" %}
+    {%block title%}
+        <h1 class="title">Role breakdown </h1>
+        <h6> </h6>
+    {%endblock title%}
+  
+    {% block content %}
+    <div class="float-child2">
+        <h2 class="title2"> CS vs Elapsed Game Time</h2>  
+        <div>
+            <canvas id="lineChart" width="1000" height="500"></canvas>
+        </div>
+    </div>  
+
+    <div class="float-child2">
+        <h2 class="title2"> CS vs Elapsed Game Time</h2>  
+        <div>
+            <canvas id="lineChartdmg" width="1000" height="500"></canvas>
+        </div>
+    </div>  
+
+    <div class="float-child2">
+        <h2 class="title2"> CS vs Elapsed Game Time</h2>  
+        <div>
+            <canvas id="lineChartexp" width="1000" height="500"></canvas>
+        </div>
+    </div>  
+
+    <div class="float-child2">
+        <h2 class="title2"> CS vs Elapsed Game Time</h2>  
+        <div>
+            <canvas id="lineChartgold" width="1000" height="500"></canvas>
+        </div>
+    </div>  
+<!------------------------CS---------------------------------------------->
+    <script>
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        var lineChart = new Chart(ctx, {
+            type: "line",
+            data: {        
+                labels: {{data_range | safe}},
+                datasets: [
+                    {
+                    label: "CS",
+                    data: {{avg_cs | safe}},
+                    pointRadius: 0,
+                    backgroundColor:"#b30000", 
+                    borderColor: "#b30000", 
+                    tension : 0.4,
+                    borderWidth : 4,
+                    },
+                   
+    
+                ],  
+            },
+            options: {
+                layout: {
+                    padding: {
+                        top: 50
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    x: {
+                        ticks:{
+                            color : 'white',  
+                            font: { 
+                                weight : 'bold',
+                                size : 16,       
+                            },
+                        },
+                        
+                        display: true,
+                        
+                        title:{
+                            color: 'white',
+                            display: true,
+                            text: "Cumulative time played (Log Scale)",
+                            font: {   
+                                weight : 'bold',
+                                size : 20,
+                            }
+                        },    
+                    },
+                    y: {
+                        grid:{
+                            color:'rgba(255,255,255,0.3)',
+                        },
+                        ticks:{
+                            color : 'white',  
+                            font: { 
+                                weight : 'bold',
+                                size : 16,       
+                            },
+                        },
+                    
+                        display: true,
+                        title:{
+                            color : 'white',
+                            display: true,
+                            text: "Win rate (%)",
+                            font: {   
+                                weight : 'bold',
+                                size : 20,
+                                color: '#000000',
+                            }
+                        },     
+                    }
+                },
+                responsive: true,
+                plugins:{
+                    legend:{
+                        labels:{
+                            color: 'white'
+                        },
+                    },
+                    datalabels: {
+                        display : false,
+                        anchor: 'end',
+                        align: 'top',
+                        font: {
+                            weight: 'bold',
+                            size : 20,
+                        },
+                    },
+    
+                },                  
+            },   
+        });
+    </script>
+
+<!------------------------damage---------------------------------------------->
+<script>
+    var ctx = document.getElementById("lineChartdmg").getContext("2d");
+    var lineChart = new Chart(ctx, {
+        type: "line",
+        data: {        
+            labels: {{data_range | safe}},
+            datasets: [
+                {
+                label: "CS",
+                data: {{avg_dmg | safe}},
+                pointRadius: 0,
+                backgroundColor:"#b30000", 
+                borderColor: "#b30000", 
+                tension : 0.4,
+                borderWidth : 4,
+                },
+               
+
+            ],  
+        },
+        options: {
+            layout: {
+                padding: {
+                    top: 50
+                }
+            },
+            plugins: {
+                datalabels: {
+                    display: false,
+                },
+            },
+            scales: {
+                x: {
+                    ticks:{
+                        color : 'white',  
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
+                        },
+                    },
+                    
+                    display: true,
+                    
+                    title:{
+                        color: 'white',
+                        display: true,
+                        text: "Cumulative time played (Log Scale)",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                        }
+                    },    
+                },
+                y: {
+                    grid:{
+                        color:'rgba(255,255,255,0.3)',
+                    },
+                    ticks:{
+                        color : 'white',  
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
+                        },
+                    },
+                
+                    display: true,
+                    title:{
+                        color : 'white',
+                        display: true,
+                        text: "Win rate (%)",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            color: '#000000',
+                        }
+                    },     
+                }
+            },
+            responsive: true,
+            plugins:{
+                legend:{
+                    labels:{
+                        color: 'white'
+                    },
+                },
+                datalabels: {
+                    display : false,
+                    anchor: 'end',
+                    align: 'top',
+                    font: {
+                        weight: 'bold',
+                        size : 20,
+                    },
+                },
+
+            },                  
+        },   
+    });
+</script>
+
+<!------------------------exp---------------------------------------------->
+<script>
+    var ctx = document.getElementById("lineChartexp").getContext("2d");
+    var lineChart = new Chart(ctx, {
+        type: "line",
+        data: {        
+            labels: {{data_range | safe}},
+            datasets: [
+                {
+                label: "CS",
+                data: {{avg_exp | safe}},
+                pointRadius: 0,
+                backgroundColor:"#b30000", 
+                borderColor: "#b30000", 
+                tension : 0.4,
+                borderWidth : 4,
+                },
+               
+
+            ],  
+        },
+        options: {
+            layout: {
+                padding: {
+                    top: 50
+                }
+            },
+            plugins: {
+                datalabels: {
+                    display: false,
+                },
+            },
+            scales: {
+                x: {
+                    ticks:{
+                        color : 'white',  
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
+                        },
+                    },
+                    
+                    display: true,
+                    
+                    title:{
+                        color: 'white',
+                        display: true,
+                        text: "Cumulative time played (Log Scale)",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                        }
+                    },    
+                },
+                y: {
+                    grid:{
+                        color:'rgba(255,255,255,0.3)',
+                    },
+                    ticks:{
+                        color : 'white',  
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
+                        },
+                    },
+                
+                    display: true,
+                    title:{
+                        color : 'white',
+                        display: true,
+                        text: "Win rate (%)",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            color: '#000000',
+                        }
+                    },     
+                }
+            },
+            responsive: true,
+            plugins:{
+                legend:{
+                    labels:{
+                        color: 'white'
+                    },
+                },
+                datalabels: {
+                    display : false,
+                    anchor: 'end',
+                    align: 'top',
+                    font: {
+                        weight: 'bold',
+                        size : 20,
+                    },
+                },
+
+            },                  
+        },   
+    });
+</script>
+
+<!------------------------gold---------------------------------------------->
+<script>
+    var ctx = document.getElementById("lineChartgold").getContext("2d");
+    var lineChart = new Chart(ctx, {
+        type: "line",
+        data: {        
+            labels: {{data_range | safe}},
+            datasets: [
+                {
+                label: "CS",
+                data: {{avg_gold | safe}},
+                pointRadius: 0,
+                backgroundColor:"#b30000", 
+                borderColor: "#b30000", 
+                tension : 0.4,
+                borderWidth : 4,
+                },
+               
+
+            ],  
+        },
+        options: {
+            layout: {
+                padding: {
+                    top: 50
+                }
+            },
+            plugins: {
+                datalabels: {
+                    display: false,
+                },
+            },
+            scales: {
+                x: {
+                    ticks:{
+                        color : 'white',  
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
+                        },
+                    },
+                    
+                    display: true,
+                    
+                    title:{
+                        color: 'white',
+                        display: true,
+                        text: "Cumulative time played (Log Scale)",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                        }
+                    },    
+                },
+                y: {
+                    grid:{
+                        color:'rgba(255,255,255,0.3)',
+                    },
+                    ticks:{
+                        color : 'white',  
+                        font: { 
+                            weight : 'bold',
+                            size : 16,       
+                        },
+                    },
+                
+                    display: true,
+                    title:{
+                        color : 'white',
+                        display: true,
+                        text: "Win rate (%)",
+                        font: {   
+                            weight : 'bold',
+                            size : 20,
+                            color: '#000000',
+                        }
+                    },     
+                }
+            },
+            responsive: true,
+            plugins:{
+                legend:{
+                    labels:{
+                        color: 'white'
+                    },
+                },
+                datalabels: {
+                    display : false,
+                    anchor: 'end',
+                    align: 'top',
+                    font: {
+                        weight: 'bold',
+                        size : 20,
+                    },
+                },
+
+            },                  
+        },   
+    });
+</script>
+       
+    {% endblock content %}

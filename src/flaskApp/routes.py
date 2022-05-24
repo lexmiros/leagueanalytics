@@ -439,3 +439,53 @@ def roles(user, region, test):
         time_overall = time_overall, cum_wr_overall = cum_wr_overall
         )
 
+@app.route("/timeseries/<user>/<region>/<test>")
+def timeseries(user, region, test):
+    """"""
+    user = user
+    region = region
+    test = test
+
+    #Check if using test data
+    if test == 'True':
+        #Read in data
+        data_cs = pd.read_csv("./TestData_cs.csv")
+        data_cs = pd.DataFrame(data_cs)
+
+        data_dmg = pd.read_csv("./TestData_dmg.csv")
+        data_dmg = pd.DataFrame(data_dmg)
+
+        data_exp = pd.read_csv("./TestData_exp.csv")
+        data_exp = pd.DataFrame(data_exp)
+
+        data_gold = pd.read_csv("./TestData_gold.csv")
+        data_gold = pd.DataFrame(data_gold)
+
+    #Subet data 3 due to limited activity before 3mins, 35 due to low games running past 35
+    data_cs = data_cs.iloc[3:36,]
+    data_dmg = data_dmg.iloc[3:36,]
+    data_exp = data_exp.iloc[3:36,]
+    data_gold = data_gold.iloc[3:36,]
+    data_range = list(range(3,36))
+
+    #Average each row for the dfs and turn to list
+    avg_cs = data_cs.mean(axis=1, skipna=True).to_list()
+    avg_dmg = data_dmg.mean(axis=1, skipna=True).to_list()
+    avg_exp = data_exp.mean(axis=1, skipna=True).to_list()
+    avg_gold = data_gold.mean(axis=1, skipna=True).to_list()
+
+
+
+  
+
+
+
+
+
+
+        
+
+    return render_template('timeSeries.html', 
+        user = user, region = region, test = test,
+        avg_cs = avg_cs, avg_dmg = avg_dmg, avg_exp = avg_exp, avg_gold = avg_gold, data_range = data_range)
+

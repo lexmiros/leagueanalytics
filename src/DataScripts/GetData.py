@@ -352,11 +352,12 @@ def get_time_series_cs(user: str, region: str) -> pd.DataFrame:
     --------
     Pandas dataframe
     """
+    
     #Get puuid for user
     puiid = get_puuid(user, region)
 
     #Get timeline match information
-    my_match_ids = watcher.match.matchlist_by_puuid(region, puiid, start=0,  count=10)    
+    my_match_ids = watcher.match.matchlist_by_puuid(region, puiid, start=0,  count=100)    
     
     #Initialise dataframes for each metric
     df_cs = pd.DataFrame()
