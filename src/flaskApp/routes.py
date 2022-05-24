@@ -2,7 +2,7 @@ from src import pd
 from src.flaskApp import app
 from flask import redirect, render_template, url_for
 
-from src.DataScripts.GetData import get_account_id, get_match_details, webpage_transfer
+from src.DataScripts.GetData import get_account_id, get_match_details, get_time_series_non_user, get_time_series_user, webpage_transfer
 from src.DataScripts.CleanData import encode_true_false, col_to_string, encode_categorical, top_n_occurences, impute_mode_lane
 from src.DataScripts.analysis import  build_logit_model, get_model_coefs, get_user_top_stats, get_user_bottom_stats, get_column_cumulative, get_wr_cumulative, role_losses, role_wins, top_champs_by_wr, win_ratio_str_formatted, get_wr_cumulative, win_ratio_str_formatted, user_win_loss_wr, top_champs_by_wr,  role_wins, role_losses
 
@@ -482,8 +482,20 @@ def timeseries(user, region, test):
 
         data_non_gold = pd.read_csv("./TestData_non_gold.csv")
         data_non_gold = pd.DataFrame(data_non_gold)
+    else:
+        dfs_user = get_time_series_user(user, region)
 
+        data_cs = dfs_user[0]
+        data_exp = dfs_user[1]
+        data_gold = dfs_user[2]
+        data_dmg = dfs_user[3]
 
+        dfs_non_user = get_time_series_non_user(user, region)
+
+        data_non_cs = dfs_non_user[0]
+        data_non_exp = dfs_non_user[1]
+        data_non_gold = dfs_non_user[2]
+        data_non_dmg = dfs_non_user[3]
 
     #Subet data 3 due to limited activity before 3mins, 35 due to low games running past 35
     data_cs = data_cs.iloc[3:36,]
