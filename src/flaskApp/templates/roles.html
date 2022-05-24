@@ -367,14 +367,19 @@
     var lineChart = new Chart(ctx, {
         type: "line",
         data: {
+                    
+                     
+                    
+                    
+                    
             labels: {{time_overall | safe }},
             datasets: [
                 {
                 label: "Top",
                 data: {{ cum_wr_top | safe }},
                 pointRadius: 0,
-                backgroundColor:"#003f5c",
-                borderColor: "#003f5c",
+                backgroundColor:"#b30000", 
+                borderColor: "#b30000", 
                 tension : 0.4,
                 borderWidth : 4,
                 },
@@ -382,8 +387,8 @@
                 label: "Jungle",
                 data: {{ cum_wr_jungle | safe }},
                 pointRadius: 0,
-                backgroundColor:"#228B22",
-                borderColor: "#228B22",
+                backgroundColor:"#7c1158",
+                borderColor: "#7c1158",
                 tension : 0.4,
                 borderWidth : 4,         
                 },
@@ -391,8 +396,8 @@
                 label: "Middle",
                 data: {{ cum_wr_middle | safe }},
                 pointRadius: 0,
-                backgroundColor:"#bc5090",
-                borderColor: "#bc5090",
+                backgroundColor:"#ebdc78",
+                borderColor: "#ebdc78",
                 tension : 0.4,
                 borderWidth : 4,
                 },
@@ -400,8 +405,8 @@
                 label: "Bottom",
                 data: {{ cum_wr_bottom | safe }},
                 pointRadius: 0,
-                backgroundColor: "#ff6361",
-                borderColor:  "#ff6361",
+                backgroundColor: "#5ad45a",
+                borderColor:  "#5ad45a",
                 tension : 0.4,
                 borderWidth : 4,
                 },
@@ -409,8 +414,8 @@
                 label: "Support",
                 data: {{ cum_wr_support | safe }},
                 pointRadius: 0,
-                backgroundColor:  "#ffa600",
-                borderColor:   "#ffa600",
+                backgroundColor:  "#0d88e6",
+                borderColor:   "#0d88e6",
                 tension : 0.4,    
                 borderWidth : 4,                  
                 },
