@@ -358,39 +358,94 @@ def get_time_series_cs(user: str, region: str) -> pd.DataFrame:
     #Get timeline match information
     my_match_ids = watcher.match.matchlist_by_puuid(region, puiid, start=0,  count=10)    
     
-    #Initialise dataframes
-    df_full = pd.DataFrame()
-    df_temp = pd.DataFrame()
+    #Initialise dataframes for each metric
+    df_cs = pd.DataFrame()
+    df_cs_temp = pd.DataFrame()
+
+    df_xp = pd.DataFrame()
+    df_xp_temp = pd.DataFrame()
+
+    df_gold = pd.DataFrame()
+    df_gold_temp = pd.DataFrame()
+
+    df_dmg = pd.DataFrame()
+    df_dmg_temp = pd.DataFrame()
     
     #For each match found
     for match_id in my_match_ids:
-        participants = []
+
+        #Empty list for each metric
+        participants_cs = []
+        participants_xp = []
+        participants_gold = []
+        participants_dmg = []
 
         #Get timeline data for the match 
         match_detail = watcher.match.timeline_by_match(region, match_id)
         
-
         #Match user puuid to match information data to find user participant ID
         userId = get_time_series_user_id(user, region, match_detail)
-        
         data = match_detail['info']['frames']
         
         #For each minute in the game
         for row in data:
-            participants_row = {}
+            #CS
+            participants_row_cs = {}
             minion_kills = row['participantFrames'][userId]['minionsKilled']
             jg_camps = row['participantFrames'][userId]['jungleMinionsKilled']
             total_cs_point = minion_kills + jg_camps
 
-            participants_row["Minion Kills"] = total_cs_point
-       
-            participants.append(participants_row)
+            participants_row_cs["Minion Kills"] = total_cs_point
+            participants_cs.append(participants_row_cs)
+
+            #exp
+            participants_row_xp = {}
+            xp = row['participantFrames'][userId]['xp']
+            participants_row_xp["xp"] = xp
+            participants_xp.append(participants_row_xp)
+
+            #gold
+            participants_row_gold = {}
+            gold = row['participantFrames'][userId]['totalGold']
+            participants_row_gold["Gold"] = gold
+            participants_gold.append(participants_row_gold)
+
+            #damage
+            participants_row_dmg = {}
+            dmg = row['participantFrames'][userId]['damageStats']['totalDamageDoneToChampions']
+            participants_row_dmg["Damage"] = dmg
+            participants_dmg.append(participants_row_dmg)
+
+
 
         #Merge main df with temp, reset temp
-        df_temp = pd.DataFrame(participants)
-        df_full = pd.merge(df_full, df_temp, how='outer', left_index=True, right_index=True)
-        df_temp = pd.DataFrame()
-        
+
+        #CS
+        df_cs_temp = pd.DataFrame(participants_cs)
+        df_cs = pd.merge(df_cs, df_cs_temp, how='outer', left_index=True, right_index=True)
+        df_cs_temp = pd.DataFrame()
+
+        #xp
+        df_xp_temp = pd.DataFrame(participants_xp)
+        df_xp = pd.merge(df_xp, df_xp_temp, how='outer', left_index=True, right_index=True)
+        df_xp_temp = pd.DataFrame()
+
+        #gold
+        df_gold_temp = pd.DataFrame(participants_gold)
+        df_gold = pd.merge(df_gold, df_gold_temp, how='outer', left_index=True, right_index=True)
+        df_gold_temp = pd.DataFrame()
+
+        #damage
+        df_dmg_temp = pd.DataFrame(participants_dmg)
+        df_dmg = pd.merge(df_dmg, df_dmg_temp, how='outer', left_index=True, right_index=True)
+        df_dmg_temp = pd.DataFrame()
+
+
+
+
  
 
-    return df_full
+    return df_cs, df_xp, df_gold, df_dmg
+
+
+    
