@@ -290,6 +290,7 @@ def get_match_details(user, region, number_games):
                 with open(f"./newdata{user}.csv", 'a', encoding="utf-8") as f:
                     df.to_csv(f, header=False)
             del df
+            del participants_1
             
             #time.sleep(120)
             i = i + 100

@@ -4,7 +4,7 @@ from flask import redirect, render_template, url_for
 import time
 
 from src.DataScripts.GetData import get_account_id, get_match_details, get_time_series_non_user, get_time_series_user, webpage_transfer
-from src.DataScripts.CleanData import encode_true_false, col_to_string, encode_categorical, top_n_occurences, impute_mode_lane
+from src.DataScripts.CleanData import top_n_occurences
 from src.DataScripts.analysis import  build_logit_model, get_model_coefs, get_user_top_stats, get_user_bottom_stats, get_column_cumulative, get_wr_cumulative, role_losses, role_wins, top_champs_by_wr, win_ratio_str_formatted, get_wr_cumulative, win_ratio_str_formatted, user_win_loss_wr, top_champs_by_wr,  role_wins, role_losses
 
 
@@ -56,15 +56,25 @@ def loading(user, region):
 
     if user != "test":
 
-        #Downloads and saves base data
+        
         test = False
         get_match_details(user, region, no_games)
-        #df = col_to_string(df, "WinLoss")
-        #df["WinLoss"] = df["WinLoss"].map(encode_true_false)
-        #df = impute_mode_lane(df)
-        #df = encode_categorical(df, "Lane")
-        #df.to_csv(f"./newdata{user}.csv")
+   
+    
+    else:
+        test = True
+        user = "Frommoh"
+        region = "OC1"
+  
 
+    return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+
+
+@app.route("/loading_timeseries/<user>/<region>/<test>")
+def loading_timeseries(user, region, test):
+
+    #Checks to see if time series data needs to be downloaded
+    if test != "True":
         #Downloads and saves time-series data
         dfs_user = get_time_series_user(user, region)
 
@@ -77,8 +87,13 @@ def loading(user, region):
         data_exp.to_csv(f"./newdata{user}_exp.csv")
         data_gold.to_csv(f"./newdata{user}_gold.csv")
         data_dmg.to_csv(f"./newdata{user}_dmg.csv")
+        
+        del data_cs
+        del data_exp
+        del data_gold
+        del data_dmg
 
-        time.sleep(120)
+       
         dfs_non_user = get_time_series_non_user(user, region)
 
         data_non_cs = dfs_non_user[0]
@@ -90,14 +105,16 @@ def loading(user, region):
         data_non_exp.to_csv(f"./newdata_non_{user}_exp.csv")
         data_non_gold.to_csv(f"./newdata_non_{user}_gold.csv")
         data_non_dmg.to_csv(f"./newdata_non_{user}_dmg.csv")
-    
-    else:
-        test = True
-        user = "Frommoh"
-        region = "OC1"
-  
 
+        del data_non_cs
+        del data_non_exp
+        del data_non_gold
+        del data_non_dmg
+    
     return redirect(url_for('overview', user = user, test = test, region = region))
+
+
+    
 
     
 @app.route("/overview/<user>/<region>/<test>")
