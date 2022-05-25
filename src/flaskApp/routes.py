@@ -58,12 +58,12 @@ def loading(user, region):
 
         #Downloads and saves base data
         test = False
-        df = get_match_details(user, region, no_games)
-        df = col_to_string(df, "WinLoss")
-        df["WinLoss"] = df["WinLoss"].map(encode_true_false)
-        df = impute_mode_lane(df)
-        df = encode_categorical(df, "Lane")
-        df.to_csv(f"./newdata{user}.csv")
+        get_match_details(user, region, no_games)
+        #df = col_to_string(df, "WinLoss")
+        #df["WinLoss"] = df["WinLoss"].map(encode_true_false)
+        #df = impute_mode_lane(df)
+        #df = encode_categorical(df, "Lane")
+        #df.to_csv(f"./newdata{user}.csv")
 
         #Downloads and saves time-series data
         dfs_user = get_time_series_user(user, region)

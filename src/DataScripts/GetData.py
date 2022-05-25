@@ -2,6 +2,7 @@ from turtle import pu
 from src import pd
 from src.DataScripts import watcher
 from src.DataScripts.analysis import user_win_loss_wr
+from src.DataScripts.CleanData import *
 
 
 def get_account_id(user: str, region:str) -> str:
@@ -193,22 +194,24 @@ def get_match_details(user, region, number_games):
         user's games
     
     """
+
+
     #Gets a list of match_ids 
     i = 0
     j = 0
 
-    #Creates an empty list to populate with dictionaries
-    #Each element of the list will be one game
-    participants_1 = []
+    
    
     while i < number_games: 
+        #Creates an empty list to populate with dictionaries
+        #Each element of the list will be one game
+        participants_1 = []
         match_ids = get_match_history_start(user, region, start_index=i)
         
         if match_ids == []:
             print("Found all matches")
             break
         else:
-        
             #For each match ID in the list of match_ids
             for id in match_ids:    
                 #Gets the information for the match
@@ -271,15 +274,26 @@ def get_match_details(user, region, number_games):
                         participants_1.append(participants_row)
                 j = j + 1
                 print(j)
-               
+            
+            #Create a dataframe from the list of dictionaries             
+            df = pd.DataFrame(participants_1)
+            df = pd.DataFrame(df)
+            df = col_to_string(df, "WinLoss")
+            df["WinLoss"] = df["WinLoss"].map(encode_true_false)
+            df = impute_mode_lane(df)
+            df = encode_categorical(df, "Lane")
 
-        #time.sleep(120)
-        i = i + 100
-        
-    #Create a dataframe from the list of dictionaries             
-    df = pd.DataFrame(participants_1)
-
-    return df
+            if i == 0:
+                with open(f"./newdata{user}.csv", 'w',encoding="utf-8") as f:
+                    df.to_csv(f)
+            else:
+                with open(f"./newdata{user}.csv", 'a', encoding="utf-8") as f:
+                    df.to_csv(f, header=False)
+            del df
+            
+            #time.sleep(120)
+            i = i + 100
+    return 
 
 def webpage_transfer(user, region, test):
 
