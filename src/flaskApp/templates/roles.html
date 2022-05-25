@@ -26,7 +26,7 @@
         <p>
             <br>
             Finds the total number of wins and losses for each role. Stacks wins ontop of losses <br>
-            to give total number of games played for each role, and finds the win-rate. 
+            to give total number of games played for each role, and finds the win-rate. <br>
            
         </p> 
         <div>
@@ -38,8 +38,11 @@
         <h2 class="title2"> Best champions by role</h2>  
         <p>
             <br>
-            Finds the total number of wins and losses for each role. Stacks wins ontop of losses <br>
-            to give total number of games played for each role, and finds the win-rate. 
+            Finds up to 3 champions per role with the highest win-rate. Filters out champions <br>
+            that have been played less than 5 times to remove inflated win-rates due to low <br>
+            sample size. Returns less than 3 champions if cannot find more 3 or more champs with 
+            at least 5 games played.
+           
            
         </p> 
         <div>
@@ -335,6 +338,8 @@
                     
                 },
                 y: {
+                    max:100,
+                    min:0,
                     grid:{
                         color:'rgba(255,255,255,0.3)',
                     },

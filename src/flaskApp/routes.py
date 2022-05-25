@@ -1,6 +1,7 @@
 from src import pd
 from src.flaskApp import app
 from flask import redirect, render_template, url_for
+import time
 
 from src.DataScripts.GetData import get_account_id, get_match_details, get_time_series_non_user, get_time_series_user, webpage_transfer
 from src.DataScripts.CleanData import encode_true_false, col_to_string, encode_categorical, top_n_occurences, impute_mode_lane
@@ -48,6 +49,8 @@ def loading(user, region):
     
 
     if user != "test":
+
+        #Downloads and saves base data
         test = False
         df = get_match_details(user, region, no_games)
         df = col_to_string(df, "WinLoss")
@@ -55,11 +58,38 @@ def loading(user, region):
         df = impute_mode_lane(df)
         df = encode_categorical(df, "Lane")
         df.to_csv(f"./newdata{user}.csv")
+
+        #Downloads and saves time-series data
+        dfs_user = get_time_series_user(user, region)
+
+        data_cs = dfs_user[0]
+        data_exp = dfs_user[1]
+        data_gold = dfs_user[2]
+        data_dmg = dfs_user[3]
+
+        data_cs.to_csv(f"./newdata{user}_cs.csv")
+        data_exp.to_csv(f"./newdata{user}_exp.csv")
+        data_gold.to_csv(f"./newdata{user}_gold.csv")
+        data_dmg.to_csv(f"./newdata{user}_dmg.csv")
+
+        time.sleep(120)
+        dfs_non_user = get_time_series_non_user(user, region)
+
+        data_non_cs = dfs_non_user[0]
+        data_non_exp = dfs_non_user[1]
+        data_non_gold = dfs_non_user[2]
+        data_non_dmg = dfs_non_user[3]
+
+        data_non_cs.to_csv(f"./newdata_non_{user}_cs.csv")
+        data_non_exp.to_csv(f"./newdata_non_{user}_exp.csv")
+        data_non_gold.to_csv(f"./newdata_non_{user}_gold.csv")
+        data_non_dmg.to_csv(f"./newdata_non_{user}_dmg.csv")
     
     else:
         test = True
         user = "Frommoh"
         region = "OC1"
+  
 
     return redirect(url_for('overview', user = user, test = test, region = region))
 
@@ -483,19 +513,16 @@ def timeseries(user, region, test):
         data_non_gold = pd.read_csv("./TestData_non_gold.csv")
         data_non_gold = pd.DataFrame(data_non_gold)
     else:
-        dfs_user = get_time_series_user(user, region)
+        data_cs = pd.read_csv(f"./newdata{user}_cs.csv")
+        data_exp = pd.read_csv(f"./newdata{user}_exp.csv")
+        data_gold = pd.read_csv(f"./newdata{user}_gold.csv")
+        data_dmg = pd.read_csv(f"./newdata{user}_dmg.csv")
 
-        data_cs = dfs_user[0]
-        data_exp = dfs_user[1]
-        data_gold = dfs_user[2]
-        data_dmg = dfs_user[3]
+        data_non_cs = pd.read_csv(f"./newdata_non_{user}_cs.csv")
+        data_non_exp = pd.read_csv(f"./newdata_non_{user}_exp.csv")
+        data_non_gold = pd.read_csv(f"./newdata_non_{user}_gold.csv")
+        data_non_dmg = pd.read_csv(f"./newdata_non_{user}_dmg.csv")
 
-        dfs_non_user = get_time_series_non_user(user, region)
-
-        data_non_cs = dfs_non_user[0]
-        data_non_exp = dfs_non_user[1]
-        data_non_gold = dfs_non_user[2]
-        data_non_dmg = dfs_non_user[3]
 
     #Subet data 3 due to limited activity before 3mins, 35 due to low games running past 35
     data_cs = data_cs.iloc[3:36,]
