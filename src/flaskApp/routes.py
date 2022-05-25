@@ -2,6 +2,9 @@ from src import pd
 from src.flaskApp import app
 from flask import redirect, render_template, url_for
 import time
+import tracemalloc
+import os
+
 
 from src.DataScripts.GetData import get_account_id, get_match_details, get_time_series_non_user, get_time_series_user, webpage_transfer
 from src.DataScripts.CleanData import top_n_occurences
@@ -13,6 +16,7 @@ from src.flaskApp.forms import UserNameForm
 #Landing page
 @app.route("/", methods = ["POST", "GET"])
 def home():
+   
     form = UserNameForm()
 
     if form.validate_on_submit():
@@ -35,6 +39,7 @@ def home():
             user = "test"
             region = "OC1"
 
+       
         return redirect(url_for('loading', user = user, region = region))
     
     return render_template("landingPage.html", form = form)
@@ -65,8 +70,12 @@ def loading(user, region):
         test = True
         user = "Frommoh"
         region = "OC1"
-  
+    
 
+
+    
+  
+  
     return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
 
 

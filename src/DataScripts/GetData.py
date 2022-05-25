@@ -1,4 +1,4 @@
-from turtle import pu
+
 from src import pd
 from src.DataScripts import watcher
 from src.DataScripts.analysis import user_win_loss_wr
@@ -196,7 +196,7 @@ def get_match_details(user, region, number_games):
         user's games
     
     """
-
+   
 
     #Gets a list of match_ids 
     i = 0
@@ -286,11 +286,14 @@ def get_match_details(user, region, number_games):
                             dictwriter_object.writerow(participants_row)
                             # Close the file object
                             f_object.close()
+                        del participants_row
                         print(j)
                         j += 1
 
         #Iterate over next 100 games
         i = i + 100
+        del match_detail
+        del match_ids
     
     #Read in final csv to df and clean
     df = pd.read_csv(f"./newdata{user}.csv")
@@ -302,6 +305,8 @@ def get_match_details(user, region, number_games):
 
     #Save back to csv
     df.to_csv(f"./newdata{user}.csv")
+
+    
 
     return 
 
