@@ -121,17 +121,16 @@ button{
 }
 
 .float-child p{
-  text-align: left;
+  text-align: center;
   margin-top: auto;
-  margin-left: 30%;
   margin-bottom: 3.5%;
   color: #ffffff;
 }
 
 .float-child9 p{
-  text-align: left;
+  text-align: center;
+  margin:auto;
   margin-top: auto;
-  margin-left: 30%;
   margin-bottom:1%;
   color: #ffffff;
 }
@@ -193,7 +192,7 @@ button{
 }
 
 .float-child p {
-  text-align: left;
+  text-align: center;
   
 }
 .float-child2 {
@@ -247,9 +246,9 @@ h6 {
 }
 
 .subtextPara{
-  text-align: left;
+  text-align: center;
   margin-top: auto;
-  margin-left: 35%;
+ 
   margin-bottom: 3.5%;
   color: #ffffff;
 }
