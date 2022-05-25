@@ -6,8 +6,29 @@
     {%endblock title%}
   
     {% block content %}
+    
+
+    <div class="float-child2">
+        <h2 class="title2"> Win-rate vs Time Played</h2>  
+        <p class="subtextPara">
+            <br>
+            Finds the cumulative number of hours played at the end of each game, specific to role and overall. <br>
+            Plots the cumulative win-rate for each role for against the number of hours played. 
+           
+        </p>
+        <div>
+            <canvas id="lineChart" width="1000" height="500"></canvas>
+        </div>
+    </div>  
+
     <div class="float-child">
-        <h2 class="title2"> Wins vs Losses by role</h2>  
+        <h2 class="title2"> Wins vs Losses by role</h2> 
+        <p>
+            <br>
+            Finds the total number of wins and losses for each role. Stacks wins ontop of losses <br>
+            to give total number of games played for each role, and finds the win-rate. 
+           
+        </p> 
         <div>
             <canvas id="topChart" width="600" height="350"></canvas>
         </div>
@@ -15,18 +36,18 @@
 
     <div class="float-child9">
         <h2 class="title2"> Best champions by role</h2>  
+        <p>
+            <br>
+            Finds the total number of wins and losses for each role. Stacks wins ontop of losses <br>
+            to give total number of games played for each role, and finds the win-rate. 
+           
+        </p> 
         <div>
             <canvas id="wrChart" width="600" height="350"></canvas>
         </div>
     </div>  
 
-    <div class="float-child2">
-        <h2 class="title2"> Win-rate vs cumulative time played by role</h2>  
-        <div>
-            <canvas id="lineChart" width="1000" height="500"></canvas>
-        </div>
-    </div>  
-
+   
   
 <!------------------------Win rates by role---------------------------------------------->
 <script>
@@ -457,7 +478,7 @@
                     title:{
                         color: 'white',
                         display: true,
-                        text: "Cumulative time played (Log Scale)",
+                        text: "Hours played (Log Scale)",
                         font: {   
                             weight : 'bold',
                             size : 20,

@@ -6,6 +6,14 @@
 {%endblock title%}
 
 {% block content %}
+    <h4 class="subtext"> Coefficient Radar Charts</h4>
+    <p class="subtextPara">
+        Displays the results of a logistic regression model fitted to {{user}}'s games. The game's outcome is the <br>
+        depdendent variable, with a plethora of normalised metrics as the independent variables. The model is run <br>
+        recursively to remove all variables with p > 0.05, refitting each time. All positive coefficients are   <br>
+        plotted on the winning chart, and negative coefficients on the losing chart
+    </p>
+
     {% if show_radar_pos %}
     <div class="float-child">
         <h2 class="title2"> What's winning {{user}} games?</h2>
@@ -36,6 +44,13 @@
             </p>
         </div>
         {%endif%}
+    
+    <h4 class="subtext"> Top Champions</h4>
+    <p class="subtextPara">
+        Finds {{user}}'s top champions by number of games played, and by their win-rate. Top champions by win-rate<br>
+        filters out champions that have been played less than 5 times to remove inflated win-rates due to low sample size.
+        
+    </p>
     
     <div class="float-child">
         <h2 class="title2"> Most played champions</h2>

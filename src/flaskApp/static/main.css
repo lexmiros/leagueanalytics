@@ -50,6 +50,7 @@
   margin: auto;
   text-align: center;
   font-size: 5  00%;
+  text-decoration: underline;
   
  }
 
@@ -117,7 +118,24 @@ button{
   float: left;
   padding: 20px;
   
-}  
+}
+
+.float-child p{
+  text-align: left;
+  margin-top: auto;
+  margin-left: 30%;
+  margin-bottom: 3.5%;
+  color: #ffffff;
+}
+
+.float-child9 p{
+  text-align: left;
+  margin-top: auto;
+  margin-left: 30%;
+  margin-bottom: 3.5%;
+  color: #ffffff;
+}
+
 
 .float-child canvas {
   margin: 0 auto;
@@ -222,7 +240,17 @@ h6 {
 
 .subtext {
   text-align: center;
-  margin-top: 2.5%;
+  margin-top: 0;
+  color: #ffffff;
+  text-decoration: underline;
+  margin-bottom: 1%;
+}
+
+.subtextPara{
+  text-align: left;
+  margin-top: auto;
+  margin-left: 35%;
+  margin-bottom: 3.5%;
   color: #ffffff;
 }
 

@@ -2,16 +2,18 @@
 {% extends "layout.html" %}
 {%block title%}
     <h1 class="title">Key indicator averages for {{user}} </h1>
-    <h5 class="subtext"> Top 5 and bottom 5 metrics for {{user}}</h5>
-    <p class="subtext">Finds the averages for all metrics for {{user}} and the other players in {{user}}'s games.<br>
-        Finds the top and bottom 5 by finding the highest / lowest ratios for the metrics. 
-    </p>
     
     
     
 {%endblock title%}
 
 {% block content %}
+    <h4 class="subtext"> Average Metric Dougnut Charts</h4>
+    <p class="subtextPara">
+        Averages each metric found across all games for {{user}} and all other players in {{user}}'s games. <br>
+        Finds the top 5, and bottom 5 metrics for {{user}} when compared to other players as a ratio. <br>
+       
+    </p>
 
     <div class="float-child3">
         <h2 class="title2"> Top game metrics for {{user}}</h2>  
