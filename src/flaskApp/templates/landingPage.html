@@ -5,7 +5,11 @@
 {%block sidebar%}{%endblock sidebar%}
 {%block title%}
 <h1 class="welcome"> League Analytics</h1>
-<h5 class="subtitle"> Hit submit WITHOUT entering a summoner name to use test data</h5>
+<h5 class="subtitle"> Please click the 'information' button below before using a custom summoner name</h5>
+<button class="readme" onclick="window.location.href='{{url_for('readme')}}';">
+    Information
+</button>
+
 {% if error_msg%}
 <h6 class="subtitle"> {{error_msg}}</h6>
 <h5 class="subtitle"> Please try again or clear the username form to use test data</h5>

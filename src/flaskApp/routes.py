@@ -39,6 +39,12 @@ def home():
     
     return render_template("landingPage.html", form = form)
 
+@app.route("/readme")
+def readme():
+    """"""
+
+    return render_template("readme.html")
+
 #Loading data function
 @app.route("/loading/<user>/<region>", methods=["POST","GET"])
 def loading(user, region):

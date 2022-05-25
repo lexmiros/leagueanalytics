@@ -225,6 +225,15 @@ button{
   
 }
 
+.readme{
+  margin-top: 5%;
+  outline: #ffffff;
+  margin-left: 40%;
+  background-color: #115e91;
+  color: #ffffff;
+  
+}
+
 .float-child h4 {
   
   text-align: center;
