@@ -5,6 +5,7 @@ from src.DataScripts.analysis import user_win_loss_wr
 from src.DataScripts.CleanData import *
 import csv
 from csv import DictWriter
+from src import filepath
 
 
 def get_account_id(user: str, region:str) -> str:
@@ -206,7 +207,7 @@ def get_match_details(user, region, number_games):
     headersCSV = ['SummonerName','WinLoss','Lane','Champion','Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp','Damage','Shielding','Healing','Total Damage Taken','Wards Placed','Wards Killed','Vision Score','Penta Kills','Game Time seconds','Crowd Control','Time spent dead','Kill participation','Team damage percentage','Skillshots hit','Skillshots dodged','Solo kills','Turret plates taken']
     
     #Create CSV file with headings
-    with open(f"./newdata{user}.csv", 'w', newline='', encoding="utf-8") as newcsv:
+    with open(f"{filepath}{user}.csv", 'w', newline='', encoding="utf-8") as newcsv:
         writer = csv.writer(newcsv)
         writer.writerow(headersCSV)
 
@@ -278,7 +279,7 @@ def get_match_details(user, region, number_games):
                             participants_row['Turret plates taken']    = 0 
                         
                         #Append the dictionary to the list
-                        with open(f'./newdata{user}.csv', 'a', newline='', encoding="utf-8") as f_object:
+                        with open(f'{filepath}{user}.csv', 'a', newline='', encoding="utf-8") as f_object:
                             # Pass the CSV  file object to the Dictwriter() function
                             # Result - a DictWriter object
                             dictwriter_object = DictWriter(f_object, fieldnames=headersCSV)
@@ -296,7 +297,7 @@ def get_match_details(user, region, number_games):
         del match_ids
     
     #Read in final csv to df and clean
-    df = pd.read_csv(f"./newdata{user}.csv")
+    df = pd.read_csv(f"{filepath}{user}.csv")
     df = pd.DataFrame(df)
     df = col_to_string(df, "WinLoss")
     df["WinLoss"] = df["WinLoss"].map(encode_true_false)
@@ -304,7 +305,7 @@ def get_match_details(user, region, number_games):
     df = encode_categorical(df, "Lane")
 
     #Save back to csv
-    df.to_csv(f"./newdata{user}.csv")
+    df.to_csv(f"{filepath}{user}.csv")
 
     
 
@@ -317,7 +318,7 @@ def get_match_details(user, region, number_games):
 def webpage_transfer(user, region, test):
 
     if test == "False":
-        data_loc = f"./newdata{user}.csv"
+        data_loc = f"{filepath}{user}.csv"
         df = pd.read_csv(data_loc)
         df = pd.DataFrame(df)
     else:

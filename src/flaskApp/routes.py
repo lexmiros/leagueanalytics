@@ -4,6 +4,7 @@ from flask import redirect, render_template, url_for
 import time
 import tracemalloc
 import os
+from src import filepath
 
 
 from src.DataScripts.GetData import get_account_id, get_match_details, get_time_series_non_user, get_time_series_user, webpage_transfer
@@ -92,10 +93,10 @@ def loading_timeseries(user, region, test):
         data_gold = dfs_user[2]
         data_dmg = dfs_user[3]
 
-        data_cs.to_csv(f"./newdata{user}_cs.csv")
-        data_exp.to_csv(f"./newdata{user}_exp.csv")
-        data_gold.to_csv(f"./newdata{user}_gold.csv")
-        data_dmg.to_csv(f"./newdata{user}_dmg.csv")
+        data_cs.to_csv(f"{filepath}{user}_cs.csv")
+        data_exp.to_csv(f"{filepath}{user}_exp.csv")
+        data_gold.to_csv(f"{filepath}{user}_gold.csv")
+        data_dmg.to_csv(f"{filepath}{user}_dmg.csv")
         
         del data_cs
         del data_exp
@@ -110,10 +111,10 @@ def loading_timeseries(user, region, test):
         data_non_gold = dfs_non_user[2]
         data_non_dmg = dfs_non_user[3]
 
-        data_non_cs.to_csv(f"./newdata_non_{user}_cs.csv")
-        data_non_exp.to_csv(f"./newdata_non_{user}_exp.csv")
-        data_non_gold.to_csv(f"./newdata_non_{user}_gold.csv")
-        data_non_dmg.to_csv(f"./newdata_non_{user}_dmg.csv")
+        data_non_cs.to_csv(f"{filepath}_non_{user}_cs.csv")
+        data_non_exp.to_csv(f"{filepath}_non_{user}_exp.csv")
+        data_non_gold.to_csv(f"{filepath}_non_{user}_gold.csv")
+        data_non_dmg.to_csv(f"{filepath}_non_{user}_dmg.csv")
 
         del data_non_cs
         del data_non_exp
@@ -545,15 +546,15 @@ def timeseries(user, region, test):
         data_non_gold = pd.read_csv("./TestData_non_gold.csv")
         data_non_gold = pd.DataFrame(data_non_gold)
     else:
-        data_cs = pd.read_csv(f"./newdata{user}_cs.csv")
-        data_exp = pd.read_csv(f"./newdata{user}_exp.csv")
-        data_gold = pd.read_csv(f"./newdata{user}_gold.csv")
-        data_dmg = pd.read_csv(f"./newdata{user}_dmg.csv")
+        data_cs = pd.read_csv(f"{filepath}{user}_cs.csv")
+        data_exp = pd.read_csv(f"{filepath}{user}_exp.csv")
+        data_gold = pd.read_csv(f"{filepath}{user}_gold.csv")
+        data_dmg = pd.read_csv(f"{filepath}{user}_dmg.csv")
 
-        data_non_cs = pd.read_csv(f"./newdata_non_{user}_cs.csv")
-        data_non_exp = pd.read_csv(f"./newdata_non_{user}_exp.csv")
-        data_non_gold = pd.read_csv(f"./newdata_non_{user}_gold.csv")
-        data_non_dmg = pd.read_csv(f"./newdata_non_{user}_dmg.csv")
+        data_non_cs = pd.read_csv(f"{filepath}_non_{user}_cs.csv")
+        data_non_exp = pd.read_csv(f"{filepath}_non_{user}_exp.csv")
+        data_non_gold = pd.read_csv(f"{filepath}_non_{user}_gold.csv")
+        data_non_dmg = pd.read_csv(f"{filepath}_non_{user}_dmg.csv")
 
 
     #Subet data 3 due to limited activity before 3mins, 35 due to low games running past 35
