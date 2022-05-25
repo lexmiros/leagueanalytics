@@ -3,6 +3,8 @@ from src import pd
 from src.DataScripts import watcher
 from src.DataScripts.analysis import user_win_loss_wr
 from src.DataScripts.CleanData import *
+import csv
+from csv import DictWriter
 
 
 def get_account_id(user: str, region:str) -> str:
@@ -200,14 +202,19 @@ def get_match_details(user, region, number_games):
     i = 0
     j = 0
 
+    #Column headings for the CSV file
+    headersCSV = ['SummonerName','WinLoss','Lane','Champion','Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp','Damage','Shielding','Healing','Total Damage Taken','Wards Placed','Wards Killed','Vision Score','Penta Kills','Game Time seconds','Crowd Control','Time spent dead','Kill participation','Team damage percentage','Skillshots hit','Skillshots dodged','Solo kills','Turret plates taken']
     
-   
+    #Create CSV file with headings
+    with open(f"./newdata{user}.csv", 'w', newline='', encoding="utf-8") as newcsv:
+        writer = csv.writer(newcsv)
+        writer.writerow(headersCSV)
+
+    #Iterate over each batch of 100 games
     while i < number_games: 
-        #Creates an empty list to populate with dictionaries
-        #Each element of the list will be one game
-        participants_1 = []
         match_ids = get_match_history_start(user, region, start_index=i)
         
+        #Check of match_Ids returned are empty therefore found all games
         if match_ids == []:
             print("Found all matches")
             break
@@ -271,30 +278,36 @@ def get_match_details(user, region, number_games):
                             participants_row['Turret plates taken']    = 0 
                         
                         #Append the dictionary to the list
-                        participants_1.append(participants_row)
-                j = j + 1
-                print(j)
-            
-            #Create a dataframe from the list of dictionaries             
-            df = pd.DataFrame(participants_1)
-            df = pd.DataFrame(df)
-            df = col_to_string(df, "WinLoss")
-            df["WinLoss"] = df["WinLoss"].map(encode_true_false)
-            df = impute_mode_lane(df)
-            df = encode_categorical(df, "Lane")
+                        with open(f'./newdata{user}.csv', 'a', newline='', encoding="utf-8") as f_object:
+                            # Pass the CSV  file object to the Dictwriter() function
+                            # Result - a DictWriter object
+                            dictwriter_object = DictWriter(f_object, fieldnames=headersCSV)
+                            # Pass the data in the dictionary as an argument into the writerow() function
+                            dictwriter_object.writerow(participants_row)
+                            # Close the file object
+                            f_object.close()
+                        print(j)
+                        j += 1
 
-            if i == 0:
-                with open(f"./newdata{user}.csv", 'w',encoding="utf-8") as f:
-                    df.to_csv(f)
-            else:
-                with open(f"./newdata{user}.csv", 'a', encoding="utf-8") as f:
-                    df.to_csv(f, header=False)
-            del df
-            del participants_1
-            
-            #time.sleep(120)
-            i = i + 100
+        #Iterate over next 100 games
+        i = i + 100
+    
+    #Read in final csv to df and clean
+    df = pd.read_csv(f"./newdata{user}.csv")
+    df = pd.DataFrame(df)
+    df = col_to_string(df, "WinLoss")
+    df["WinLoss"] = df["WinLoss"].map(encode_true_false)
+    df = impute_mode_lane(df)
+    df = encode_categorical(df, "Lane")
+
+    #Save back to csv
+    df.to_csv(f"./newdata{user}.csv")
+
     return 
+
+
+            
+    
 
 def webpage_transfer(user, region, test):
 

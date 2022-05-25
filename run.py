@@ -3,6 +3,7 @@ from ntpath import join
 from re import match
 
 import pandas
+import csv
 
 from src.flaskApp import app, routes
 from src.DataScripts.analysis import *
@@ -15,11 +16,7 @@ if __name__ == "__main__":
     #user = "Ausfreak"
     #region = "OC1"
     #get_match_details(user, region, 400)
-    
- 
-    
-   
-   
+
    
     """
     
