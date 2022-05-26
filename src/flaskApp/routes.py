@@ -63,16 +63,15 @@ def loading(user, region):
     try:
         next_batch = get_match_details(user, region, start_index, final_set=False)
         print("Batch 1")
+        return redirect(url_for('loading2', user = user,  region = region, next_batch = next_batch))
     except:
-        print("Batch 1 skipped")
+        form = UserNameForm()
+        error_msg = "Riot Sever currently 'Busy' (error 503). Please search again in a few minutes "
+        return render_template("landingPage.html", form = form, error_msg = error_msg)
         
-    return redirect(url_for('loading2', user = user,  region = region, next_batch = next_batch))
-
     
 
-
-
-       
+   
 
 #Loading data function
 @app.route("/loading2/<user>/<region>/<next_batch>", methods=["POST","GET"])
@@ -91,8 +90,10 @@ def loading2(user, region, next_batch):
         else:
             return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
     except:
+        time.sleep(30)
         print('batch 2 skipped')
         return redirect(url_for('loading3', user = user, region = region, next_batch = next_batch))
+        #return redirect(url_for('loading2', user = user,  region = region, next_batch = next_batch))
 
     
 
@@ -116,8 +117,10 @@ def loading3(user, region, next_batch):
         else:
             return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
     except:
+        time.sleep(30)
         print('batch 3 skipped')
         return redirect(url_for('loading4', user = user, region = region, next_batch = next_batch))
+        #return redirect(url_for('loading3', user = user, region = region, next_batch = next_batch))
     
 
     
@@ -139,8 +142,10 @@ def loading4(user, region, next_batch):
         else:
             return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
     except:
+        time.sleep(30)
         print('batch 4 skipped')
         return redirect(url_for('loading5', user = user, region = region, next_batch = next_batch))
+        #return redirect(url_for('loading4', user = user, region = region, next_batch = next_batch))
     
     
 
@@ -161,7 +166,7 @@ def loading5(user, region, next_batch):
     
         print("Batch 5")
     except:
-        print("Batch 5 skipped")
+        return redirect(url_for('loading5', user = user, region = region, next_batch = next_batch))
 
     return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
 
@@ -193,9 +198,12 @@ def loading_timeseries_user(user, region, test):
             print("User gold to csv loaded")
             data_dmg.to_csv(f"{filepath}{user}_dmg.csv")
             print("User dmg to csv loaded")
+
+            return redirect(url_for('loading_timeseries_non_user', user = user, test = test, region = region))
     except:
-        pass
-    return redirect(url_for('loading_timeseries_non_user', user = user, test = test, region = region))
+        return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
+
+    
 
 
 @app.route("/loading_timeseries_non_user/<user>/<region>/<test>")
@@ -222,10 +230,12 @@ def loading_timeseries_non_user(user, region, test):
         print("NON User gold to csv loaded")
         data_non_dmg.to_csv(f"{filepath}_non_{user}_dmg.csv")
         print("NON User dmg to csv loaded")
-    except:
-        pass
 
-    return redirect(url_for('overview', user = user, test = test, region = region))
+        return redirect(url_for('overview', user = user, test = test, region = region))
+    except:
+        return redirect(url_for('loading_timeseries_non_user', user = user, test = test, region = region))
+
+    
 
     
 
