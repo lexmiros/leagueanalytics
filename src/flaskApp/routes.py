@@ -1,11 +1,8 @@
 from src import pd
 from src.flaskApp import app
 from flask import redirect, render_template, url_for
-import time
-import tracemalloc
-import os
 from src import filepath
-
+import time
 
 from src.DataScripts.GetData import get_account_id, get_match_details, get_time_series_non_user, get_time_series_user, webpage_transfer
 from src.DataScripts.CleanData import top_n_occurences
@@ -69,7 +66,7 @@ def loading(user, region):
         test = True
         user = "Frommoh"
         region = "OC1"
-        return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+        return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
 
 
     
@@ -91,7 +88,7 @@ def loading2(user, region, next_batch):
         if next_batch == "True":
             return redirect(url_for('loading3', user = user, region = region, next_batch = next_batch))
         else:
-             return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+             return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
     
 
  
@@ -118,7 +115,7 @@ def loading3(user, region, next_batch):
             return redirect(url_for('loading4', user = user, region = region, next_batch = next_batch))
  
         else:
-            return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+            return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
     
 
     
@@ -140,7 +137,7 @@ def loading4(user, region, next_batch):
             return redirect(url_for('loading5', user = user, region = region, next_batch = next_batch))
  
         else:
-            return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+            return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
     
     
 
@@ -161,11 +158,11 @@ def loading5(user, region, next_batch):
  
     print("Batch 5")
 
-    return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+    return redirect(url_for('loading_timeseries_user', user = user, test = test, region = region))
 
 
-@app.route("/loading_timeseries/<user>/<region>/<test>")
-def loading_timeseries(user, region, test):
+@app.route("/loading_timeseries_user/<user>/<region>/<test>")
+def loading_timeseries_user(user, region, test):
 
     #Checks to see if time series data needs to be downloaded
     if test != "True":
@@ -190,41 +187,35 @@ def loading_timeseries(user, region, test):
         print("User gold to csv loaded")
         data_dmg.to_csv(f"{filepath}{user}_dmg.csv")
         print("User dmg to csv loaded")
-        
-        del data_cs
-        del data_exp
-        del data_gold
-        del data_dmg
-
-       
-        dfs_non_user = get_time_series_non_user(user, region)
-        print("User NON Data loaded")
-
-        data_non_cs = dfs_non_user[0]
-        print("NON User cs loaded")
-        data_non_exp = dfs_non_user[1]
-        print("NON User exp loaded")
-        data_non_gold = dfs_non_user[2]
-        print("NON User gold loaded")
-        data_non_dmg = dfs_non_user[3]
-        print("NON User dmg loaded")
-
-        data_non_cs.to_csv(f"{filepath}_non_{user}_cs.csv")
-        print("NON User cs to csv loaded")
-        data_non_exp.to_csv(f"{filepath}_non_{user}_exp.csv")
-        print("NON User exp to csv loaded")
-        data_non_gold.to_csv(f"{filepath}_non_{user}_gold.csv")
-        print("NON User gold to csv loaded")
-        data_non_dmg.to_csv(f"{filepath}_non_{user}_dmg.csv")
-        print("NON User dmg to csv loaded")
-
-        del data_non_cs
-        del data_non_exp
-        del data_non_gold
-        del data_non_dmg
     
-    return redirect(url_for('overview', user = user, test = test, region = region))
+    return redirect(url_for('loading_timeseries_non_user', user = user, test = test, region = region))
 
+
+@app.route("/loading_timeseries_non_user/<user>/<region>/<test>")
+def loading_timeseries_non_user(user, region, test):
+
+    dfs_non_user = get_time_series_non_user(user, region)
+    print("User NON Data loaded")
+
+    data_non_cs = dfs_non_user[0]
+    print("NON User cs loaded")
+    data_non_exp = dfs_non_user[1]
+    print("NON User exp loaded")
+    data_non_gold = dfs_non_user[2]
+    print("NON User gold loaded")
+    data_non_dmg = dfs_non_user[3]
+    print("NON User dmg loaded")
+
+    data_non_cs.to_csv(f"{filepath}_non_{user}_cs.csv")
+    print("NON User cs to csv loaded")
+    data_non_exp.to_csv(f"{filepath}_non_{user}_exp.csv")
+    print("NON User exp to csv loaded")
+    data_non_gold.to_csv(f"{filepath}_non_{user}_gold.csv")
+    print("NON User gold to csv loaded")
+    data_non_dmg.to_csv(f"{filepath}_non_{user}_dmg.csv")
+    print("NON User dmg to csv loaded")
+
+    return redirect(url_for('overview', user = user, test = test, region = region))
 
     
 
