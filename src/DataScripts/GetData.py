@@ -293,7 +293,7 @@ def get_match_details(user, region, start_index, final_set):
                             # Close the file object
                             f_object.close()
                         del participants_row
-                        print(j)
+                        #print(j)
                         j += 1
 
         #Iterate over next 100 games
