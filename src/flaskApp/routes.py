@@ -58,45 +58,109 @@ def loading(user, region):
     user = user
     region = region
     start_index = 0
-    
 
     if user != "test":
-
-        
         test = False
-        get_match_details(user, region, start_index, final_set=False)
-   
-    
+        next_batch = get_match_details(user, region, start_index, final_set=False)
+        print("Batch 1")
+
+        return redirect(url_for('loading2', user = user,  region = region, next_batch = next_batch))
     else:
         test = True
         user = "Frommoh"
         region = "OC1"
+        return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+
+
     
-  
-    return redirect(url_for('loading2', user = user,  region = region))
+    
+    
 
 #Loading data function
-@app.route("/loading2/<user>/<region>", methods=["POST","GET"])
-def loading2(user, region):
+@app.route("/loading2/<user>/<region>/<next_batch>", methods=["POST","GET"])
+def loading2(user, region, next_batch):
     
     user = user
     region = region
-    start_index = 200
+    start_index = 200 
+    test = False
+
+    if user != "test":   
+        
+        next_batch = get_match_details(user, region, start_index, final_set=False)
+        if next_batch == "True":
+            return redirect(url_for('loading3', user = user, region = region, next_batch = next_batch))
+        else:
+             return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
     
+
+ 
+  
+      
+    
+    
+
+#Loading data function
+@app.route("/loading3/<user>/<region>/<next_batch>", methods=["POST","GET"])
+def loading3(user, region, next_batch):
+    
+    user = user
+    region = region
+    start_index = 400 
+    test = False
+    print(next_batch)
+
+    if user != "test": 
+        
+        next_batch = get_match_details(user, region, start_index, final_set=False)
+        print("Batch 3")
+        if next_batch == "True":
+            return redirect(url_for('loading4', user = user, region = region, next_batch = next_batch))
+ 
+        else:
+            return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+    
+
+    
+
+#Loading data function
+@app.route("/loading4/<user>/<region>/<next_batch>", methods=["POST","GET"])
+def loading4(user, region, next_batch):
+    
+    user = user
+    region = region
+    start_index = 600 
+    test = False
+
+    if user != "test": 
+        
+        next_batch = get_match_details(user, region, start_index, final_set=False)
+        print("Batch 4")
+        if next_batch == "True":
+            return redirect(url_for('loading5', user = user, region = region, next_batch = next_batch))
+ 
+        else:
+            return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
+    
+    
+
+
+#FINAL
+#Loading data function
+@app.route("/loading5/<user>/<region>/<next_batch>", methods=["POST","GET"])
+def loading5(user, region, next_batch):
+    
+    user = user
+    region = region
+    start_index = 800
+    test = False 
 
     if user != "test":
-
         
-        test = False
         get_match_details(user, region, start_index, final_set=True)
-   
-    
-    else:
-        test = True
-        user = "Frommoh"
-        region = "OC1"
-    
-  
+ 
+    print("Batch 5")
+
     return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
 
 
@@ -107,16 +171,25 @@ def loading_timeseries(user, region, test):
     if test != "True":
         #Downloads and saves time-series data
         dfs_user = get_time_series_user(user, region)
+        print("User Data loaded")
 
         data_cs = dfs_user[0]
+        print("User cs loaded")
         data_exp = dfs_user[1]
+        print("User exp loaded")
         data_gold = dfs_user[2]
+        print("User gold loaded")
         data_dmg = dfs_user[3]
+        print("User dmg loaded")
 
         data_cs.to_csv(f"{filepath}{user}_cs.csv")
+        print("User cs to csv loaded")
         data_exp.to_csv(f"{filepath}{user}_exp.csv")
+        print("User exp to csv loaded")
         data_gold.to_csv(f"{filepath}{user}_gold.csv")
+        print("User gold to csv loaded")
         data_dmg.to_csv(f"{filepath}{user}_dmg.csv")
+        print("User dmg to csv loaded")
         
         del data_cs
         del data_exp
@@ -125,16 +198,25 @@ def loading_timeseries(user, region, test):
 
        
         dfs_non_user = get_time_series_non_user(user, region)
+        print("User NON Data loaded")
 
         data_non_cs = dfs_non_user[0]
+        print("NON User cs loaded")
         data_non_exp = dfs_non_user[1]
+        print("NON User exp loaded")
         data_non_gold = dfs_non_user[2]
+        print("NON User gold loaded")
         data_non_dmg = dfs_non_user[3]
+        print("NON User dmg loaded")
 
         data_non_cs.to_csv(f"{filepath}_non_{user}_cs.csv")
+        print("NON User cs to csv loaded")
         data_non_exp.to_csv(f"{filepath}_non_{user}_exp.csv")
+        print("NON User exp to csv loaded")
         data_non_gold.to_csv(f"{filepath}_non_{user}_gold.csv")
+        print("NON User gold to csv loaded")
         data_non_dmg.to_csv(f"{filepath}_non_{user}_dmg.csv")
+        print("NON User dmg to csv loaded")
 
         del data_non_cs
         del data_non_exp
@@ -153,6 +235,8 @@ def overview(user, region, test):
     user = user
     region = region
     test = test
+    print(test)
+    print(type(test))
 
     #Set up passed in info from webpage
     info = webpage_transfer(user, region, test)

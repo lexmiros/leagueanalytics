@@ -200,6 +200,7 @@ def get_match_details(user, region, start_index, final_set):
     
     """
    
+    next_batch = "True"
 
     #Gets a list of match_ids 
     i = start_index
@@ -221,7 +222,8 @@ def get_match_details(user, region, start_index, final_set):
         #Check of match_Ids returned are empty therefore found all games
         if match_ids == []:
             print("Found all matches")
-            break
+            next_batch = "False"
+            return next_batch
         else:
             #For each match ID in the list of match_ids
             for id in match_ids:    
@@ -313,7 +315,7 @@ def get_match_details(user, region, start_index, final_set):
 
     
 
-    return 
+    return next_batch
 
 
             
@@ -325,10 +327,12 @@ def webpage_transfer(user, region, test):
         data_loc = f"{filepath}newdata{user}.csv"
         df = pd.read_csv(data_loc)
         df = pd.DataFrame(df)
+        print("NONTEST")
     else:
-        data_loc = f"./TestData_Cleaned_2.csv"
+        data_loc = f"{filepath}TestData_Cleaned_2.csv"
         df = pd.read_csv(data_loc)
         df = pd.DataFrame(df)
+        print("TEST")
     
     #Get top nav bar info
     results = user_win_loss_wr(df, user)
@@ -479,11 +483,6 @@ def get_time_series_user(user: str, region: str) -> pd.DataFrame:
         df_dmg_temp = pd.DataFrame(participants_dmg)
         df_dmg = pd.merge(df_dmg, df_dmg_temp, how='outer', left_index=True, right_index=True)
         df_dmg_temp = pd.DataFrame()
-
-
-
-
- 
 
     return df_cs, df_xp, df_gold, df_dmg
 
