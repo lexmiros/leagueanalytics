@@ -57,14 +57,14 @@ def loading(user, region):
     
     user = user
     region = region
-    no_games = 1000
+    start_index = 0
     
 
     if user != "test":
 
         
         test = False
-        get_match_details(user, region, no_games)
+        get_match_details(user, region, start_index, final_set=False)
    
     
     else:
@@ -72,10 +72,30 @@ def loading(user, region):
         user = "Frommoh"
         region = "OC1"
     
-
-
-    
   
+    return redirect(url_for('loading2', user = user,  region = region))
+
+#Loading data function
+@app.route("/loading2/<user>/<region>", methods=["POST","GET"])
+def loading2(user, region):
+    
+    user = user
+    region = region
+    start_index = 200
+    
+
+    if user != "test":
+
+        
+        test = False
+        get_match_details(user, region, start_index, final_set=True)
+   
+    
+    else:
+        test = True
+        user = "Frommoh"
+        region = "OC1"
+    
   
     return redirect(url_for('loading_timeseries', user = user, test = test, region = region))
 

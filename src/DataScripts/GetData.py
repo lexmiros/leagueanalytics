@@ -1,4 +1,5 @@
 
+from tracemalloc import start
 from src import pd
 from src.DataScripts import watcher
 from src.DataScripts.analysis import user_win_loss_wr
@@ -159,17 +160,17 @@ def get_rank(user: str, region: str) -> str:
     tier = ""
     rank = ""
     for row in account_info:
-        #try:
-        tier = row['tier']
-        rank = row['rank']
-        #except:
-           # pass
+        try:
+            tier = row['tier']
+            rank = row['rank']
+        except:
+            pass
 
     current_rank = tier + " " + rank
 
     return current_rank
 
-def get_match_details(user, region, number_games):
+def get_match_details(user, region, start_index, final_set):
     """
     Create a dataframe containing details from the user's
     match history
@@ -201,19 +202,20 @@ def get_match_details(user, region, number_games):
    
 
     #Gets a list of match_ids 
-    i = 0
+    i = start_index
+    z = i + 200
     j = 0
 
     #Column headings for the CSV file
     headersCSV = ['SummonerName','WinLoss','Lane','Champion','Q casts','W casts','E casts','R casts','ChampLevel','CS','Kills','Deaths','Assists','Exp','Damage','Shielding','Healing','Total Damage Taken','Wards Placed','Wards Killed','Vision Score','Penta Kills','Game Time seconds','Crowd Control','Time spent dead','Kill participation','Team damage percentage','Skillshots hit','Skillshots dodged','Solo kills','Turret plates taken']
-    
-    #Create CSV file with headings
-    with open(f"{filepath}newdata{user}.csv", 'w', newline='', encoding="utf-8") as newcsv:
-        writer = csv.writer(newcsv)
-        writer.writerow(headersCSV)
+    if i == 0:
+        #Create CSV file with headings
+        with open(f"{filepath}newdata{user}.csv", 'w', newline='', encoding="utf-8") as newcsv:
+            writer = csv.writer(newcsv)
+            writer.writerow(headersCSV)
 
     #Iterate over each batch of 100 games
-    while i < number_games: 
+    while i < z: 
         match_ids = get_match_history_start(user, region, start_index=i)
         
         #Check of match_Ids returned are empty therefore found all games
@@ -296,17 +298,18 @@ def get_match_details(user, region, number_games):
         i = i + 100
         del match_detail
         del match_ids
-    
-    #Read in final csv to df and clean
-    df = pd.read_csv(f"{filepath}newdata{user}.csv")
-    df = pd.DataFrame(df)
-    df = col_to_string(df, "WinLoss")
-    df["WinLoss"] = df["WinLoss"].map(encode_true_false)
-    df = impute_mode_lane(df)
-    df = encode_categorical(df, "Lane")
+        
+    if final_set:
+        #Read in final csv to df and clean
+        df = pd.read_csv(f"{filepath}newdata{user}.csv")
+        df = pd.DataFrame(df)
+        df = col_to_string(df, "WinLoss")
+        df["WinLoss"] = df["WinLoss"].map(encode_true_false)
+        df = impute_mode_lane(df)
+        df = encode_categorical(df, "Lane")
 
-    #Save back to csv
-    df.to_csv(f"{filepath}newdata{user}.csv")
+        #Save back to csv
+        df.to_csv(f"{filepath}newdata{user}.csv")
 
     
 
