@@ -72,11 +72,11 @@ var ctx = document.getElementById("radarChart").getContext("2d");
     var lineChart = new Chart(ctx, {
         type: "radar",
         data: {
-            labels: {{model_names | safe }},
+            labels: {{model_names_user | safe }},
             datasets: [
                 {
                 label: "{{user}}",
-                data: {{ model_values | safe }},
+                data: {{ model_values_user | safe }},
                 backgroundColor: 'rgba(170,219,30, 0.2)',
                 borderColor: 'rgb(170,219,30)',
                 pointBackgroundColor: 'rgb(154, 205, 50)',
@@ -138,11 +138,11 @@ var ctx = document.getElementById("radarChart2").getContext("2d");
     var lineChart = new Chart(ctx, {
         type: "radar",
         data: {
-            labels: {{model_names_neg | safe }},
+            labels: {{model_names_neg_user | safe }},
             datasets: [
                 {
                 label: "{{user}}",
-                data: {{ model_values_neg | safe }},
+                data: {{ model_values_neg_user | safe }},
                 backgroundColor: 'rgba(170,219,30, 0.2)',
                 borderColor: 'rgb(170,219,30)',
                 pointBackgroundColor: 'rgb(154, 205, 50)',
@@ -150,6 +150,7 @@ var ctx = document.getElementById("radarChart2").getContext("2d");
                 pointHoverBackgroundColor: '#fff',
                 pointHoverBorderColor: 'rgb(154, 205, 50)'
                 },
+                
             ], 
         },
         options: {

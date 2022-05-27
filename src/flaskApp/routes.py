@@ -275,8 +275,9 @@ def overview(user, region, test):
     #Logistic regression results
     #subset df on user v non-user
     df_user = df[df["SummonerName"] == user]
+    df_non_user = df[df["SummonerName"] != user]
     
-    #model variables
+    #model_user variables
     y = "WinLoss"
     X = ['Q casts','W casts','E casts','R casts','ChampLevel','CS',\
         'Damage','Shielding','Healing','Total Damage Taken','Wards Placed','Wards Killed','Game Time seconds',\
@@ -285,35 +286,54 @@ def overview(user, region, test):
 
     #build models and get coefficients
     #user
-    model = build_logit_model(df_user, y, X, 0.1)
-    coefs = get_model_coefs(model)
+    model_user = build_logit_model(df_user, y, X, 0.1)
+    coefs_user = get_model_coefs(model_user)
 
-    model_names = coefs[0]
-    model_values = coefs[1]
-    model_names_neg = coefs[2]
-    model_values_neg = coefs[3]
+    #Non-user
+    model_non_user = build_logit_model(df_non_user, y, X, 0.1)
+    coefs_non_user = get_model_coefs(model_non_user)
+
+    #Model names & values for user
+    model_names_user = coefs_user[0]
+    model_values_user = coefs_user[1]
+    model_names_neg_user = coefs_user[2]
+    model_values_neg_user = coefs_user[3]
+
+    #Model names & values for NON user
+    model_names_non_user = coefs_non_user[0]
+    model_values_non_user = coefs_non_user[1]
+    model_names_neg_non_user = coefs_non_user[2]
+    model_values_neg_non_user = coefs_non_user[3]
     
-    pos_max = max(model_values)
-    pos_min = min(model_values)
+    pos_max = max(model_values_user + model_values_non_user)
+    pos_min = min(model_values_user + model_values_non_user)
 
-    neg_max = max(model_values_neg)
-    neg_min = min(model_values_neg)
+    neg_max = max(model_values_neg_user + model_values_neg_non_user)
+    neg_min = min(model_values_neg_user + model_values_neg_non_user)
 
 
-    #Check that the model found at least 3 variables
+    #Check that the model_user found at least 3 variables
     show_radar_pos = True
     show_radar_neg = True
-    if len(model_names) < 3:
+    if len(model_names_user) < 3:
         show_radar_pos = False
-    if len(model_names_neg) < 3:
+    if len(model_names_neg_user) < 3:
         show_radar_pos = False
 
 
 
-    return render_template("overview.html", labels_wr = labels_wr, win_rates = win_rates, labels_top = labels_top, \
+    return render_template("overview.html", 
+        labels_wr = labels_wr, win_rates = win_rates, labels_top = labels_top,
+
         games = games, wins = wins, losses = losses, wr = wr, total_games = total_games, user = user, rank = rank,
-        model_values = model_values, model_names = model_names, model_names_neg = model_names_neg, model_values_neg = model_values_neg,
-        pos_max = pos_max, pos_min = pos_min, neg_max = neg_max, neg_min = neg_min,
+
+        model_values_user = model_values_user, model_names_user = model_names_user, model_names_neg_user = model_names_neg_user, 
+        model_values_neg_user = model_values_neg_user, pos_max = pos_max, pos_min = pos_min, neg_max = neg_max, 
+        neg_min = neg_min,
+
+        model_values_non_user = model_values_non_user, model_names_non_user = model_names_non_user, model_names_neg_non_user = model_names_neg_non_user, 
+        model_values_neg_non_user = model_values_neg_non_user,
+
         show_radar_neg = show_radar_neg, show_radar_pos = show_radar_pos, test = test, region = region)
 
 @app.route("/stats/<user>/<region>/<test>")
