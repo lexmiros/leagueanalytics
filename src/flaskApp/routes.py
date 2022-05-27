@@ -23,11 +23,12 @@ def home():
             user = form.user.data
             region = form.region.data
             user = user.capitalize()
-
-            #Check to see if user exists
+             #Check to see if user exists
             try:
                 get_account_id(user, region)
                 return redirect(url_for('loading', user = user, region = region))
+
+           
             except:
                 error_msg = "Account / Region combination not found!"
                 return render_template("landingPage.html", form = form, error_msg = error_msg)
@@ -236,18 +237,12 @@ def loading_timeseries_non_user(user, region, test):
         return redirect(url_for('loading_timeseries_non_user', user = user, test = test, region = region))
 
     
-
-    
-
-    
 @app.route("/overview/<user>/<region>/<test>")
 def overview(user, region, test):
     
     user = user
     region = region
     test = test
-    print(test)
-    print(type(test))
 
     #Set up passed in info from webpage
     info = webpage_transfer(user, region, test)

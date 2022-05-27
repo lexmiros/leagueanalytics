@@ -327,18 +327,21 @@ def webpage_transfer(user, region, test):
         data_loc = f"{filepath}newdata{user}.csv"
         df = pd.read_csv(data_loc)
         df = pd.DataFrame(df)
-        print("NONTEST")
+        rank = get_rank(user, region)
+        
     else:
         data_loc = f"{filepath}TestData_Cleaned_2.csv"
         df = pd.read_csv(data_loc)
         df = pd.DataFrame(df)
-        print("TEST")
-    
+        rank = "SILVER IV"
+        
+
     #Get top nav bar info
-    results = user_win_loss_wr(df, user)
-    rank = get_rank(user, region)
-  
+    
+    
+    
     #Build topnav info
+    results = user_win_loss_wr(df, user)
     wins = results[0]
     losses = results[1]
     wr = results[2]
