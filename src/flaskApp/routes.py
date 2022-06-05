@@ -68,7 +68,7 @@ def loading(user, region):
     except:
         form = UserNameForm()
         error_msg = "Riot Sever currently 'Busy' (error 503). Please search again in a few minutes "
-        return render_template("landingPage.html", form = form, error_msg = error_msg)
+        return redirect(url_for("home", form = form, error_msg = error_msg))
         
     
 
