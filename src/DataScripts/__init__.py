@@ -1,4 +1,9 @@
 from riotwatcher import LolWatcher, ApiError
+import os
+from dotenv import load_dotenv
 
-api_key = "RGAPI-630713ea-691b-4153-9c79-f49856025daf"
+load_dotenv()
+
+api_key = os.getenv("API_KEY")
+
 watcher = LolWatcher(api_key)
