@@ -5,20 +5,16 @@
 {%block sidebar%}{%endblock sidebar%}
 {%block title%}
 
-<h1 class="welcome"> Customer summoner name search</h1>
+<h1 class="welcome"> Custom summoner name search</h1>
 
-<h5 class="subtitle"> Searching for a summoner name on any region is implemented and fully functional. <br>
-However, the application currently only has a personal Riot Games API key. <br>
-This means that requesting data from the Riot games server is slow. <br>
-Data for up to 1000 games will be requested if available, with download times up to <br>
-20 minutes.  <br><br>
-A production API key is under reqeust. 
-<br><br>
+<h5 class="subtitle"> Searching for a summoner name currently takes up to 25 minutes due to heavy restrictions on a personal API key. <br>
 
 <b>It is currently reccommended to use the pre-downloaded test data set.</b><br> 
 This is achieved by submitting the home page form with an empty summoner name.
+
+An API key with drastically increased request limits is currently under application <br><br>
 </h5>
-<b>
+
 
 <button class="readme" onclick="window.location.href='{{url_for('home')}}';">
     Return to home page
