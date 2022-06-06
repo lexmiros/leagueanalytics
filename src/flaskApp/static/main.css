@@ -257,6 +257,12 @@ button{
   margin-left: 400%;
   background-color: #115e91;
   color: #ffffff;
+  border-color: rgb(93, 194, 230);
+  
+}
+
+.btn:hover {
+  background-color: rgb(93, 194, 230);
   
 }
 
@@ -440,6 +446,11 @@ nav ul li:hover ul {
   background-color: #115e91;
   color: #ffffff;
   margin-bottom: 2.5%;
-  border-color: white;
+  border-color: rgb(93, 194, 230);
+  border-radius: 4px; 
+}
+
+.myBtn:hover {
+  background-color: rgb(93, 194, 230);
   
 }
