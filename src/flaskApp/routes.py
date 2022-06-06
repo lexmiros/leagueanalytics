@@ -31,7 +31,7 @@ def home():
            
             except:
                 error_msg = "Account / Region combination not found!"
-                return render_template("landingPage.html", form = form, error_msg = error_msg)
+                return render_template("landing2.html", form = form, error_msg = error_msg, show_example_modal=True)
 
         
         #If user doesnt enter a name, use test data
@@ -44,7 +44,7 @@ def home():
        
         
     
-    return render_template("landingPage.html", form = form)
+    return render_template("landing2.html", form = form)
 
 @app.route("/readme")
 def readme():
@@ -726,8 +726,20 @@ def timeseries(user, region, test):
 @app.route("/about/<user>/<region>/<test>")
 def about(user, region, test):
     """"""
+    user = user
+    region = region
+    test = test
+
+    #Set up passed in info from webpage
+    info = webpage_transfer(user, region, test)
+
+    df = info[0]
+    rank = info[1]
+    wins = info[2]
+    losses = info[3]
+    wr = info[4]
+    total_games = info[5]
     
-    
-    return render_template("about.html", user = user, region = region, test = test)
+    return render_template("about.html", user = user, region = region, test = test, wins = wins, losses = losses, wr = wr, total_games = total_games, rank = rank)
 
 

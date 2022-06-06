@@ -1,0 +1,64 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends "layout.html" %}
+{%block topnav%}{%endblock topnav%}
+{%block sidebar%}{%endblock sidebar%}
+
+{% block content %}
+
+<div class="float-child">
+    <div class="video-container">
+        <video autoplay muted loop id="myVideo">
+            <source src="static/vid.mp4" type="video/mp4">
+        </video>
+        </div>
+</div>
+
+<div class="float-child">
+    <img src="/static/lol-logo.png" alt="Italian Trulli" style="width: 400px;height: 200px;">
+    <h5 class="subtitle">Analytics</h5>
+    <div class="userForm">
+        <form method="POST" action="">
+            
+            {% if form.region.errors %}
+                {{form.region(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.region.errors %}
+                            <span> {{ error }}</span>
+                        {% endfor %}
+                    </div>
+            {% else %}
+                {{form.region(class="form-control form-control-lg") }}
+            {%endif%}
+    
+    
+    
+            {{form.hidden_tag()}}
+    
+                {% if form.user.errors %}
+                    {{form.user(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.user.errors %}
+                                <span> {{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{form.user(class="form-control form-control-lg") }}
+                {%endif%}
+    
+            {{form.submit(class="btn btn-outline-info")}}
+            
+        </form>
+           
+       
+    </div>   
+    <p><br> <br> <br> <br> <br> <br> <br>This product isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</p>
+</div>
+
+   
+
+
+    
+{%endblock content%}
+
+
