@@ -713,16 +713,6 @@ def timeseries(user, region, test):
     avg_non_dmg = data_non_dmg.mean(axis=1, skipna=True).to_list()
     avg_non_exp = data_non_exp.mean(axis=1, skipna=True).to_list()
     avg_non_gold = data_non_gold.mean(axis=1, skipna=True).to_list()
-
-
-
-  
-
-
-
-
-
-
         
 
     return render_template('timeSeries.html', 
@@ -733,5 +723,11 @@ def timeseries(user, region, test):
         avg_non_cs = avg_non_cs, avg_non_dmg = avg_non_dmg, avg_non_exp = avg_non_exp, avg_non_gold = avg_non_gold
         )
 
+@app.route("/about/<user>/<region>/<test>")
+def about(user, region, test):
+    """"""
+    
+    
+    return render_template("about.html", user = user, region = region, test = test)
 
 

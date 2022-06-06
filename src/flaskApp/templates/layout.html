@@ -29,6 +29,7 @@
                     <li><a href="{{url_for('timeseries', user = user, region = region, test=test)}}">Time-Series</a></li>
                     <li><a href="{{url_for('stats', user = user, region = region, test = test)}}">Game stats</a></li>
                     <li><a href="{{url_for('roles', user = user, region = region, test = test)}}">Roles</a></li>
+                    <li><a href="{{url_for('about', user = user, region = region, test = test)}}">About</a></li>
                     <li><a href="{{url_for('home')}}">New search</a></li>
                 </ul>
                 
@@ -53,6 +54,7 @@
         {%block content%}
 
         {%endblock content%}
+        
         
     </div>
         

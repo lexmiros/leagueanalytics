@@ -2,7 +2,7 @@
 .body{
   background-image: linear-gradient(to bottom right, rgb(52, 0, 174), #0C0032);
   height:  100%;
-  
+  padding-bottom: 1000px;
 }
 
 .welcome{
@@ -257,9 +257,22 @@ h6 {
 .subtextPara{
   text-align: center;
   margin-top: auto;
- 
   margin-bottom: 3.5%;
   color: #ffffff;
+}
+
+li{
+  
+  margin-top: auto;
+  margin-bottom: 3.5%;
+  color: #ffffff;
+}
+
+ul{
+  
+  color: #ffffff;
+  display: table;
+  margin: 0 auto;
 }
 
 .float-child h6 {
@@ -329,4 +342,8 @@ nav ul li ul li {
 nav ul li:hover ul {
   display:block;
   text-align: center;
+}
+
+.padder{
+  padding-bottom: 1000px;
 }
